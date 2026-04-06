@@ -10,6 +10,23 @@ export enum Routes {
 
     PROFILE = "profile",
     ADMIN = "admin",
+
+    // 선박
+    VESSELS = "vessels",
+    BOOKING = "booking",
+}
+
+// 네비게이션 링크 정의
+// basePath: 버전 prefix (예: "test1", "test2"). 없으면 루트.
+export function getNavLinks(basePath?: string) {
+  const base = basePath ? `/${basePath}` : "";
+  return [
+    { href: `${base}/${Routes.VESSELS}`,                     label: "선박 목록" },
+    { href: `${base}/${Routes.VESSELS}?type=rent`,           label: "선박 임대" },
+    { href: `${base}/${Routes.VESSELS}?type=sale`,           label: "선박 판매" },
+    { href: `${base}/${Routes.ABOUT}`,                       label: "회사 소개" },
+    { href: `${base}/${Routes.CONTACT}`,                     label: "문의하기" },
+  ];
 }
 
 /*  애플리케이션의 페이지 이름을 정의 

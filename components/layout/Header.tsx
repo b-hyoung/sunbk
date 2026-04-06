@@ -6,23 +6,23 @@ import { Menu, X, Phone, Anchor } from "lucide-react";
 import { usePathname } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { getNavLinks } from "@/constants/enums";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const navLinks = [
-  { href: "/vessels", label: "선박 목록" },
-  { href: "/vessels?type=rent", label: "선박 임대" },
-  { href: "/vessels?type=sale", label: "선박 판매" },
-  { href: "/about", label: "회사 소개" },
-  { href: "/contact", label: "문의하기" },
-];
+interface HeaderProps {
+  basePath?: string;
+}
 
-export default function Header() {
+export default function Header({ basePath }: HeaderProps) {
+  const base = basePath ? `/${basePath}` : "";
+  const navLinks = getNavLinks(basePath);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
-  const isHome = pathname === "/";
+  const isHome = pathname === "/" || pathname === base;
 
   useEffect(() => {
     const header = headerRef.current;
@@ -76,7 +76,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* 로고 */}
           <Link
-            href="/"
+            href={base || "/"}
             className={`flex items-center gap-2 font-bold text-lg tracking-tight transition-colors duration-300 ${
               scrolled ? "text-gray-900" : "text-white"
             }`}

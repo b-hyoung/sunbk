@@ -1,14 +1,22 @@
 import Link from "next/link";
 import { Anchor, Phone, Mail, MapPin } from "lucide-react";
+import { getNavLinks } from "@/constants/enums";
 
-export default function Footer() {
+interface FooterProps {
+  basePath?: string;
+}
+
+export default function Footer({ basePath }: FooterProps) {
+  const base = basePath ? `/${basePath}` : "/";
+  const navLinks = getNavLinks(basePath);
+
   return (
     <footer className="bg-gray-900 text-gray-400">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* 브랜드 */}
           <div>
-            <Link href="/" className="inline-flex items-center gap-2 font-bold text-white text-base mb-4">
+            <Link href={base} className="inline-flex items-center gap-2 font-bold text-white text-base mb-4">
               <Anchor className="w-4 h-4 text-blue-400" />
               수연선박
             </Link>
@@ -21,13 +29,7 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-xs font-semibold uppercase tracking-wider mb-4">바로가기</h3>
             <ul className="space-y-2">
-              {[
-                { href: "/vessels", label: "선박 목록" },
-                { href: "/vessels?type=rent", label: "선박 임대" },
-                { href: "/vessels?type=sale", label: "선박 판매" },
-                { href: "/about", label: "회사 소개" },
-                { href: "/contact", label: "문의하기" },
-              ].map((link) => (
+              {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className="text-sm hover:text-white transition-colors">
                     {link.label}
