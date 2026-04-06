@@ -5,6 +5,7 @@ import { Vessel } from "@/lib/supabase";
 
 interface VesselCardProps {
   vessel: Vessel;
+  basePath: string;
 }
 
 const typeMeta: Record<string, { label: string; color: string }> = {
@@ -13,13 +14,13 @@ const typeMeta: Record<string, { label: string; color: string }> = {
   both:  { label: "임대·판매", color: "bg-violet-50 text-violet-700" },
 };
 
-export default function VesselCard({ vessel }: VesselCardProps) {
+export default function VesselCard({ vessel, basePath }: VesselCardProps) {
   const primaryImage = vessel.vessel_images?.find((img) => img.is_primary) ?? vessel.vessel_images?.[0];
   const meta = typeMeta[vessel.type] ?? typeMeta.both;
 
   return (
     <Link
-      href={`/vessels/${vessel.slug}`}
+      href={`/${basePath}/vessels/${vessel.slug}`}
       className="group flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100 transition-all duration-200"
     >
       {/* 이미지 */}
