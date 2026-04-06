@@ -1,6 +1,6 @@
 import { getVesselById } from "@/lib/data";
 import { notFound } from "next/navigation";
-import BookingForm from "@/components/vessels/BookingForm";
+import BookingForm from "@/app/test1/_components/BookingForm";
 import Link from "next/link";
 import { ChevronRight } from "lucide-react";
 import type { Metadata } from "next";

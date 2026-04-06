@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Phone, Ship, ArrowRight, ChevronRight } from "lucide-react";
 import { getFeaturedVessels } from "@/lib/data";
-import VesselCard from "@/components/vessels/VesselCard";
+import VesselCard from "@/app/test1/_components/VesselCard";
 import HeroVideo from "@/components/layout/HeroVideo";
 
 const stats = [

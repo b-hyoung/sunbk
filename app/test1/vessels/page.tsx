@@ -1,6 +1,6 @@
 import { getVessels } from "@/lib/data";
-import VesselCard from "@/components/vessels/VesselCard";
-import VesselFilter from "@/components/vessels/VesselFilter";
+import VesselCard from "@/app/test1/_components/VesselCard";
+import VesselFilter from "@/app/test1/_components/VesselFilter";
 import { Ship } from "lucide-react";
 import type { Metadata } from "next";
 

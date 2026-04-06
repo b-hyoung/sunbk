@@ -46,7 +46,7 @@ export default function BookingForm({ vessel, bookingType }: BookingFormProps) {
       body: JSON.stringify({ vessel_id: vessel.id, booking_type: bookingType, ...form, total_price: totalPrice }),
     });
     setLoading(false);
-    if (res.ok) router.push("/booking/confirm");
+    if (res.ok) router.push("/test1/booking/confirm");
     else alert("오류가 발생했습니다. 다시 시도해주세요.");
   };
 

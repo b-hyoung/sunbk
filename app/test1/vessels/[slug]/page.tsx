@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Phone, MapPin, Ruler, Users, Calendar, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
-import BookingButton from "@/components/vessels/BookingButton";
+import BookingButton from "@/app/test1/_components/BookingButton";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
