@@ -8,20 +8,20 @@ interface VesselCardProps {
   basePath: string;
 }
 
-const typeMeta: Record<string, { label: string; color: string }> = {
-  rent:  { label: "임대",    color: "bg-emerald-50 text-emerald-700" },
-  sale:  { label: "판매",    color: "bg-blue-50 text-blue-700" },
-  both:  { label: "임대·판매", color: "bg-violet-50 text-violet-700" },
+const typeLabel: Record<string, string> = {
+  rent: "임대",
+  sale: "판매",
+  both: "임대·판매",
 };
 
 export default function VesselCard({ vessel, basePath }: VesselCardProps) {
   const primaryImage = vessel.vessel_images?.find((img) => img.is_primary) ?? vessel.vessel_images?.[0];
-  const meta = typeMeta[vessel.type] ?? typeMeta.both;
+  const label = typeLabel[vessel.type] ?? typeLabel.both;
 
   return (
     <Link
       href={`/${basePath}/vessels/${vessel.slug}`}
-      className="group flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100 transition-all duration-200"
+      className="group flex flex-col bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100 transition-[border-color,box-shadow] duration-200"
     >
       {/* 이미지 */}
       <div className="relative h-48 bg-gray-50 overflow-hidden shrink-0">
@@ -30,13 +30,14 @@ export default function VesselCard({ vessel, basePath }: VesselCardProps) {
             src={primaryImage.url}
             alt={vessel.title}
             fill
+            sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw"
             className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
           />
         ) : (
           <div className="flex items-center justify-center h-full text-4xl opacity-20">🚢</div>
         )}
-        <span className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full ${meta.color}`}>
-          {meta.label}
+        <span className="absolute top-3 left-3 text-xs font-medium px-2.5 py-1 rounded-full bg-black/50 text-white backdrop-blur-sm">
+          {label}
         </span>
       </div>
 
@@ -70,7 +71,7 @@ export default function VesselCard({ vessel, basePath }: VesselCardProps) {
         )}
 
         {/* 가격 */}
-        <div className="mt-auto pt-3 border-t border-gray-50 space-y-1">
+        <div className="mt-auto pt-3 border-t border-gray-100 space-y-1">
           {vessel.rent_price_per_day && (
             <div className="flex justify-between items-baseline">
               <span className="text-xs text-gray-400">임대</span>
