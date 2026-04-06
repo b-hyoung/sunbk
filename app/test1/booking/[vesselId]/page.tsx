@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getVesselById } from "@/lib/data";
 import { notFound } from "next/navigation";
 import BookingForm from "@/components/vessels/BookingForm";
 import Link from "next/link";
@@ -17,12 +17,7 @@ export default async function BookingPage({
   const { vesselId } = await params;
   const { type } = await searchParams;
 
-  const { data: vessel } = await supabase
-    .from("vessels")
-    .select("*")
-    .eq("id", vesselId)
-    .eq("status", "active")
-    .single();
+  const vessel = await getVesselById(vesselId);
 
   if (!vessel) notFound();
 
@@ -33,9 +28,9 @@ export default async function BookingPage({
       <div className="border-b border-gray-100">
         <div className="max-w-2xl mx-auto px-4 sm:px-6 py-4">
           <nav className="flex items-center gap-1.5 text-xs text-gray-400">
-            <Link href="/vessels" className="hover:text-gray-600 transition-colors">선박 목록</Link>
+            <Link href="/test1/vessels" className="hover:text-gray-600 transition-colors">선박 목록</Link>
             <ChevronRight className="w-3 h-3" />
-            <Link href={`/vessels/${vessel.slug}`} className="hover:text-gray-600 transition-colors">{vessel.title}</Link>
+            <Link href={`/test1/vessels/${vessel.slug}`} className="hover:text-gray-600 transition-colors">{vessel.title}</Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-gray-700 font-medium">{bookingType === "rent" ? "임대 예약" : "구매 문의"}</span>
           </nav>

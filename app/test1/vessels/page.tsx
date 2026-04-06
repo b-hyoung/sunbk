@@ -1,4 +1,4 @@
-import { supabase, Vessel } from "@/lib/supabase";
+import { getVessels } from "@/lib/data";
 import VesselCard from "@/components/vessels/VesselCard";
 import VesselFilter from "@/components/vessels/VesselFilter";
 import { Ship } from "lucide-react";
@@ -12,28 +12,6 @@ export const metadata: Metadata = {
 interface SearchParams {
   type?: string;
   vessel_type?: string;
-}
-
-async function getVessels(searchParams: SearchParams): Promise<Vessel[]> {
-  let query = supabase
-    .from("vessels")
-    .select("*, vessel_images(*)")
-    .eq("status", "active")
-    .order("is_featured", { ascending: false })
-    .order("created_at", { ascending: false });
-
-  if (searchParams.type === "rent") {
-    query = query.in("type", ["rent", "both"]);
-  } else if (searchParams.type === "sale") {
-    query = query.in("type", ["sale", "both"]);
-  }
-
-  if (searchParams.vessel_type) {
-    query = query.eq("vessel_type", searchParams.vessel_type);
-  }
-
-  const { data } = await query;
-  return data ?? [];
 }
 
 export default async function VesselsPage({
@@ -64,7 +42,7 @@ export default async function VesselsPage({
         <div className="flex flex-col lg:flex-row gap-10">
           {/* 사이드바 필터 */}
           <aside data-fade-in className="w-full lg:w-48 shrink-0">
-            <VesselFilter currentType={params.type} currentVesselType={params.vessel_type} />
+            <VesselFilter basePath="test1" currentType={params.type} currentVesselType={params.vessel_type} />
           </aside>
 
           {/* 선박 목록 */}
@@ -73,7 +51,7 @@ export default async function VesselsPage({
               <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                 {vessels.map((vessel) => (
                   <div key={vessel.id} data-stagger>
-                    <VesselCard vessel={vessel} />
+                    <VesselCard vessel={vessel} basePath="test1" />
                   </div>
                 ))}
               </div>

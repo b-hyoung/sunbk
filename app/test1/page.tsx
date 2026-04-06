@@ -1,18 +1,8 @@
 import Link from "next/link";
 import { Phone, Ship, ArrowRight, ChevronRight } from "lucide-react";
-import { supabase, Vessel } from "@/lib/supabase";
+import { getFeaturedVessels } from "@/lib/data";
 import VesselCard from "@/components/vessels/VesselCard";
 import HeroVideo from "@/components/layout/HeroVideo";
-
-async function getFeaturedVessels(): Promise<Vessel[]> {
-  const { data } = await supabase
-    .from("vessels")
-    .select("*, vessel_images(*)")
-    .eq("is_featured", true)
-    .eq("status", "active")
-    .limit(6);
-  return data ?? [];
-}
 
 const stats = [
   { value: "50", suffix: "+", label: "보유 선박" },
@@ -22,10 +12,10 @@ const stats = [
 ];
 
 const vesselCategories = [
-  { label: "레저선", icon: "⛵", href: "/vessels?vessel_type=레저선" },
-  { label: "어선", icon: "🎣", href: "/vessels?vessel_type=어선" },
-  { label: "화물선", icon: "🚢", href: "/vessels?vessel_type=화물선" },
-  { label: "여객선", icon: "🛳️", href: "/vessels?vessel_type=여객선" },
+  { label: "레저선", icon: "⛵", href: "/test1/vessels?vessel_type=레저선" },
+  { label: "어선", icon: "🎣", href: "/test1/vessels?vessel_type=어선" },
+  { label: "화물선", icon: "🚢", href: "/test1/vessels?vessel_type=화물선" },
+  { label: "여객선", icon: "🛳️", href: "/test1/vessels?vessel_type=여객선" },
 ];
 
 export default async function HomePage() {
@@ -50,7 +40,7 @@ export default async function HomePage() {
             </p>
             <div data-hero className="flex flex-wrap gap-3">
               <Link
-                href="/vessels"
+                href="/test1/vessels"
                 className="group inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
               >
                 <Ship className="w-4 h-4" />
@@ -116,7 +106,7 @@ export default async function HomePage() {
           <div className="flex items-center justify-between mb-10">
             <h2 data-fade-up className="text-gray-900">추천 선박</h2>
             <Link
-              href="/vessels"
+              href="/test1/vessels"
               data-fade-in
               className="group flex items-center gap-1 text-sm text-gray-400 hover:text-blue-600 font-medium transition-colors"
             >
@@ -129,7 +119,7 @@ export default async function HomePage() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {featuredVessels.map((vessel) => (
                 <div key={vessel.id} data-stagger>
-                  <VesselCard vessel={vessel} />
+                  <VesselCard vessel={vessel} basePath="test1" />
                 </div>
               ))}
             </div>

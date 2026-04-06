@@ -1,4 +1,5 @@
-import { supabase, Vessel } from "@/lib/supabase";
+import { getVesselBySlug } from "@/lib/data";
+import type { Vessel } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,19 +7,9 @@ import { Phone, MapPin, Ruler, Users, Calendar, ChevronRight } from "lucide-reac
 import type { Metadata } from "next";
 import BookingButton from "@/components/vessels/BookingButton";
 
-async function getVessel(slug: string): Promise<Vessel | null> {
-  const { data } = await supabase
-    .from("vessels")
-    .select("*, vessel_images(*)")
-    .eq("slug", slug)
-    .eq("status", "active")
-    .single();
-  return data;
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const vessel = await getVessel(slug);
+  const vessel = await getVesselBySlug(slug);
   if (!vessel) return {};
   return {
     title: vessel.title,
@@ -45,7 +36,7 @@ const typeBadge: Record<string, string> = {
 
 export default async function VesselDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const vessel = await getVessel(slug);
+  const vessel = await getVesselBySlug(slug);
   if (!vessel) notFound();
 
   const images = vessel.vessel_images ?? [];
@@ -69,7 +60,7 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
           <nav className="flex items-center gap-1.5 text-xs text-gray-400">
             <Link href="/" className="hover:text-gray-600 transition-colors">홈</Link>
             <ChevronRight className="w-3 h-3" />
-            <Link href="/vessels" className="hover:text-gray-600 transition-colors">선박 목록</Link>
+            <Link href="/test1/vessels" className="hover:text-gray-600 transition-colors">선박 목록</Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-gray-700 font-medium">{vessel.title}</span>
           </nav>
@@ -219,7 +210,7 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
               </div>
 
               {/* 예약/문의 버튼 */}
-              <BookingButton vessel={vessel} />
+              <BookingButton vessel={vessel} basePath="test1" />
 
               {/* 전화 */}
               <a
