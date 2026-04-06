@@ -38,9 +38,9 @@ export default async function VesselsPage({
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* 사이드바 필터 */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:py-10">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+          {/* 필터: 모바일=상단 pill, 데스크탑=사이드바 */}
           <aside data-fade-in className="w-full lg:w-48 shrink-0">
             <VesselFilter basePath="test1" currentType={params.type} currentVesselType={params.vessel_type} />
           </aside>

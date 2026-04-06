@@ -43,3 +43,10 @@ next-env.d.ts
 
 # Claude Code
 .claude
+
+# AI skills / plugins (로컬 설치, node_modules와 동일)
+.agents/
+skills-lock.json
+
+# Design tool config (로컬 전용)
+.impeccable.md
