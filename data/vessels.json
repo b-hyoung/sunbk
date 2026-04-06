@@ -1,0 +1,188 @@
+[
+  {
+    "id": "vessel-001",
+    "title": "블루마린 36",
+    "slug": "blue-marine-36",
+    "type": "both",
+    "vessel_type": "레저선",
+    "year_built": 2019,
+    "length_m": 11.0,
+    "tonnage": 5,
+    "engine_power": "220HP × 2",
+    "capacity": 12,
+    "location": "경남 통영시 도천동 항",
+    "description": "최신형 레저선으로 안정적인 항해와 넓은 선실을 자랑합니다.\n낚시, 스노클링, 가족 여행 등 다양한 해양 레저에 최적화된 선박입니다.\n숙련된 선장이 동승하여 안전하고 즐거운 시간을 보장합니다.",
+    "features": ["GPS 항법장치", "에어컨/난방", "위성 통신", "구명정 완비", "낚시 장비 제공", "간이 주방"],
+    "rent_price_per_day": 450000,
+    "sale_price": 85000000,
+    "is_available": true,
+    "is_featured": true,
+    "status": "active",
+    "created_at": "2024-01-15T09:00:00Z",
+    "updated_at": "2024-06-01T12:00:00Z",
+    "vessel_images": [
+      {
+        "id": "img-001-1",
+        "vessel_id": "vessel-001",
+        "url": "https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=800",
+        "is_primary": true,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "id": "vessel-002",
+    "title": "동해호 28톤",
+    "slug": "donghae-28ton",
+    "type": "sale",
+    "vessel_type": "어선",
+    "year_built": 2015,
+    "length_m": 17.5,
+    "tonnage": 28,
+    "engine_power": "450HP",
+    "capacity": 8,
+    "location": "경북 포항시 북구 죽도동 항",
+    "description": "동해 연안에서 검증된 28톤급 어선입니다.\n트롤 어업 및 연승 어업에 최적화되어 있으며, 대용량 어창과 최신 어군탐지기를 보유하고 있습니다.\n선체 상태 양호, 정기검사 완료.",
+    "features": ["어군탐지기", "대용량 어창", "냉동설비", "레이더", "자동조타장치", "선원실 4인"],
+    "rent_price_per_day": null,
+    "sale_price": 220000000,
+    "is_available": true,
+    "is_featured": true,
+    "status": "active",
+    "created_at": "2024-02-10T09:00:00Z",
+    "updated_at": "2024-06-01T12:00:00Z",
+    "vessel_images": [
+      {
+        "id": "img-002-1",
+        "vessel_id": "vessel-002",
+        "url": "https://images.unsplash.com/photo-1605281317010-fe5ffe798166?w=800",
+        "is_primary": true,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "id": "vessel-003",
+    "title": "씨스타 크루저",
+    "slug": "seestar-cruiser",
+    "type": "rent",
+    "vessel_type": "레저선",
+    "year_built": 2021,
+    "length_m": 14.2,
+    "tonnage": 8,
+    "engine_power": "300HP × 2",
+    "capacity": 20,
+    "location": "부산 해운대구 수영만 요트경기장",
+    "description": "부산 해운대에서 즐기는 프리미엄 크루저입니다.\n넓은 선상 공간과 고급 인테리어로 파티, 기업 행사, 결혼기념일 등 특별한 날에 최적입니다.\n선상 바베큐 가능, 음향 시스템 완비.",
+    "features": ["프리미엄 오디오", "선상 바베큐", "고급 인테리어", "화장실 2개", "에어컨", "선루프"],
+    "rent_price_per_day": 800000,
+    "sale_price": null,
+    "is_available": true,
+    "is_featured": true,
+    "status": "active",
+    "created_at": "2024-03-05T09:00:00Z",
+    "updated_at": "2024-06-01T12:00:00Z",
+    "vessel_images": [
+      {
+        "id": "img-003-1",
+        "vessel_id": "vessel-003",
+        "url": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800",
+        "is_primary": true,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "id": "vessel-004",
+    "title": "한울 카고 150",
+    "slug": "hanul-cargo-150",
+    "type": "sale",
+    "vessel_type": "화물선",
+    "year_built": 2012,
+    "length_m": 45.0,
+    "tonnage": 150,
+    "engine_power": "1200HP",
+    "capacity": 6,
+    "location": "인천 중구 항동 인천항",
+    "description": "150톤급 연안 화물선으로 서해안 도서 지역 화물 운송에 특화된 선박입니다.\n선체 FRP 보강 완료, 주기관 최근 교체. 연간 정기검사 통과.\n즉시 운항 가능한 상태로 각종 인허가 서류 완비.",
+    "features": ["대형 화물창", "크레인 5톤", "냉동화물 칸", "GPS/AIS", "레이더 2중화", "선원실 6인"],
+    "rent_price_per_day": null,
+    "sale_price": 850000000,
+    "is_available": true,
+    "is_featured": false,
+    "status": "active",
+    "created_at": "2024-01-20T09:00:00Z",
+    "updated_at": "2024-06-01T12:00:00Z",
+    "vessel_images": [
+      {
+        "id": "img-004-1",
+        "vessel_id": "vessel-004",
+        "url": "https://images.unsplash.com/photo-1520637102912-2df6bb2aec6d?w=800",
+        "is_primary": true,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "id": "vessel-005",
+    "title": "남해 선샤인",
+    "slug": "namhae-sunshine",
+    "type": "rent",
+    "vessel_type": "어선",
+    "year_built": 2018,
+    "length_m": 9.8,
+    "tonnage": 3,
+    "engine_power": "135HP",
+    "capacity": 6,
+    "location": "전남 여수시 돌산읍 방죽포",
+    "description": "여수 돌산도 앞바다에서 즐기는 소형 낚시어선입니다.\n우럭, 광어, 볼락 등 다양한 어종을 체험할 수 있으며, 초보자도 쉽게 즐길 수 있도록 장비 일체를 제공합니다.\n선장 동승, 안전장비 완비.",
+    "features": ["낚시 장비 일체 제공", "미끼 제공", "구명조끼", "선상 쿨러", "GPS", "어군탐지기"],
+    "rent_price_per_day": 200000,
+    "sale_price": null,
+    "is_available": true,
+    "is_featured": false,
+    "status": "active",
+    "created_at": "2024-04-01T09:00:00Z",
+    "updated_at": "2024-06-01T12:00:00Z",
+    "vessel_images": [
+      {
+        "id": "img-005-1",
+        "vessel_id": "vessel-005",
+        "url": "https://images.unsplash.com/photo-1559827260-dc66d52bef19?w=800",
+        "is_primary": true,
+        "sort_order": 1
+      }
+    ]
+  },
+  {
+    "id": "vessel-006",
+    "title": "제주 페리 퀸",
+    "slug": "jeju-ferry-queen",
+    "type": "sale",
+    "vessel_type": "여객선",
+    "year_built": 2017,
+    "length_m": 58.0,
+    "tonnage": 400,
+    "engine_power": "2400HP × 2",
+    "capacity": 150,
+    "location": "제주 제주시 건입동 제주항",
+    "description": "제주 연안 여객 운항에 최적화된 400톤급 여객선입니다.\n150명 탑승 가능하며 객실 시설 및 편의시설이 완비되어 있습니다.\n해수부 인허가 완료, 2급 항해사 이상 운항 가능.",
+    "features": ["150인 탑승", "일반석/특등실", "매점/카페테리아", "구명정 전 인원", "에어컨 전관", "장애인 편의시설"],
+    "rent_price_per_day": null,
+    "sale_price": 3200000000,
+    "is_available": true,
+    "is_featured": true,
+    "status": "active",
+    "created_at": "2024-02-28T09:00:00Z",
+    "updated_at": "2024-06-01T12:00:00Z",
+    "vessel_images": [
+      {
+        "id": "img-006-1",
+        "vessel_id": "vessel-006",
+        "url": "https://images.unsplash.com/photo-1570375322628-9d0dca3dd3c2?w=800",
+        "is_primary": true,
+        "sort_order": 1
+      }
+    ]
+  }
+]
