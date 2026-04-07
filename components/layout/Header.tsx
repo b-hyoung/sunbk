@@ -72,6 +72,16 @@ export default function Header({ basePath }: HeaderProps) {
     return () => trigger.kill();
   }, [isHome]);
 
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header) return;
+    if (menuOpen && !scrolled) {
+      gsap.to(header, { backgroundColor: "rgba(15,23,42,0.95)", backdropFilter: "blur(12px)", duration: 0.2 });
+    } else if (!scrolled) {
+      gsap.to(header, { backgroundColor: "rgba(0,0,0,0)", backdropFilter: "blur(0px)", duration: 0.2 });
+    }
+  }, [menuOpen, scrolled]);
+
   return (
     <header ref={headerRef} className="fixed top-8 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -137,7 +147,7 @@ export default function Header({ basePath }: HeaderProps) {
 
       {/* 모바일 메뉴 */}
       {menuOpen && (
-        <div className={`md:hidden border-t ${scrolled ? "bg-white border-gray-100" : "bg-black/60 border-white/10 backdrop-blur-md"}`}>
+        <div className={`md:hidden border-t ${scrolled ? "bg-white border-gray-100" : "bg-slate-900/95 backdrop-blur-xl border-white/10"}`}>
           <nav className="flex flex-col py-2">
             {navLinks.map((link) => (
               <Link
