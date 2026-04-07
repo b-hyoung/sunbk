@@ -1,10 +1,5 @@
 import { createClient } from '@supabase/supabase-js'
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
-
-export const supabase = createClient(supabaseUrl, supabaseAnonKey)
-
 // 타입 정의
 export type VesselType = 'rent' | 'sale' | 'both'
 export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed'
@@ -71,3 +66,23 @@ export interface Inquiry {
   is_read: boolean
   created_at: string
 }
+
+// Supabase 클라이언트는 lazy로 생성 (실제 사용 시에만)
+let _supabase: ReturnType<typeof createClient> | null = null
+
+export function getSupabase() {
+  if (!_supabase) {
+    _supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    )
+  }
+  return _supabase
+}
+
+/** @deprecated getSupabase() 사용 권장 */
+export const supabase = {
+  get from() { return getSupabase().from.bind(getSupabase()) },
+  get auth() { return getSupabase().auth },
+  get storage() { return getSupabase().storage },
+} as unknown as ReturnType<typeof createClient>

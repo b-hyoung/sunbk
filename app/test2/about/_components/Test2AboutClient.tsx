@@ -24,7 +24,9 @@ export default function Test2AboutClient({ photos }: { photos: WorkPhoto[] }) {
     <div className="bg-white">
       {/* ── 히어로 ── */}
       <section className="relative bg-[#001e42] py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('/hero-bg.jpg')] bg-cover bg-center opacity-15" />
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-15" poster="/hero-bg.jpg">
+          <source src="https://videos.pexels.com/video-files/6472920/6472920-hd_1920_1080_24fps.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-[#001e42]/90 via-[#001e42]/60 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <p className="text-white/60 text-xs font-bold tracking-[0.2em] uppercase mb-4">

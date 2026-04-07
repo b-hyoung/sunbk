@@ -1,15 +1,12 @@
 import { MetadataRoute } from "next";
-import { supabase } from "@/lib/supabase";
+import { getVessels } from "@/lib/data";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://sooyeonship.com";
 
-  const { data: vessels } = await supabase
-    .from("vessels")
-    .select("slug, updated_at")
-    .eq("status", "active");
+  const vessels = await getVessels({});
 
-  const vesselUrls = (vessels ?? []).map((v) => ({
+  const vesselUrls = vessels.map((v) => ({
     url: `${baseUrl}/vessels/${v.slug}`,
     lastModified: new Date(v.updated_at),
     changeFrequency: "weekly" as const,

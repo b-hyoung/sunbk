@@ -1,12 +1,6 @@
 import type { Metadata } from "next";
-import { Noto_Sans_KR } from "next/font/google";
+import VersionSwitcher from "@/components/layout/VersionSwitcher";
 import "./globals.css";
-
-const notoSansKR = Noto_Sans_KR({
-  variable: "--font-sans",
-  subsets: ["latin"],
-  weight: ["400", "500", "700"],
-});
 
 export const metadata: Metadata = {
   title: {
@@ -28,8 +22,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ko" className={`${notoSansKR.variable} h-full antialiased`}>
+    <html lang="ko" className="h-full antialiased" style={{ fontFamily: "'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
       <body className="min-h-full flex flex-col">
+        <VersionSwitcher />
         {children}
       </body>
     </html>

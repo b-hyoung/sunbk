@@ -1,18 +1,8 @@
 import Link from "next/link";
 import { Phone, Ship, ArrowRight, ChevronRight } from "lucide-react";
-import { supabase, Vessel } from "@/lib/supabase";
+import { getFeaturedVessels } from "@/lib/data";
 import VesselCard from "@/app/test1/_components/VesselCard";
 import HeroVideo from "@/components/layout/HeroVideo";
-
-async function getFeaturedVessels(): Promise<Vessel[]> {
-  const { data } = await supabase
-    .from("vessels")
-    .select("*, vessel_images(*)")
-    .eq("is_featured", true)
-    .eq("status", "active")
-    .limit(6);
-  return data ?? [];
-}
 
 const stats = [
   { value: "50", suffix: "+", label: "보유 선박" },

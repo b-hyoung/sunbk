@@ -10,8 +10,8 @@ export default function Test2Layout({ children }: { children: React.ReactNode })
       <Suspense>
         <Test2Header />
       </Suspense>
-      {/* 상단 파란 띠(36px) + 메인헤더(68px) = 104px */}
-      <main className="flex-1 pt-[104px]">{children}</main>
+      {/* 버전바(32px) + 파란 띠(36px) + 메인헤더(68px) = 136px */}
+      <main className="flex-1 pt-[136px]">{children}</main>
       <Test2Footer />
     </>
   );

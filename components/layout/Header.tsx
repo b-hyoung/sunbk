@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
 import { Menu, X, Phone, Anchor } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { usePathname, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getNavLinks } from "@/constants/enums";
@@ -22,6 +22,8 @@ export default function Header({ basePath }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
   const isHome = pathname === "/" || pathname === base;
 
   useEffect(() => {
@@ -71,13 +73,13 @@ export default function Header({ basePath }: HeaderProps) {
   }, [isHome]);
 
   return (
-    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50">
+    <header ref={headerRef} className="fixed top-8 left-0 right-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* 로고 */}
           <Link
             href={base || "/"}
-            className={`flex items-center gap-2 font-bold text-lg tracking-tight transition-colors duration-300 ${
+            className={`flex items-center gap-2 font-bold text-xl tracking-tight transition-colors duration-300 ${
               scrolled ? "text-gray-900" : "text-white"
             }`}
           >
@@ -87,25 +89,32 @@ export default function Header({ basePath }: HeaderProps) {
 
           {/* 데스크탑 네비게이션 */}
           <nav className="hidden md:flex items-center gap-0.5">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-3.5 py-2 rounded-lg text-sm transition-colors duration-300 ${
-                  scrolled
-                    ? "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                    : "text-white/80 hover:text-white hover:bg-white/10"
-                }`}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              const isActive = currentUrl === link.href || currentUrl.startsWith(link.href + "&");
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-3.5 py-2 rounded-lg text-base transition-colors duration-300 ${
+                    isActive
+                      ? scrolled
+                        ? "text-blue-600 font-semibold"
+                        : "text-white font-semibold"
+                      : scrolled
+                        ? "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                        : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
           {/* 전화 CTA */}
           <a
             href="tel:010-0000-0000"
-            className={`hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-semibold transition-colors duration-300 ${
+            className={`hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-base font-semibold transition-colors duration-300 ${
               scrolled
                 ? "bg-blue-600 hover:bg-blue-700 text-white"
                 : "bg-white/15 hover:bg-white/25 text-white border border-white/30"

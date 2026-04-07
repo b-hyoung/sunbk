@@ -28,7 +28,7 @@ export default function Test2Header() {
   const isActive = (href: string) => currentUrl === href || currentUrl.startsWith(href + "&");
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#E6E7E9]">
+    <header className="fixed top-8 left-0 right-0 z-50 bg-white border-b border-[#E6E7E9]">
       {/* 상단 파란 띠 */}
       <div className="bg-[#09388a] hidden md:block">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-9">

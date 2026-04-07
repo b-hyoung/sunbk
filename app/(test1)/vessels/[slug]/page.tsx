@@ -1,4 +1,4 @@
-import { supabase, Vessel } from "@/lib/supabase";
+import { getVesselBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,19 +6,9 @@ import { Phone, MapPin, Ruler, Users, Calendar, ChevronRight } from "lucide-reac
 import type { Metadata } from "next";
 import BookingButton from "@/app/test1/_components/BookingButton";
 
-async function getVessel(slug: string): Promise<Vessel | null> {
-  const { data } = await supabase
-    .from("vessels")
-    .select("*, vessel_images(*)")
-    .eq("slug", slug)
-    .eq("status", "active")
-    .single();
-  return data;
-}
-
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
-  const vessel = await getVessel(slug);
+  const vessel = await getVesselBySlug(slug);
   if (!vessel) return {};
   return {
     title: vessel.title,
@@ -45,7 +35,7 @@ const typeBadge: Record<string, string> = {
 
 export default async function VesselDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const vessel = await getVessel(slug);
+  const vessel = await getVesselBySlug(slug);
   if (!vessel) notFound();
 
   const images = vessel.vessel_images ?? [];

@@ -98,7 +98,7 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
       )}
 
       {/* ── 가격 + CTA 바 ── */}
-      <section className="border-b border-[#E6E7E9] bg-white sticky top-[68px] md:top-[104px] z-40">
+      <section className="border-b border-[#E6E7E9] bg-white sticky top-[100px] md:top-[136px] z-40">
         <div className="max-w-5xl mx-auto px-6 py-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex flex-wrap items-baseline gap-6">
             {!vessel.rent_price_per_day && !vessel.sale_price && (

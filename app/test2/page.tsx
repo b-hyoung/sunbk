@@ -24,10 +24,13 @@ export default async function Test2HomePage() {
     <div>
       {/* ── 히어로 ── */}
       <section className="relative bg-[#001e42] overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center opacity-25"
-          style={{ backgroundImage: `url(https://images.unsplash.com/photo-1566933293069-b55c7f326dd4?w=1920&q=80&auto=format&fit=crop)` }}
-        />
+        <video
+          autoPlay muted loop playsInline
+          className="absolute inset-0 w-full h-full object-cover opacity-30"
+          poster="/hero-bg.jpg"
+        >
+          <source src="https://videos.pexels.com/video-files/4438522/4438522-hd_1920_1080_30fps.mp4" type="video/mp4" />
+        </video>
         <div className="absolute inset-0 bg-gradient-to-r from-[#001e42]/90 via-[#001e42]/60 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 md:py-40">
           <div className="max-w-2xl">

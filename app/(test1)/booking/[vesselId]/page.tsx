@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getVesselById } from "@/lib/data";
 import { notFound } from "next/navigation";
 import BookingForm from "@/app/test1/_components/BookingForm";
 import Link from "next/link";
@@ -17,12 +17,7 @@ export default async function BookingPage({
   const { vesselId } = await params;
   const { type } = await searchParams;
 
-  const { data: vessel } = await supabase
-    .from("vessels")
-    .select("*")
-    .eq("id", vesselId)
-    .eq("status", "active")
-    .single();
+  const vessel = await getVesselById(vesselId);
 
   if (!vessel) notFound();
 

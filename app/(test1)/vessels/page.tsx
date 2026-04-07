@@ -1,4 +1,4 @@
-import { supabase, Vessel } from "@/lib/supabase";
+import { getVessels } from "@/lib/data";
 import VesselCard from "@/app/test1/_components/VesselCard";
 import VesselFilter from "@/app/test1/_components/VesselFilter";
 import { Ship } from "lucide-react";
@@ -12,28 +12,6 @@ export const metadata: Metadata = {
 interface SearchParams {
   type?: string;
   vessel_type?: string;
-}
-
-async function getVessels(searchParams: SearchParams): Promise<Vessel[]> {
-  let query = supabase
-    .from("vessels")
-    .select("*, vessel_images(*)")
-    .eq("status", "active")
-    .order("is_featured", { ascending: false })
-    .order("created_at", { ascending: false });
-
-  if (searchParams.type === "rent") {
-    query = query.in("type", ["rent", "both"]);
-  } else if (searchParams.type === "sale") {
-    query = query.in("type", ["sale", "both"]);
-  }
-
-  if (searchParams.vessel_type) {
-    query = query.eq("vessel_type", searchParams.vessel_type);
-  }
-
-  const { data } = await query;
-  return data ?? [];
 }
 
 export default async function VesselsPage({
