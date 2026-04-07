@@ -1,0 +1,163 @@
+import Link from "next/link";
+import { Phone, Ship, ArrowRight, ChevronRight } from "lucide-react";
+import { getFeaturedVessels } from "@/lib/data";
+import VesselCard from "@/app/test1/_components/VesselCard";
+import HeroVideo from "@/components/layout/HeroVideo";
+
+const stats = [
+  { value: "50", suffix: "+", label: "보유 선박" },
+  { value: "200", suffix: "+", label: "누적 거래" },
+  { value: "98", suffix: "%", label: "고객 만족도" },
+  { value: "15", suffix: "년", label: "영업 경력" },
+];
+
+const vesselCategories = [
+  { label: "레저선", icon: "⛵", href: "/test1/vessels?vessel_type=레저선" },
+  { label: "어선", icon: "🎣", href: "/test1/vessels?vessel_type=어선" },
+  { label: "화물선", icon: "🚢", href: "/test1/vessels?vessel_type=화물선" },
+  { label: "여객선", icon: "🛳️", href: "/test1/vessels?vessel_type=여객선" },
+];
+
+export default async function HomePage() {
+  const featuredVessels = await getFeaturedVessels();
+
+  return (
+    <div className="bg-white -mt-16">
+      {/* ── 히어로 ── */}
+      <section className="relative h-screen flex items-center overflow-hidden">
+        <HeroVideo />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 w-full">
+          <div className="max-w-2xl">
+            <p data-hero className="text-blue-300 text-sm font-semibold tracking-widest uppercase mb-5">
+              선박 임대·판매 전문
+            </p>
+            <h1 data-hero className="text-white font-bold mb-6 leading-tight">
+              최적의 선박을<br />합리적인 가격으로
+            </h1>
+            <p data-hero className="text-white/70 text-lg leading-relaxed mb-10 max-w-lg">
+              15년 경력의 선박 전문가가 레저선부터 어선·화물선까지,
+              고객님의 목적에 맞는 최고의 선박을 추천해드립니다.
+            </p>
+            <div data-hero className="flex flex-wrap gap-3">
+              <Link
+                href="/test1/vessels"
+                className="group inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
+              >
+                <Ship className="w-4 h-4" />
+                선박 둘러보기
+                <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+              <a
+                href="tel:010-0000-0000"
+                className="inline-flex items-center gap-2 border border-white/30 hover:border-white/60 bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors backdrop-blur-sm"
+              >
+                <Phone className="w-4 h-4" />
+                전화 문의
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── 통계 ── */}
+      <section className="border-b border-gray-100">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-gray-100">
+            {stats.map((s) => (
+              <div key={s.label} data-fade-up className="text-center px-6 py-2">
+                <div
+                  data-count={`${s.value}${s.suffix}`}
+                  className="text-2xl font-bold text-gray-900"
+                >
+                  {s.value}{s.suffix}
+                </div>
+                <div className="text-sm text-gray-400 mt-0.5">{s.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── 카테고리 ── */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
+        <div className="flex items-end justify-between mb-10">
+          <h2 data-fade-up className="text-gray-900">선박 종류</h2>
+        </div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {vesselCategories.map((cat) => (
+            <Link
+              key={cat.label}
+              href={cat.href}
+              data-stagger
+              className="group flex flex-col items-center gap-3 py-8 px-4 border border-gray-100 rounded-xl hover:border-blue-200 hover:bg-blue-50/40 transition-all text-center"
+            >
+              <span className="text-3xl">{cat.icon}</span>
+              <span className="text-sm font-semibold text-gray-700 group-hover:text-blue-700 transition-colors">
+                {cat.label}
+              </span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* ── 추천 선박 ── */}
+      <section className="bg-gray-50 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="flex items-center justify-between mb-10">
+            <h2 data-fade-up className="text-gray-900">추천 선박</h2>
+            <Link
+              href="/test1/vessels"
+              data-fade-in
+              className="group flex items-center gap-1 text-sm text-gray-400 hover:text-blue-600 font-medium transition-colors"
+            >
+              전체보기
+              <ChevronRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
+            </Link>
+          </div>
+
+          {featuredVessels.length > 0 ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+              {featuredVessels.map((vessel) => (
+                <div key={vessel.id} data-stagger>
+                  <VesselCard vessel={vessel} basePath="test1" />
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div data-fade-in className="text-center py-20 text-gray-400">
+              <Ship className="w-10 h-10 mx-auto mb-3 opacity-30" />
+              <p className="text-sm">선박 정보를 불러오는 중입니다.</p>
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* ── CTA ── */}
+      <section className="border-t border-gray-100 py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div data-scale-in className="bg-blue-600 rounded-2xl px-8 py-14 md:py-16 text-center">
+            <h2 className="text-white mb-3">원하시는 선박을 찾지 못하셨나요?</h2>
+            <p className="text-blue-100 text-base mb-8 max-w-md mx-auto">
+              전문 상담사가 조건에 맞는 최적의 선박을 찾아드립니다.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-3 justify-center">
+              <a
+                href="tel:010-0000-0000"
+                className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-blue-50 px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                010-0000-0000
+              </a>
+              <Link
+                href="/contact"
+                className="inline-flex items-center justify-center gap-2 border border-blue-400 hover:bg-blue-500 text-white px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
+              >
+                온라인 문의
+              </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  );
+}
