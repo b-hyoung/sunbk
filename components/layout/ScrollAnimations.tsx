@@ -36,64 +36,40 @@ export default function ScrollAnimations() {
       }
     );
 
-    // fade-up: 섹션 제목, 단일 텍스트 블록
+    // 공통: 이미 화면에 보이는 요소는 즉시 표시
+    const animateIn = (el: Element, props: gsap.TweenVars) => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight) {
+        // 이미 화면에 있으면 즉시 표시
+        gsap.set(el, { opacity: 1, y: 0, scale: 1 });
+      } else {
+        ScrollTrigger.create({
+          trigger: el,
+          start: "top 88%",
+          once: true,
+          onEnter: () => gsap.to(el, props),
+        });
+      }
+    };
+
+    // fade-up
     document.querySelectorAll("[data-fade-up]").forEach((el) => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 88%",
-        onEnter: () => {
-          gsap.to(el, {
-            opacity: 1,
-            y: 0,
-            duration: 0.75,
-            ease: "power3.out",
-          });
-        },
-      });
+      animateIn(el, { opacity: 1, y: 0, duration: 0.75, ease: "power3.out" });
     });
 
-    // fade-in: 단순 등장
+    // fade-in
     document.querySelectorAll("[data-fade-in]").forEach((el) => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 88%",
-        onEnter: () => {
-          gsap.to(el, { opacity: 1, duration: 0.6, ease: "power2.out" });
-        },
-      });
+      animateIn(el, { opacity: 1, duration: 0.6, ease: "power2.out" });
     });
 
-    // stagger: 카드·그리드 자식들
+    // stagger
     document.querySelectorAll("[data-stagger]").forEach((el, i) => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 90%",
-        onEnter: () => {
-          gsap.to(el, {
-            opacity: 1,
-            y: 0,
-            duration: 0.65,
-            ease: "power3.out",
-            delay: i * 0.08,
-          });
-        },
-      });
+      animateIn(el, { opacity: 1, y: 0, duration: 0.65, ease: "power3.out", delay: i * 0.08 });
     });
 
-    // scale-in: CTA 박스
+    // scale-in
     document.querySelectorAll("[data-scale-in]").forEach((el) => {
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 85%",
-        onEnter: () => {
-          gsap.to(el, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: "expo.out",
-          });
-        },
-      });
+      animateIn(el, { opacity: 1, scale: 1, duration: 0.8, ease: "expo.out" });
     });
 
     // 통계 숫자 카운트업
