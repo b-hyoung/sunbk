@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import VersionSwitcher from "@/components/layout/VersionSwitcher";
 import "./globals.css";
 
@@ -24,7 +25,9 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full antialiased" style={{ fontFamily: "'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
       <body className="min-h-full flex flex-col">
-        <VersionSwitcher />
+        <Suspense>
+          <VersionSwitcher />
+        </Suspense>
         {children}
       </body>
     </html>
