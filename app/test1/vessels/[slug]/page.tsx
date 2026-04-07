@@ -1,3 +1,4 @@
+export const runtime = "edge";
 import { getVesselBySlug } from "@/lib/data";
 import type { Vessel } from "@/lib/supabase";
 import { notFound } from "next/navigation";

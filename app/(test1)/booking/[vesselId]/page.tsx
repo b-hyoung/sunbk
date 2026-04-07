@@ -1,3 +1,4 @@
+export const runtime = "edge";
 import { getVesselById } from "@/lib/data";
 import { notFound } from "next/navigation";
 import BookingForm from "@/app/test1/_components/BookingForm";

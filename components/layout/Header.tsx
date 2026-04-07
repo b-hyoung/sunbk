@@ -24,14 +24,17 @@ export default function Header({ basePath }: HeaderProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-  const isHome = pathname === "/" || pathname === base;
+  const isHome = pathname === "/" || pathname === base || (base === "" && pathname === "/");
 
   useEffect(() => {
     const header = headerRef.current;
     if (!header) return;
 
+    // 모든 ScrollTrigger 정리
+    ScrollTrigger.getAll().forEach((t) => t.kill());
+
     if (!isHome) {
-      // 홈 아닌 페이지: 항상 흰색
+      // 홈 아닌 페이지: 항상 흰색 배경
       gsap.set(header, {
         backgroundColor: "rgba(255,255,255,1)",
         boxShadow: "0 1px 0 rgba(0,0,0,0.08)",

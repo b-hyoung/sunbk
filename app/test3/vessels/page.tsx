@@ -1,3 +1,4 @@
+export const runtime = "edge";
 import { getVessels } from "@/lib/data";
 import VesselFilter from "@/app/test3/_components/VesselFilter";
 import Link from "next/link";
