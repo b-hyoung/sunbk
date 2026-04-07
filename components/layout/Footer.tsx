@@ -1,10 +1,11 @@
 import Link from "next/link";
 import {
-  Anchor, Phone, Mail, MapPin,
+  Anchor, MapPin,
   CalendarDays, Tag, Camera,
   ExternalLink,
 } from "lucide-react";
 import { getNavLinks } from "@/constants/enums";
+import { COMPANY } from "@/constants/company";
 
 interface FooterProps {
   basePath?: string;
@@ -29,7 +30,7 @@ export default function Footer({ basePath }: FooterProps) {
           <div>
             <Link href={base} className="inline-flex items-center gap-2 font-bold text-white text-base mb-4">
               <Anchor className="w-4 h-4 text-blue-400" />
-              수연선박
+              {COMPANY.name}
             </Link>
             <p className="text-sm leading-relaxed max-w-xs text-gray-500">
               국내 최고 수준의 선박 임대·판매 전문 업체. 고객의 목적에 맞는 최적의 선박을 제안해드립니다.
@@ -57,36 +58,24 @@ export default function Footer({ basePath }: FooterProps) {
             </ul>
           </div>
 
-          {/* 연락처 */}
+          {/* 사업자정보 */}
           <div>
-            <h3 className="flex items-center gap-1.5 text-white text-base font-bold mb-4">
-              <Phone className="w-4 h-4 text-blue-400" />
-              연락처
-            </h3>
-            <ul className="space-y-3 text-sm">
-              <li>
-                <a href="tel:010-0000-0000" className="flex items-center gap-2 hover:text-white transition-colors">
-                  <Phone className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                  010-0000-0000
-                </a>
-              </li>
-              <li>
-                <a href="mailto:info@sooyeonship.com" className="flex items-center gap-2 hover:text-white transition-colors">
-                  <Mail className="w-3.5 h-3.5 text-blue-400 shrink-0" />
-                  info@sooyeonship.com
-                </a>
-              </li>
-              <li className="flex items-start gap-2">
-                <MapPin className="w-3.5 h-3.5 text-blue-400 shrink-0 mt-0.5" />
-                부산광역시 영도구 해양로 000
-              </li>
-            </ul>
+            <h3 className="text-white text-base font-bold mb-4">사업자정보</h3>
+            <div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-sm">
+              <span className="text-gray-500">이메일</span>
+              <a href={`mailto:${COMPANY.email}`} className="hover:text-white transition-colors">{COMPANY.email}</a>
+              <span className="text-gray-500">상호명</span>
+              <span>{COMPANY.name}</span>
+              <span className="text-gray-500">사업자번호</span>
+              <span>{COMPANY.businessNumber}</span>
+              <span className="text-gray-500">대표자</span>
+              <span>{COMPANY.representative}</span>
+            </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-10 pt-6 flex flex-col sm:flex-row justify-between items-center gap-2 text-xs text-gray-600">
-          <p>© 2025 수연선박. All rights reserved.</p>
-          <p>사업자등록번호: 000-00-00000 | 대표: 홍길동</p>
+        <div className="border-t border-gray-800 mt-10 pt-6 text-xs text-gray-700">
+          <p>© {COMPANY.copyrightYear} {COMPANY.name}. All rights reserved.</p>
         </div>
       </div>
     </footer>

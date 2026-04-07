@@ -1,39 +1,18 @@
-import { supabase, Vessel } from "@/lib/supabase";
-import VesselCard from "@/app/test1/_components/VesselCard";
+import { getVessels } from "@/lib/data";
+import Test2VesselCard from "@/components/test2/VesselCard";
 import VesselFilter from "@/app/test1/_components/VesselFilter";
 import { Ship } from "lucide-react";
+import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "선박 목록",
-  description: "임대 및 판매 가능한 선박 목록을 확인하세요. 레저선, 어선, 화물선, 여객선 등 다양한 선박을 보유하고 있습니다.",
+  description: "임대 및 판매 가능한 선박 목록을 확인하세요.",
 };
 
 interface SearchParams {
   type?: string;
   vessel_type?: string;
-}
-
-async function getVessels(searchParams: SearchParams): Promise<Vessel[]> {
-  let query = supabase
-    .from("vessels")
-    .select("*, vessel_images(*)")
-    .eq("status", "active")
-    .order("is_featured", { ascending: false })
-    .order("created_at", { ascending: false });
-
-  if (searchParams.type === "rent") {
-    query = query.in("type", ["rent", "both"]);
-  } else if (searchParams.type === "sale") {
-    query = query.in("type", ["sale", "both"]);
-  }
-
-  if (searchParams.vessel_type) {
-    query = query.eq("vessel_type", searchParams.vessel_type);
-  }
-
-  const { data } = await query;
-  return data ?? [];
 }
 
 export default async function VesselsPage({
@@ -49,20 +28,22 @@ export default async function VesselsPage({
     sale: "판매 선박",
   };
   const pageTitle = params.type ? (typeLabel[params.type] ?? "선박 목록") : "전체 선박";
+  const hasFilter = !!params.type || !!params.vessel_type;
 
   return (
     <div className="bg-white min-h-screen">
       {/* 페이지 헤더 */}
-      <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-          <h1 data-fade-up className="text-gray-900 mb-1">{pageTitle}</h1>
-          <p data-fade-up className="text-gray-400 text-sm">총 {vessels.length}척</p>
+      <div className="border-b border-[#E6E7E9]">
+        <div className="max-w-7xl mx-auto px-6 py-10">
+          <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-2">Vessels</p>
+          <h1 data-fade-up className="text-[#001e42] text-2xl font-bold mb-1">{pageTitle}</h1>
+          <p data-fade-up className="text-[#001e42]/40 text-sm">총 {vessels.length}척</p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-        <div className="flex flex-col lg:flex-row gap-10">
-          {/* 사이드바 필터 */}
+      <div className="max-w-7xl mx-auto px-6 py-6 lg:py-10">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
+          {/* 필터 */}
           <aside data-fade-in className="w-full lg:w-48 shrink-0">
             <VesselFilter basePath="test2" currentType={params.type} currentVesselType={params.vessel_type} />
           </aside>
@@ -70,17 +51,25 @@ export default async function VesselsPage({
           {/* 선박 목록 */}
           <div className="flex-1">
             {vessels.length > 0 ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                 {vessels.map((vessel) => (
                   <div key={vessel.id} data-stagger>
-                    <VesselCard vessel={vessel} basePath="test2" />
+                    <Test2VesselCard vessel={vessel} filterType={params.type} />
                   </div>
                 ))}
               </div>
             ) : (
-              <div data-fade-in className="flex flex-col items-center justify-center py-32 text-gray-300">
+              <div data-fade-in className="flex flex-col items-center justify-center py-32 text-[#001e42]/30">
                 <Ship className="w-12 h-12 mb-4" />
-                <p className="text-base text-gray-400">해당 조건의 선박이 없습니다.</p>
+                <p className="text-base text-[#001e42]/40 mb-1">해당 조건의 선박이 없습니다.</p>
+                {hasFilter && (
+                  <Link
+                    href="/test2/vessels"
+                    className="mt-4 px-4 py-2 text-sm text-[#09388a] border border-[#09388a]/30 hover:bg-[#09388a]/5 transition-colors"
+                  >
+                    필터 초기화하고 전체 보기
+                  </Link>
+                )}
               </div>
             )}
           </div>

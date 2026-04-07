@@ -2,28 +2,30 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Menu, X, Phone, ChevronDown, Search } from "lucide-react";
+import { Menu, X, Phone, ChevronDown } from "lucide-react";
+import { usePathname, useSearchParams } from "next/navigation";
 
 const navLinks = [
   {
     label: "선박 매물",
     href: "/test2/vessels",
     children: [
-      { href: "/test2/vessels?type=rent", label: "임대 선박" },
-      { href: "/test2/vessels?type=sale", label: "판매 선박" },
-      { href: "/test2/vessels?vessel_type=레저선", label: "레저선" },
-      { href: "/test2/vessels?vessel_type=어선", label: "어선" },
-      { href: "/test2/vessels?vessel_type=화물선", label: "화물선" },
+      { href: "/test2/vessels?type=rent", label: "선박 임대" },
+      { href: "/test2/vessels?type=sale", label: "선박 판매" },
     ],
   },
-  { label: "서비스", href: "/test2/vessels" },
-  { label: "회사 소개", href: "/test2/about" },
-  { label: "문의하기", href: "/test2/contact" },
+  { label: "작업사진", href: "/test2/about" },
+  { label: "오시는길", href: "/test2/contact" },
 ];
 
 export default function Test2Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
+
+  const isActive = (href: string) => currentUrl === href || currentUrl.startsWith(href + "&");
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-[#E6E7E9]">
@@ -56,43 +58,51 @@ export default function Test2Header() {
 
           {/* 데스크탑 네비게이션 */}
           <nav className="hidden md:flex items-center h-full">
-            {navLinks.map((link) => (
-              <div
-                key={link.label}
-                className="relative h-full flex items-center group"
-                onMouseEnter={() => link.children && setOpenDropdown(link.label)}
-                onMouseLeave={() => setOpenDropdown(null)}
-              >
-                <Link
-                  href={link.href}
-                  className="flex items-center gap-1 px-5 h-full text-sm text-[#001e42] hover:text-[#09388a] font-medium transition-colors border-b-2 border-transparent hover:border-[#09388a]"
+            {navLinks.map((link) => {
+              const active = isActive(link.href) || link.children?.some((c) => isActive(c.href));
+              return (
+                <div
+                  key={link.label}
+                  className="relative h-full flex items-center group"
+                  onMouseEnter={() => link.children && setOpenDropdown(link.label)}
+                  onMouseLeave={() => setOpenDropdown(null)}
                 >
-                  {link.label}
-                  {link.children && <ChevronDown className="w-3 h-3 mt-0.5 opacity-50" />}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className={`flex items-center gap-1 px-5 h-full text-sm font-medium transition-colors border-b-2 ${
+                      active
+                        ? "text-[#09388a] border-[#09388a]"
+                        : "text-[#001e42] hover:text-[#09388a] border-transparent hover:border-[#09388a]"
+                    }`}
+                  >
+                    {link.label}
+                    {link.children && <ChevronDown className="w-3 h-3 mt-0.5 opacity-50" />}
+                  </Link>
 
-                {link.children && openDropdown === link.label && (
-                  <div className="absolute top-full left-0 w-48 bg-white border border-[#E6E7E9] shadow-lg z-50">
-                    {link.children.map((child) => (
-                      <Link
-                        key={child.href}
-                        href={child.href}
-                        className="block px-5 py-3 text-sm text-[#001e42] hover:text-[#09388a] hover:bg-[#F3F3F3] border-b border-[#E6E7E9] last:border-0 transition-colors"
-                      >
-                        {child.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+                  {link.children && openDropdown === link.label && (
+                    <div className="absolute top-full left-0 w-48 bg-white border border-[#E6E7E9] shadow-lg z-50">
+                      {link.children.map((child) => (
+                        <Link
+                          key={child.href}
+                          href={child.href}
+                          className={`block px-5 py-3 text-sm border-b border-[#E6E7E9] last:border-0 transition-colors ${
+                            isActive(child.href)
+                              ? "text-[#09388a] bg-[#F3F3F3] font-semibold"
+                              : "text-[#001e42] hover:text-[#09388a] hover:bg-[#F3F3F3]"
+                          }`}
+                        >
+                          {child.label}
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </nav>
 
           {/* 우측 액션 */}
           <div className="hidden md:flex items-center gap-3">
-            <button className="p-2 text-[#001e42]/50 hover:text-[#09388a] transition-colors">
-              <Search className="w-4 h-4" />
-            </button>
             <a
               href="tel:010-0000-0000"
               className="bg-[#09388a] hover:bg-[#072d6e] text-white px-5 py-2.5 text-sm font-semibold transition-colors"

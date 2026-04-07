@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { X } from "lucide-react";
 
 const vesselTypes = ["레저선", "어선", "화물선", "여객선", "예인선", "기타"];
 
@@ -34,10 +33,6 @@ export default function VesselFilter({ basePath, currentType, currentVesselType 
       : currentType
         ? `${base}?type=${currentType}`
         : base;
-
-  const hasActiveFilter = !!currentType || !!currentVesselType;
-
-  const typeLabel: Record<string, string> = { rent: "임대", sale: "판매" };
 
   return (
     <>
@@ -81,66 +76,10 @@ export default function VesselFilter({ basePath, currentType, currentVesselType 
           <div className="absolute right-0 top-0 bottom-1 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none" />
         </div>
 
-        {/* 모바일 활성 필터 태그 */}
-        {hasActiveFilter && (
-          <div className="flex flex-wrap gap-2 pt-1">
-            {currentType && (
-              <Link
-                href={currentVesselType ? `${base}?vessel_type=${currentVesselType}` : base}
-                className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200"
-              >
-                {typeLabel[currentType]}
-                <X className="w-3 h-3" />
-              </Link>
-            )}
-            {currentVesselType && (
-              <Link
-                href={currentType ? `${base}?type=${currentType}` : base}
-                className="inline-flex items-center gap-1 px-3 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200"
-              >
-                {currentVesselType}
-                <X className="w-3 h-3" />
-              </Link>
-            )}
-            <Link href={base} className="inline-flex items-center gap-1 px-3 py-1 text-gray-400 text-xs hover:text-gray-600 transition-colors">
-              전체 초기화
-            </Link>
-          </div>
-        )}
       </nav>
 
       {/* ── 데스크탑: 세로 사이드바 ── */}
       <nav aria-label="선박 필터" className="hidden lg:block space-y-8">
-        {/* 활성 필터 태그 */}
-        {hasActiveFilter && (
-          <div className="space-y-2">
-            <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider">적용된 필터</p>
-            <div className="flex flex-wrap gap-1.5">
-              {currentType && (
-                <Link
-                  href={currentVesselType ? `${base}?vessel_type=${currentVesselType}` : base}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200 hover:bg-blue-100 transition-colors"
-                >
-                  {typeLabel[currentType]}
-                  <X className="w-3 h-3" />
-                </Link>
-              )}
-              {currentVesselType && (
-                <Link
-                  href={currentType ? `${base}?type=${currentType}` : base}
-                  className="inline-flex items-center gap-1 px-2.5 py-1 bg-blue-50 text-blue-700 text-xs rounded-full border border-blue-200 hover:bg-blue-100 transition-colors"
-                >
-                  {currentVesselType}
-                  <X className="w-3 h-3" />
-                </Link>
-              )}
-            </div>
-            <Link href={base} className="block text-xs text-gray-400 hover:text-gray-600 transition-colors">
-              전체 초기화
-            </Link>
-          </div>
-        )}
-
         {/* 거래 유형 */}
         <div>
           <p className="text-xs font-semibold text-gray-400 uppercase tracking-wider mb-3">거래 유형</p>
