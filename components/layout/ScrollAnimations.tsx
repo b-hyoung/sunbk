@@ -19,24 +19,32 @@ export default function ScrollAnimations() {
       });
     }
 
-    // 스크롤 애니메이션 등록
-    const createAnim = (selector: string, from: gsap.TweenVars, to: gsap.TweenVars) => {
+    // 스크롤 애니메이션: 화면 밖 요소만 숨기고 애니메이션
+    const setupAnim = (selector: string, from: gsap.TweenVars, to: gsap.TweenVars, stagger = false) => {
       document.querySelectorAll(selector).forEach((el, i) => {
-        const delay = selector === "[data-stagger]" ? i * 0.08 : 0;
+        const rect = el.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight + 100;
+
+        if (isVisible) {
+          // 이미 화면에 보이는 요소 — 건드리지 않음 (기본 visible)
+          return;
+        }
+
+        // 화면 밖 요소만 숨기고 스크롤 시 등장
         gsap.set(el, from);
         ScrollTrigger.create({
           trigger: el,
-          start: "top 90%",
+          start: "top 95%",
           once: true,
-          onEnter: () => gsap.to(el, { ...to, delay }),
+          onEnter: () => gsap.to(el, { ...to, delay: stagger ? i * 0.03 : 0 }),
         });
       });
     };
 
-    createAnim("[data-fade-up]", { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out" });
-    createAnim("[data-fade-in]", { opacity: 0 }, { opacity: 1, duration: 0.6, ease: "power2.out" });
-    createAnim("[data-stagger]", { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.6, ease: "power3.out" });
-    createAnim("[data-scale-in]", { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.7, ease: "expo.out" });
+    setupAnim("[data-fade-up]", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
+    setupAnim("[data-fade-in]", { opacity: 0 }, { opacity: 1, duration: 0.3, ease: "power2.out" });
+    setupAnim("[data-stagger]", { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.3, ease: "power2.out" }, true);
+    setupAnim("[data-scale-in]", { opacity: 0, scale: 0.97 }, { opacity: 1, scale: 1, duration: 0.4, ease: "power2.out" });
 
     // 통계 숫자 카운트업
     document.querySelectorAll("[data-count]").forEach((el) => {
@@ -57,9 +65,6 @@ export default function ScrollAnimations() {
         },
       });
     });
-
-    // ScrollTrigger refresh — 레이아웃 변경 후 위치 재계산
-    ScrollTrigger.refresh();
 
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);

@@ -30,9 +30,6 @@ export default function Header({ basePath }: HeaderProps) {
     const header = headerRef.current;
     if (!header) return;
 
-    // 모든 ScrollTrigger 정리
-    ScrollTrigger.getAll().forEach((t) => t.kill());
-
     if (!isHome) {
       // 홈 아닌 페이지: 항상 흰색 배경
       gsap.set(header, {
