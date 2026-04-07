@@ -7,7 +7,8 @@
 import type { Vessel, Booking } from "./supabase";
 import { createClient } from "@supabase/supabase-js";
 
-const USE_LOCAL = process.env.DATA_SOURCE === "local";
+// edge runtime에서 환경변수 미설정 시 안전하게 로컬 fallback
+const USE_LOCAL = process.env.DATA_SOURCE === "local" || !process.env.NEXT_PUBLIC_SUPABASE_URL;
 
 // ── Supabase 클라이언트 (서버 전용, service role) ──────────────────────────
 function getSupabaseAdmin() {
