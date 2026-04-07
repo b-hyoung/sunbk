@@ -32,17 +32,28 @@ export default function VersionSwitcher() {
         <span className="text-gray-600">버전 선택</span>
         <div className="flex items-center gap-1">
           {versions.map((v) => (
-            <Link
-              key={v.key}
-              href={getSwitchedPath(v.href, v.key)}
-              className={`px-3 py-1 rounded-sm transition-colors ${
-                current === v.key
-                  ? "bg-white/10 text-white font-medium"
-                  : "hover:text-white hover:bg-white/5"
-              }`}
-            >
-              {v.label}
-            </Link>
+            <div key={v.key} className="flex items-center">
+              <Link
+                href={getSwitchedPath(v.href, v.key)}
+                className={`px-3 py-1 rounded-sm transition-colors ${
+                  current === v.key
+                    ? "bg-white/10 text-white font-medium"
+                    : "hover:text-white hover:bg-white/5"
+                }`}
+              >
+                {v.label}
+              </Link>
+              <Link
+                href={`${v.href}/admin`}
+                className={`px-1.5 py-1 rounded-sm text-[10px] transition-colors ${
+                  pathname === `${v.href}/admin`
+                    ? "bg-amber-500/20 text-amber-400 font-medium"
+                    : "text-gray-600 hover:text-amber-400 hover:bg-white/5"
+                }`}
+              >
+                admin
+              </Link>
+            </div>
           ))}
         </div>
       </div>
