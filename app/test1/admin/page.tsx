@@ -30,7 +30,7 @@ export default async function AdminPage() {
               <p className="text-gray-400 text-sm mt-0.5">수연선박 운영 현황</p>
             </div>
             <Link
-              href="/admin/vessels/new"
+              href="/test1/admin/vessels/new"
               className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors"
             >
               <Plus className="w-4 h-4" />
@@ -82,7 +82,7 @@ export default async function AdminPage() {
         <div data-fade-up className="border border-gray-100 rounded-2xl overflow-hidden">
           <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
             <h2 className="text-base font-semibold text-gray-900">최근 예약/문의</h2>
-            <Link href="/admin/bookings" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
+            <Link href="/test1/admin/bookings" className="text-sm text-blue-600 hover:text-blue-700 transition-colors">
               전체보기
             </Link>
           </div>
@@ -134,10 +134,10 @@ export default async function AdminPage() {
 
         {/* 빠른 메뉴 */}
         <div data-fade-in className="flex gap-3 flex-wrap">
-          <Link href="/admin/vessels" className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors font-medium">
+          <Link href="/test1/admin/vessels" className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors font-medium">
             선박 관리
           </Link>
-          <Link href="/admin/bookings" className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors font-medium">
+          <Link href="/test1/admin/bookings" className="px-4 py-2.5 border border-gray-200 rounded-lg text-sm text-gray-600 hover:bg-gray-50 transition-colors font-medium">
             예약 관리
           </Link>
         </div>

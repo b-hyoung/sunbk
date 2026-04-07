@@ -1,35 +1,7 @@
-import { createClient } from "@supabase/supabase-js";
+import { getAdminStats, getRecentBookings } from "@/lib/data";
 import Link from "next/link";
 import { Ship, Calendar, MessageCircle, Plus } from "lucide-react";
 import AdminCharts from "@/components/admin/AdminCharts";
-
-const supabaseAdmin = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL!,
-  process.env.SUPABASE_SERVICE_ROLE_KEY!
-);
-
-async function getStats() {
-  const [vessels, bookings, pendingBookings] = await Promise.all([
-    supabaseAdmin.from("vessels").select("id", { count: "exact" }).eq("status", "active"),
-    supabaseAdmin.from("bookings").select("id", { count: "exact" }),
-    supabaseAdmin.from("bookings").select("id", { count: "exact" }).eq("status", "pending"),
-  ]);
-
-  return {
-    vessels: vessels.count ?? 0,
-    bookings: bookings.count ?? 0,
-    pendingBookings: pendingBookings.count ?? 0,
-  };
-}
-
-async function getRecentBookings() {
-  const { data } = await supabaseAdmin
-    .from("bookings")
-    .select("*, vessels(title)")
-    .order("created_at", { ascending: false })
-    .limit(10);
-  return data ?? [];
-}
 
 const statusLabel: Record<string, string> = {
   pending: "대기",
@@ -46,7 +18,7 @@ const statusColor: Record<string, string> = {
 };
 
 export default async function AdminPage() {
-  const [stats, recentBookings] = await Promise.all([getStats(), getRecentBookings()]);
+  const [stats, recentBookings] = await Promise.all([getAdminStats(), getRecentBookings()]);
 
   return (
     <div className="bg-white min-h-screen">

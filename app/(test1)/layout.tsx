@@ -14,7 +14,8 @@ export default function Test1Layout({
       <Suspense>
         <Header />
       </Suspense>
-      <main className="flex-1 pt-16">{children}</main>
+      {/* 버전바(32px) + 헤더(80px) = 112px */}
+      <main className="flex-1 pt-28">{children}</main>
       <Footer />
     </>
   );

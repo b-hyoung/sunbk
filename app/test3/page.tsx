@@ -75,7 +75,7 @@ export default async function Test3HomePage() {
   const featuredVessels = await getFeaturedVessels();
 
   return (
-    <div className="bg-white -mt-16">
+    <div className="bg-white -mt-28">
       {/* ── 풀스크린 히어로 (중앙 정렬) ── */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <HeroVideo />

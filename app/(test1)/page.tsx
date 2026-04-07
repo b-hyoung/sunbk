@@ -22,7 +22,7 @@ export default async function HomePage() {
   const featuredVessels = await getFeaturedVessels();
 
   return (
-    <div className="bg-white -mt-16">
+    <div className="bg-white -mt-28">
       {/* ── 히어로 ── */}
       <section className="relative h-screen flex items-center overflow-hidden">
         <HeroVideo />
