@@ -1,6 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import Link from "next/link";
 import { Ship, Calendar, MessageCircle, Plus } from "lucide-react";
+import AdminCharts from "@/components/admin/AdminCharts";
 
 const supabaseAdmin = createClient(
   process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -101,6 +102,9 @@ export default async function AdminPage() {
             </div>
           </div>
         </div>
+
+        {/* 차트 */}
+        <AdminCharts />
 
         {/* 최근 예약 */}
         <div data-fade-up className="border border-gray-100 rounded-2xl overflow-hidden">

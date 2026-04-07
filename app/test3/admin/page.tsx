@@ -1,6 +1,7 @@
 import { getAdminStats, getRecentBookings } from "@/lib/data";
 import Link from "next/link";
 import { Ship, Calendar, MessageCircle } from "lucide-react";
+import AdminCharts from "@/components/admin/AdminCharts";
 
 const statusLabel: Record<string, string> = {
   pending: "대기",
@@ -66,6 +67,9 @@ export default async function Test3AdminPage() {
             </div>
           </div>
         </div>
+
+        {/* 차트 */}
+        <AdminCharts />
 
         {/* 최근 예약 */}
         <div>
