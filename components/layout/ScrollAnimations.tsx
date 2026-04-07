@@ -15,11 +15,14 @@ export default function ScrollAnimations() {
       return;
     }
 
-    // 초기 상태 설정
-    gsap.set("[data-fade-up]", { opacity: 0, y: 40 });
-    gsap.set("[data-fade-in]", { opacity: 0 });
-    gsap.set("[data-stagger]", { opacity: 0, y: 36 });
-    gsap.set("[data-scale-in]", { opacity: 0, scale: 0.95 });
+    // 초기 상태 설정 (요소 존재할 때만)
+    const setIfExists = (sel: string, props: gsap.TweenVars) => {
+      if (document.querySelector(sel)) gsap.set(sel, props);
+    };
+    setIfExists("[data-fade-up]", { opacity: 0, y: 40 });
+    setIfExists("[data-fade-in]", { opacity: 0 });
+    setIfExists("[data-stagger]", { opacity: 0, y: 36 });
+    setIfExists("[data-scale-in]", { opacity: 0, scale: 0.95 });
 
     // 히어로 텍스트 — 페이지 로드 시 순차 등장
     const heroItems = document.querySelectorAll("[data-hero]");
