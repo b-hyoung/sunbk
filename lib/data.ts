@@ -17,22 +17,23 @@ function getSupabaseAdmin() {
   );
 }
 
-// ── 로컬 JSON 로더 ────────────────────────────────────────────────────────
-async function localVessels(): Promise<Vessel[]> {
-  const data = await import("@/data/vessels.json");
-  return data.default as unknown as Vessel[];
+// ── 로컬 JSON 로더 (정적 import — edge runtime 호환) ──────────────────────
+import vesselsJson from "@/data/vessels.json";
+import bookingsJson from "@/data/bookings.json";
+
+function localVessels(): Vessel[] {
+  return vesselsJson as unknown as Vessel[];
 }
 
-async function localBookings() {
-  const data = await import("@/data/bookings.json");
-  return data.default;
+function localBookings() {
+  return bookingsJson;
 }
 
 // ── 퍼블릭 함수 ──────────────────────────────────────────────────────────
 
 export async function getFeaturedVessels(): Promise<Vessel[]> {
   if (USE_LOCAL) {
-    const vessels = await localVessels();
+    const vessels = localVessels();
     return vessels
       .filter((v) => v.is_featured && v.status === "active")
       .slice(0, 6);
@@ -56,7 +57,7 @@ export async function getVessels(searchParams: {
   vessel_type?: string;
 }): Promise<Vessel[]> {
   if (USE_LOCAL) {
-    const vessels = await localVessels();
+    const vessels = localVessels();
     let result = vessels.filter((v) => v.status === "active");
 
     if (searchParams.type === "rent") {
@@ -98,7 +99,7 @@ export async function getVessels(searchParams: {
 
 export async function getVesselBySlug(slug: string): Promise<Vessel | null> {
   if (USE_LOCAL) {
-    const vessels = await localVessels();
+    const vessels = localVessels();
     return vessels.find((v) => v.slug === slug && v.status === "active") ?? null;
   }
 
@@ -117,7 +118,7 @@ export async function getVesselBySlug(slug: string): Promise<Vessel | null> {
 
 export async function getVesselById(id: string): Promise<Vessel | null> {
   if (USE_LOCAL) {
-    const vessels = await localVessels();
+    const vessels = localVessels();
     return vessels.find((v) => v.id === id && v.status === "active") ?? null;
   }
 
@@ -161,7 +162,7 @@ export async function getAdminStats() {
 
 export async function getRecentBookings() {
   if (USE_LOCAL) {
-    const bookings = await localBookings();
+    const bookings = localBookings();
     return bookings
       .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
       .slice(0, 10);

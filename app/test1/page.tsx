@@ -132,32 +132,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="border-t border-gray-100 py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div data-scale-in className="bg-blue-600 rounded-2xl px-8 py-14 md:py-16 text-center">
-            <h2 className="text-white mb-3">원하시는 선박을 찾지 못하셨나요?</h2>
-            <p className="text-blue-100 text-base mb-8 max-w-md mx-auto">
-              전문 상담사가 조건에 맞는 최적의 선박을 찾아드립니다.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href="tel:010-0000-0000"
-                className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-blue-50 px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                010-0000-0000
-              </a>
-              <Link
-                href="/contact"
-                className="inline-flex items-center justify-center gap-2 border border-blue-400 hover:bg-blue-500 text-white px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
-              >
-                온라인 문의
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

@@ -143,33 +143,6 @@ export default async function Test2HomePage() {
         </div>
       </section>
 
-      {/* ── CTA ── */}
-      <section className="bg-white py-20">
-        <div className="max-w-7xl mx-auto px-6">
-          <div data-scale-in className="border border-[#E6E7E9] p-12 md:p-16 flex flex-col md:flex-row items-center justify-between gap-8">
-            <div>
-              <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-3">Contact</p>
-              <h2 className="text-[#001e42] text-2xl font-bold mb-2">원하는 선박이 없으신가요?</h2>
-              <p className="text-[#001e42]/50 text-sm">전문 상담사가 맞춤 선박을 찾아드립니다.</p>
-            </div>
-            <div className="flex flex-col sm:flex-row gap-3 shrink-0">
-              <a
-                href="tel:010-0000-0000"
-                className="inline-flex items-center justify-center gap-2 bg-[#09388a] hover:bg-[#072d6e] text-white px-8 py-3.5 text-sm font-semibold transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                010-0000-0000
-              </a>
-              <Link
-                href="/test2/contact"
-                className="inline-flex items-center justify-center gap-2 border border-[#E6E7E9] hover:border-[#09388a] hover:text-[#09388a] text-[#001e42]/70 px-8 py-3.5 text-sm font-semibold transition-colors"
-              >
-                오시는길
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

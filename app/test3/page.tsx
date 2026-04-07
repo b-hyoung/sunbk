@@ -215,23 +215,6 @@ export default async function Test3HomePage() {
         </div>
       </section>
 
-      {/* ── CTA 풀위드 ── */}
-      <section className="bg-[#036EB8]">
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 py-14 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div>
-            <h2 className="text-white text-xl font-bold mb-1">원하는 선박을 찾지 못하셨나요?</h2>
-            <p className="text-white/70 text-sm">전문 상담사가 조건에 맞는 최적의 선박을 찾아드립니다.</p>
-          </div>
-          <div className="flex gap-3 shrink-0">
-            <a href="tel:010-0000-0000" className="inline-flex items-center gap-2 bg-white text-[#036EB8] hover:bg-gray-100 px-6 py-3 text-sm font-bold transition-colors">
-              <Phone className="w-4 h-4" /> 전화 문의
-            </a>
-            <Link href="/test3/vessels" className="inline-flex items-center gap-2 border border-white/40 hover:bg-white/10 text-white px-6 py-3 text-sm font-bold transition-colors">
-              선박 목록
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }
