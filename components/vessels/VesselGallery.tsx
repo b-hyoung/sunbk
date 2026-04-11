@@ -200,12 +200,25 @@ export default function VesselGallery({
             className="relative w-full max-w-4xl mx-4 sm:mx-8 lg:mx-16 aspect-[16/9]"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* 이전 이미지 (페이드아웃) */}
+            {fading && (
+              <Image
+                src={images[prevIndex].url}
+                alt=""
+                fill
+                className="object-contain absolute inset-0"
+              />
+            )}
+            {/* 현재 이미지 (페이드인) */}
             <Image
-              key={`lightbox-${images[activeIndex].id}`}
               src={images[activeIndex].url}
               alt={`${vesselTitle} - ${getCategoryLabel(images[activeIndex].category ?? "")}`}
               fill
-              className="object-contain"
+              className="object-contain absolute inset-0"
+              style={{
+                opacity: fading ? 0 : 1,
+                transition: "opacity 400ms ease-in-out",
+              }}
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 px-5 py-3 text-center">
               <p id="gallery-lightbox-title" className="text-white font-semibold">
