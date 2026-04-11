@@ -3,10 +3,13 @@ import { VESSEL_OVERRIDES } from "@/constants/vessels-data";
 import { readFileSync, writeFileSync } from "fs";
 import path from "path";
 
-const JSON_PATH = path.join(process.cwd(), "data", "vessels.json");
+function getJsonPath(): string {
+  return path.resolve(process.cwd(), "data", "vessels.json");
+}
 
 function readVessels(): Vessel[] {
-  const raw = readFileSync(JSON_PATH, "utf-8");
+  const jsonPath = getJsonPath();
+  const raw = readFileSync(jsonPath, "utf-8");
   const vessels = JSON.parse(raw) as Vessel[];
   return vessels.map((v) => {
     const override = VESSEL_OVERRIDES[v.id];
@@ -16,11 +19,7 @@ function readVessels(): Vessel[] {
 }
 
 function writeVessels(vessels: Vessel[]): void {
-  const raw = vessels.map((v) => {
-    const { ...data } = v;
-    return data;
-  });
-  writeFileSync(JSON_PATH, JSON.stringify(raw, null, 2), "utf-8");
+  writeFileSync(getJsonPath(), JSON.stringify(vessels, null, 2), "utf-8");
 }
 
 export function getAllVesselsFromStore(): Vessel[] {
