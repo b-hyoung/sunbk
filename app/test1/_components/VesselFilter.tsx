@@ -11,7 +11,7 @@ interface VesselFilterProps {
 }
 
 export default function VesselFilter({ basePath, currentType, currentVesselType }: VesselFilterProps) {
-  const base = `/${basePath}/vessels`;
+  const base = basePath ? `/${basePath}/vessels` : `/vessels`;
   const activeClass = "bg-blue-600 text-white font-medium";
   const inactiveClass = "text-gray-500 hover:text-gray-900 hover:bg-gray-50";
   const typePillActive = "bg-blue-600 text-white font-medium";

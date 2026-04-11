@@ -17,7 +17,7 @@ export default function BookingButton({ vessel, basePath }: BookingButtonProps) 
     <div className="space-y-2">
       {canRent && (
         <Link
-          href={`/${basePath}/booking/${vessel.id}?type=rent`}
+          href={basePath ? `/${basePath}/booking/${vessel.id}?type=rent` : `/booking/${vessel.id}?type=rent`}
           className="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm font-semibold transition-colors"
         >
           <Calendar className="w-4 h-4" />
@@ -26,7 +26,7 @@ export default function BookingButton({ vessel, basePath }: BookingButtonProps) 
       )}
       {canBuy && (
         <Link
-          href={`/${basePath}/booking/${vessel.id}?type=inquiry`}
+          href={basePath ? `/${basePath}/booking/${vessel.id}?type=inquiry` : `/booking/${vessel.id}?type=inquiry`}
           className="flex items-center justify-center gap-2 w-full bg-gray-800 hover:bg-gray-900 text-white py-3 rounded-lg text-sm font-semibold transition-colors"
         >
           <MessageCircle className="w-4 h-4" />

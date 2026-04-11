@@ -20,7 +20,7 @@ export default function VesselCard({ vessel, basePath }: VesselCardProps) {
 
   return (
     <Link
-      href={`/${basePath}/vessels/${vessel.slug}`}
+      href={basePath ? `/${basePath}/vessels/${vessel.slug}` : `/vessels/${vessel.slug}`}
       className="group flex flex-col bg-white border border-gray-200 overflow-hidden hover:border-[#036EB8] hover:shadow-lg hover:shadow-[#036EB8]/10 transition-[border-color,box-shadow] duration-200"
     >
       {/* 이미지 */}

@@ -13,7 +13,7 @@ const VESSEL_TYPES = ["레저선", "어선", "화물선", "여객선"];
 
 export default function VesselFilter({ basePath, currentType, currentVesselType }: VesselFilterProps) {
   const pathname = usePathname();
-  const base = `/${basePath}/vessels`;
+  const base = basePath ? `/${basePath}/vessels` : `/vessels`;
 
   const typeHref = (type?: string) => {
     const params = new URLSearchParams();
