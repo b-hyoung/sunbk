@@ -89,16 +89,18 @@ export default function VesselGallery({
         {images.length > 1 && (
           <>
             <button
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={(e) => { e.stopPropagation(); prev(); }}
+              aria-label="이전 사진"
             >
-              <ChevronLeft className="w-5 h-5" />
+              <ChevronLeft className="w-6 h-6" />
             </button>
             <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity"
               onClick={(e) => { e.stopPropagation(); next(); }}
+              aria-label="다음 사진"
             >
-              <ChevronRight className="w-5 h-5" />
+              <ChevronRight className="w-6 h-6" />
             </button>
           </>
         )}
@@ -107,10 +109,12 @@ export default function VesselGallery({
         {images.length > 1 && (
           <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
             {images.map((_, i) => (
-              <span
+              <button
                 key={i}
-                className={`w-2 h-2 rounded-full transition-colors ${
-                  i === activeIndex ? "bg-white" : "bg-white/40"
+                onClick={(e) => { e.stopPropagation(); setActiveIndex(i); }}
+                aria-label={`사진 ${i + 1}`}
+                className={`w-2.5 h-2.5 rounded-full transition-colors ${
+                  i === activeIndex ? "bg-white" : "bg-white/40 hover:bg-white/60"
                 }`}
               />
             ))}
@@ -125,11 +129,12 @@ export default function VesselGallery({
             <button
               key={img.id}
               onClick={() => setActiveIndex(i)}
+              aria-label={getCategoryLabel(img.category ?? "") + " 보기"}
               className={`relative w-20 h-14 shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
                 i === activeIndex ? "border-blue-500" : "border-gray-100 hover:border-blue-300"
               }`}
             >
-              <Image src={img.url} alt="" fill className="object-cover" sizes="80px" />
+              <Image src={img.url} alt={getCategoryLabel(img.category ?? "")} fill className="object-cover" sizes="80px" />
               {img.category && (
                 <span className="absolute bottom-0 left-0 right-0 bg-black/60 text-white text-[9px] text-center py-0.5 leading-tight">
                   {getCategoryLabel(img.category)}
@@ -147,10 +152,12 @@ export default function VesselGallery({
           onClick={() => setLightboxOpen(false)}
           role="dialog"
           aria-modal="true"
+          aria-labelledby="gallery-lightbox-title"
         >
           <button
             className="absolute top-5 right-5 text-white/70 hover:text-white transition-colors"
             onClick={() => setLightboxOpen(false)}
+            aria-label="닫기"
           >
             <X className="w-7 h-7" />
           </button>
@@ -158,12 +165,13 @@ export default function VesselGallery({
           <button
             className="absolute left-4 text-white/70 hover:text-white transition-colors p-2"
             onClick={(e) => { e.stopPropagation(); prev(); }}
+            aria-label="이전 사진"
           >
             <ChevronLeft className="w-8 h-8" />
           </button>
 
           <div
-            className="relative w-full max-w-4xl mx-16 aspect-[16/9]"
+            className="relative w-full max-w-4xl mx-4 sm:mx-8 lg:mx-16 aspect-[16/9]"
             onClick={(e) => e.stopPropagation()}
           >
             <Image
@@ -174,7 +182,7 @@ export default function VesselGallery({
               className="object-contain"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 px-5 py-3 text-center">
-              <p className="text-white font-semibold">
+              <p id="gallery-lightbox-title" className="text-white font-semibold">
                 {vesselTitle} — {getCategoryLabel(images[activeIndex].category ?? "")}
               </p>
             </div>
@@ -183,6 +191,7 @@ export default function VesselGallery({
           <button
             className="absolute right-4 text-white/70 hover:text-white transition-colors p-2"
             onClick={(e) => { e.stopPropagation(); next(); }}
+            aria-label="다음 사진"
           >
             <ChevronRight className="w-8 h-8" />
           </button>

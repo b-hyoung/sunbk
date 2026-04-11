@@ -50,6 +50,7 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
           <button
             key={cat.key}
             onClick={() => setCategoryFilter(cat.key)}
+            aria-pressed={categoryFilter === cat.key}
             className={`px-3.5 py-1.5 rounded-full text-sm transition-colors ${
               categoryFilter === cat.key
                 ? "bg-blue-600 text-white"
@@ -67,6 +68,7 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
           <button
             key={s.id}
             onClick={() => setShipFilter(s.id)}
+            aria-pressed={shipFilter === s.id}
             className={`px-3.5 py-1.5 rounded-full text-sm border transition-colors ${
               shipFilter === s.id
                 ? "border-blue-600 text-blue-600 bg-blue-50"
@@ -81,12 +83,17 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
       {/* 사진 그리드 */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {filtered.map((photo, i) => (
-          <div key={photo.id} className="group cursor-pointer" onClick={() => openLightbox(i)}>
+          <button
+            key={photo.id}
+            className="group cursor-pointer text-left"
+            onClick={() => openLightbox(i)}
+          >
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100">
               <Image
                 src={photo.src}
                 alt={`${photo.ship} ${photo.title}`}
                 fill
+                loading={i < 8 ? "eager" : "lazy"}
                 className="object-cover group-hover:scale-105 transition-transform duration-300"
                 sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
               />
@@ -100,7 +107,7 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
                 <p className="text-xs text-gray-400">{photo.taken_date}</p>
               )}
             </div>
-          </div>
+          </button>
         ))}
       </div>
 
@@ -112,14 +119,31 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
 
       {/* 라이트박스 */}
       {lightboxIndex !== null && (
-        <div className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center" onClick={closeLightbox}>
-          <button className="absolute top-5 right-5 text-white/70 hover:text-white" onClick={closeLightbox}>
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+          onClick={closeLightbox}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="work-lightbox-title"
+        >
+          <button
+            className="absolute top-5 right-5 text-white/70 hover:text-white"
+            onClick={closeLightbox}
+            aria-label="닫기"
+          >
             <X className="w-7 h-7" />
           </button>
-          <button className="absolute left-4 text-white/70 hover:text-white p-2" onClick={(e) => { e.stopPropagation(); prev(); }}>
+          <button
+            className="absolute left-4 text-white/70 hover:text-white p-2"
+            onClick={(e) => { e.stopPropagation(); prev(); }}
+            aria-label="이전 사진"
+          >
             <ChevronLeft className="w-8 h-8" />
           </button>
-          <div className="relative w-full max-w-4xl mx-16 aspect-[4/3]" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="relative w-full max-w-4xl mx-4 sm:mx-8 lg:mx-16 aspect-[4/3]"
+            onClick={(e) => e.stopPropagation()}
+          >
             <Image
               src={filtered[lightboxIndex].src}
               alt={`${filtered[lightboxIndex].ship} ${filtered[lightboxIndex].title}`}
@@ -127,13 +151,19 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
               className="object-contain"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 px-5 py-3 text-center">
-              <p className="text-white font-semibold">{filtered[lightboxIndex].ship} — {filtered[lightboxIndex].title}</p>
+              <p id="work-lightbox-title" className="text-white font-semibold">
+                {filtered[lightboxIndex].ship} — {filtered[lightboxIndex].title}
+              </p>
               {filtered[lightboxIndex].taken_date && (
                 <p className="text-white/50 text-sm">{filtered[lightboxIndex].taken_date}</p>
               )}
             </div>
           </div>
-          <button className="absolute right-4 text-white/70 hover:text-white p-2" onClick={(e) => { e.stopPropagation(); next(); }}>
+          <button
+            className="absolute right-4 text-white/70 hover:text-white p-2"
+            onClick={(e) => { e.stopPropagation(); next(); }}
+            aria-label="다음 사진"
+          >
             <ChevronRight className="w-8 h-8" />
           </button>
           <div className="absolute bottom-5 text-white/50 text-sm">
