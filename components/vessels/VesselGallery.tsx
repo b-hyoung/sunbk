@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { getCategoryLabel } from "@/constants/photo-config";
@@ -9,11 +9,46 @@ import type { VesselImage } from "@/lib/supabase";
 interface VesselGalleryProps {
   images: VesselImage[];
   vesselTitle: string;
+  /** 자동 슬라이드 간격 (ms). 0이면 비활성. 기본 5000ms */
+  autoplayInterval?: number;
 }
 
-export default function VesselGallery({ images, vesselTitle }: VesselGalleryProps) {
+export default function VesselGallery({
+  images,
+  vesselTitle,
+  autoplayInterval = 5000,
+}: VesselGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [paused, setPaused] = useState(false);
+
+  const prev = useCallback(
+    () => setActiveIndex((i) => (i - 1 + images.length) % images.length),
+    [images.length],
+  );
+  const next = useCallback(
+    () => setActiveIndex((i) => (i + 1) % images.length),
+    [images.length],
+  );
+
+  // 자동 슬라이드
+  useEffect(() => {
+    if (autoplayInterval <= 0 || paused || lightboxOpen || images.length <= 1) return;
+    const timer = setInterval(next, autoplayInterval);
+    return () => clearInterval(timer);
+  }, [autoplayInterval, paused, lightboxOpen, images.length, next]);
+
+  // 키보드 네비게이션 (라이트박스)
+  useEffect(() => {
+    if (!lightboxOpen) return;
+    const handler = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setLightboxOpen(false);
+      if (e.key === "ArrowLeft") prev();
+      if (e.key === "ArrowRight") next();
+    };
+    window.addEventListener("keydown", handler);
+    return () => window.removeEventListener("keydown", handler);
+  }, [lightboxOpen, prev, next]);
 
   if (images.length === 0) {
     return (
@@ -25,22 +60,22 @@ export default function VesselGallery({ images, vesselTitle }: VesselGalleryProp
 
   const activeImage = images[activeIndex];
 
-  const prev = () => setActiveIndex((i) => (i - 1 + images.length) % images.length);
-  const next = () => setActiveIndex((i) => (i + 1) % images.length);
-
   return (
     <>
       {/* 메인 이미지 */}
       <div
         className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-50 cursor-pointer group"
         onClick={() => setLightboxOpen(true)}
+        onMouseEnter={() => setPaused(true)}
+        onMouseLeave={() => setPaused(false)}
       >
         <Image
+          key={activeImage.id}
           src={activeImage.url}
           alt={`${vesselTitle} - ${getCategoryLabel(activeImage.category ?? "")}`}
           fill
-          className="object-cover"
-          priority
+          className="object-cover transition-opacity duration-500"
+          priority={activeIndex === 0}
           sizes="(max-width: 1024px) 100vw, 66vw"
         />
         {activeImage.category && (
@@ -49,6 +84,38 @@ export default function VesselGallery({ images, vesselTitle }: VesselGalleryProp
           </span>
         )}
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+
+        {/* 좌우 화살표 (이미지 2장 이상일 때) */}
+        {images.length > 1 && (
+          <>
+            <button
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={(e) => { e.stopPropagation(); prev(); }}
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </button>
+            <button
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-1.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              onClick={(e) => { e.stopPropagation(); next(); }}
+            >
+              <ChevronRight className="w-5 h-5" />
+            </button>
+          </>
+        )}
+
+        {/* 인디케이터 닷 */}
+        {images.length > 1 && (
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+            {images.map((_, i) => (
+              <span
+                key={i}
+                className={`w-2 h-2 rounded-full transition-colors ${
+                  i === activeIndex ? "bg-white" : "bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
+        )}
       </div>
 
       {/* 썸네일 스트립 */}
@@ -78,6 +145,8 @@ export default function VesselGallery({ images, vesselTitle }: VesselGalleryProp
         <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
           onClick={() => setLightboxOpen(false)}
+          role="dialog"
+          aria-modal="true"
         >
           <button
             className="absolute top-5 right-5 text-white/70 hover:text-white transition-colors"
@@ -98,6 +167,7 @@ export default function VesselGallery({ images, vesselTitle }: VesselGalleryProp
             onClick={(e) => e.stopPropagation()}
           >
             <Image
+              key={`lightbox-${images[activeIndex].id}`}
               src={images[activeIndex].url}
               alt={`${vesselTitle} - ${getCategoryLabel(images[activeIndex].category ?? "")}`}
               fill
