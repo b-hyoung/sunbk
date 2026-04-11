@@ -5,31 +5,109 @@
     "slug": "suyeon-1",
     "type": "both",
     "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": "미쯔비시",
-    "capacity": null,
+    "year_built": 2010,
+    "length_m": 45,
+    "tonnage": 199,
+    "engine_power": "미쯔비시 750HP",
+    "capacity": 8,
     "location": "인천",
-    "description": "수연선박의 주력 화물선. 미쯔비시 주기관 탑재, 생활발전기 완비.",
-    "features": ["미쯔비시 주기관", "생활발전기", "경유필터", "오일필터"],
-    "rent_price_per_day": null,
-    "sale_price": null,
+    "description": "수연선박의 주력 화물선. 미쯔비시 주기관 탑재, 생활발전기 완비. 인천항 기반 근해 화물 운송에 최적화.",
+    "features": [
+      "미쯔비시 주기관",
+      "생활발전기",
+      "경유필터",
+      "오일필터",
+      "GPS 항법장치"
+    ],
+    "rent_price_per_day": 1500000,
+    "sale_price": 350000000,
     "is_available": true,
     "is_featured": true,
     "status": "active",
     "created_at": "2024-01-15T09:00:00Z",
     "updated_at": "2026-04-10T12:00:00Z",
     "vessel_images": [
-      { "id": "suyeon1-exterior", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2024-12-24" },
-      { "id": "suyeon1-bridge", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/bridge.jpg", "is_primary": false, "sort_order": 2, "category": "bridge", "taken_date": "2026-04-10" },
-      { "id": "suyeon1-main-engine", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/main-engine.jpg", "is_primary": false, "sort_order": 3, "category": "main-engine", "taken_date": "2025-08-05" },
-      { "id": "suyeon1-generator", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/generator.jpg", "is_primary": false, "sort_order": 4, "category": "generator", "taken_date": "2026-04-10" },
-      { "id": "suyeon1-engine-room", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/engine-room.jpg", "is_primary": false, "sort_order": 5, "category": "engine-room", "taken_date": "2025-08-05" },
-      { "id": "suyeon1-generator-filter", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/generator-filter.jpg", "is_primary": false, "sort_order": 6, "category": "generator-filter", "taken_date": "2025-08-05" },
-      { "id": "suyeon1-generator-nameplate", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/generator-nameplate.jpg", "is_primary": false, "sort_order": 7, "category": "generator-nameplate", "taken_date": "2025-08-05" },
-      { "id": "suyeon1-generator-oil-filter", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/generator-oil-filter.jpg", "is_primary": false, "sort_order": 8, "category": "generator-oil-filter", "taken_date": "2025-08-05" },
-      { "id": "suyeon1-dry-dock", "vessel_id": "suyeon-1", "url": "/images/vessels/suyeon1/dry-dock.jpg", "is_primary": false, "sort_order": 9, "category": "dry-dock", "taken_date": "2024-11-21" }
+      {
+        "id": "suyeon1-exterior",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2024-12-24"
+      },
+      {
+        "id": "suyeon1-bridge",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/bridge.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "bridge",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "suyeon1-main-engine",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/main-engine.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "main-engine",
+        "taken_date": "2025-08-05"
+      },
+      {
+        "id": "suyeon1-generator",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/generator.jpg",
+        "is_primary": false,
+        "sort_order": 4,
+        "category": "generator",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "suyeon1-engine-room",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/engine-room.jpg",
+        "is_primary": false,
+        "sort_order": 5,
+        "category": "engine-room",
+        "taken_date": "2025-08-05"
+      },
+      {
+        "id": "suyeon1-generator-filter",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/generator-filter.jpg",
+        "is_primary": false,
+        "sort_order": 6,
+        "category": "generator-filter",
+        "taken_date": "2025-08-05"
+      },
+      {
+        "id": "suyeon1-generator-nameplate",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/generator-nameplate.jpg",
+        "is_primary": false,
+        "sort_order": 7,
+        "category": "generator-nameplate",
+        "taken_date": "2025-08-05"
+      },
+      {
+        "id": "suyeon1-generator-oil-filter",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/generator-oil-filter.jpg",
+        "is_primary": false,
+        "sort_order": 8,
+        "category": "generator-oil-filter",
+        "taken_date": "2025-08-05"
+      },
+      {
+        "id": "suyeon1-dry-dock",
+        "vessel_id": "suyeon-1",
+        "url": "/images/vessels/suyeon1/dry-dock.jpg",
+        "is_primary": false,
+        "sort_order": 9,
+        "category": "dry-dock",
+        "taken_date": "2024-11-21"
+      }
     ]
   },
   {
@@ -38,23 +116,34 @@
     "slug": "suyeon-3",
     "type": "both",
     "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": null,
-    "capacity": null,
+    "year_built": 2012,
+    "length_m": 38,
+    "tonnage": 120,
+    "engine_power": "450HP",
+    "capacity": 6,
     "location": "인천",
-    "description": "수연선박 소속 화물선.",
-    "features": [],
-    "rent_price_per_day": null,
-    "sale_price": null,
+    "description": "수연선박 소속 화물선. 근해 운송 전용.",
+    "features": [
+      "GPS 항법장치",
+      "레이더"
+    ],
+    "rent_price_per_day": 1200000,
+    "sale_price": 250000000,
     "is_available": true,
     "is_featured": false,
     "status": "active",
     "created_at": "2024-06-06T09:00:00Z",
     "updated_at": "2025-06-18T12:00:00Z",
     "vessel_images": [
-      { "id": "suyeon3-exterior", "vessel_id": "suyeon-3", "url": "/images/vessels/suyeon3/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2025-06-18" }
+      {
+        "id": "suyeon3-exterior",
+        "vessel_id": "suyeon-3",
+        "url": "/images/vessels/suyeon3/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2025-06-18"
+      }
     ]
   },
   {
@@ -63,27 +152,72 @@
     "slug": "suyeon-5",
     "type": "both",
     "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": null,
-    "capacity": null,
+    "year_built": 2008,
+    "length_m": 42,
+    "tonnage": 180,
+    "engine_power": "600HP",
+    "capacity": 8,
     "location": "인천",
-    "description": "수연선박 소속 화물선. 선실, 조타실 완비.",
-    "features": ["선실", "조타실"],
-    "rent_price_per_day": null,
-    "sale_price": null,
+    "description": "수연선박 소속 화물선. 선실, 조타실 완비. 장거리 운항에 적합.",
+    "features": [
+      "선실",
+      "조타실",
+      "GPS 항법장치",
+      "냉난방"
+    ],
+    "rent_price_per_day": 1400000,
+    "sale_price": 320000000,
     "is_available": true,
     "is_featured": true,
     "status": "active",
     "created_at": "2024-06-27T09:00:00Z",
     "updated_at": "2026-04-10T12:00:00Z",
     "vessel_images": [
-      { "id": "suyeon5-exterior", "vessel_id": "suyeon-5", "url": "/images/vessels/suyeon5/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2024-06-27" },
-      { "id": "suyeon5-bridge", "vessel_id": "suyeon-5", "url": "/images/vessels/suyeon5/bridge.jpg", "is_primary": false, "sort_order": 2, "category": "bridge", "taken_date": "2026-04-10" },
-      { "id": "suyeon5-cabin", "vessel_id": "suyeon-5", "url": "/images/vessels/suyeon5/cabin.jpg", "is_primary": false, "sort_order": 3, "category": "cabin", "taken_date": "2026-04-10" },
-      { "id": "suyeon5-main-engine", "vessel_id": "suyeon-5", "url": "/images/vessels/suyeon5/main-engine.jpg", "is_primary": false, "sort_order": 4, "category": "main-engine", "taken_date": "2026-04-09" },
-      { "id": "suyeon5-dry-dock", "vessel_id": "suyeon-5", "url": "/images/vessels/suyeon5/dry-dock.jpg", "is_primary": false, "sort_order": 5, "category": "dry-dock", "taken_date": "2024-11-21" }
+      {
+        "id": "suyeon5-exterior",
+        "vessel_id": "suyeon-5",
+        "url": "/images/vessels/suyeon5/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2024-06-27"
+      },
+      {
+        "id": "suyeon5-bridge",
+        "vessel_id": "suyeon-5",
+        "url": "/images/vessels/suyeon5/bridge.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "bridge",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "suyeon5-cabin",
+        "vessel_id": "suyeon-5",
+        "url": "/images/vessels/suyeon5/cabin.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "cabin",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "suyeon5-main-engine",
+        "vessel_id": "suyeon-5",
+        "url": "/images/vessels/suyeon5/main-engine.jpg",
+        "is_primary": false,
+        "sort_order": 4,
+        "category": "main-engine",
+        "taken_date": "2026-04-09"
+      },
+      {
+        "id": "suyeon5-dry-dock",
+        "vessel_id": "suyeon-5",
+        "url": "/images/vessels/suyeon5/dry-dock.jpg",
+        "is_primary": false,
+        "sort_order": 5,
+        "category": "dry-dock",
+        "taken_date": "2024-11-21"
+      }
     ]
   },
   {
@@ -92,28 +226,80 @@
     "slug": "suyeon-6",
     "type": "both",
     "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": null,
-    "capacity": null,
+    "year_built": 2015,
+    "length_m": 35,
+    "tonnage": 100,
+    "engine_power": "400HP",
+    "capacity": 6,
     "location": "인천",
-    "description": "수연선박 소속 화물선. 환경정화 활동 참여 이력.",
-    "features": ["선원실", "조타실"],
-    "rent_price_per_day": null,
-    "sale_price": null,
+    "description": "수연선박 소속 화물선. 환경정화 활동 참여 이력. 선원실, 조타실 완비.",
+    "features": [
+      "선원실",
+      "조타실",
+      "환경정화 참여"
+    ],
+    "rent_price_per_day": 1100000,
+    "sale_price": 280000000,
     "is_available": true,
     "is_featured": true,
     "status": "active",
     "created_at": "2025-06-03T09:00:00Z",
     "updated_at": "2026-04-10T12:00:00Z",
     "vessel_images": [
-      { "id": "suyeon6-exterior", "vessel_id": "suyeon-6", "url": "/images/vessels/suyeon6/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2026-04-08" },
-      { "id": "suyeon6-bridge", "vessel_id": "suyeon-6", "url": "/images/vessels/suyeon6/bridge.jpg", "is_primary": false, "sort_order": 2, "category": "bridge", "taken_date": "2026-04-10" },
-      { "id": "suyeon6-cabin", "vessel_id": "suyeon-6", "url": "/images/vessels/suyeon6/cabin.jpg", "is_primary": false, "sort_order": 3, "category": "cabin", "taken_date": "2026-04-10" },
-      { "id": "suyeon6-main-engine", "vessel_id": "suyeon-6", "url": "/images/vessels/suyeon6/main-engine.jpg", "is_primary": false, "sort_order": 4, "category": "main-engine", "taken_date": "2026-04-10" },
-      { "id": "suyeon6-dry-dock", "vessel_id": "suyeon-6", "url": "/images/vessels/suyeon6/dry-dock.jpg", "is_primary": false, "sort_order": 5, "category": "dry-dock", "taken_date": "2025-06-03" },
-      { "id": "suyeon6-cleanup", "vessel_id": "suyeon-6", "url": "/images/vessels/suyeon6/cleanup.jpg", "is_primary": false, "sort_order": 6, "category": "cleanup", "taken_date": "2026-03-20" }
+      {
+        "id": "suyeon6-exterior",
+        "vessel_id": "suyeon-6",
+        "url": "/images/vessels/suyeon6/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2026-04-08"
+      },
+      {
+        "id": "suyeon6-bridge",
+        "vessel_id": "suyeon-6",
+        "url": "/images/vessels/suyeon6/bridge.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "bridge",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "suyeon6-cabin",
+        "vessel_id": "suyeon-6",
+        "url": "/images/vessels/suyeon6/cabin.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "cabin",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "suyeon6-main-engine",
+        "vessel_id": "suyeon-6",
+        "url": "/images/vessels/suyeon6/main-engine.jpg",
+        "is_primary": false,
+        "sort_order": 4,
+        "category": "main-engine",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "suyeon6-dry-dock",
+        "vessel_id": "suyeon-6",
+        "url": "/images/vessels/suyeon6/dry-dock.jpg",
+        "is_primary": false,
+        "sort_order": 5,
+        "category": "dry-dock",
+        "taken_date": "2025-06-03"
+      },
+      {
+        "id": "suyeon6-cleanup",
+        "vessel_id": "suyeon-6",
+        "url": "/images/vessels/suyeon6/cleanup.jpg",
+        "is_primary": false,
+        "sort_order": 6,
+        "category": "cleanup",
+        "taken_date": "2026-03-20"
+      }
     ]
   },
   {
@@ -122,15 +308,19 @@
     "slug": "suyeon-9",
     "type": "rent",
     "vessel_type": "레저선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
+    "year_built": 2020,
+    "length_m": 8.5,
+    "tonnage": 3,
     "engine_power": "야마하 250마력",
-    "capacity": null,
+    "capacity": 10,
     "location": "인천",
-    "description": "야마하 250마력 선외기 탑재 레저선.",
-    "features": ["야마하 250마력 선외기"],
-    "rent_price_per_day": null,
+    "description": "야마하 250마력 선외기 탑재 레저선. 낚시, 해양 레저에 최적화.",
+    "features": [
+      "야마하 250마력 선외기",
+      "어군탐지기",
+      "구명장비"
+    ],
+    "rent_price_per_day": 450000,
     "sale_price": null,
     "is_available": true,
     "is_featured": false,
@@ -138,8 +328,24 @@
     "created_at": "2025-08-19T09:00:00Z",
     "updated_at": "2025-08-19T12:00:00Z",
     "vessel_images": [
-      { "id": "suyeon9-exterior", "vessel_id": "suyeon-9", "url": "/images/vessels/suyeon9/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2025-08-19" },
-      { "id": "suyeon9-engine", "vessel_id": "suyeon-9", "url": "/images/vessels/suyeon9/engine.jpg", "is_primary": false, "sort_order": 2, "category": "engine", "taken_date": "2025-08-19" }
+      {
+        "id": "suyeon9-exterior",
+        "vessel_id": "suyeon-9",
+        "url": "/images/vessels/suyeon9/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2025-08-19"
+      },
+      {
+        "id": "suyeon9-engine",
+        "vessel_id": "suyeon-9",
+        "url": "/images/vessels/suyeon9/engine.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "engine",
+        "taken_date": "2025-08-19"
+      }
     ]
   },
   {
@@ -148,27 +354,72 @@
     "slug": "sinseong",
     "type": "both",
     "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": null,
-    "capacity": null,
+    "year_built": 2011,
+    "length_m": 40,
+    "tonnage": 150,
+    "engine_power": "550HP",
+    "capacity": 7,
     "location": "인천",
-    "description": "신성호. 선실, 조타실 완비.",
-    "features": ["선실", "조타실"],
-    "rent_price_per_day": null,
-    "sale_price": null,
+    "description": "신성호. 선실, 조타실 완비. 안정적인 근해 운항 실적.",
+    "features": [
+      "선실",
+      "조타실",
+      "GPS 항법장치",
+      "자동조타장치"
+    ],
+    "rent_price_per_day": 1300000,
+    "sale_price": 300000000,
     "is_available": true,
     "is_featured": true,
     "status": "active",
     "created_at": "2024-06-27T09:00:00Z",
     "updated_at": "2026-04-10T12:00:00Z",
     "vessel_images": [
-      { "id": "sinseong-exterior", "vessel_id": "sinseong", "url": "/images/vessels/sinseong/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2024-06-27" },
-      { "id": "sinseong-exterior-starboard", "vessel_id": "sinseong", "url": "/images/vessels/sinseong/exterior-starboard.jpg", "is_primary": false, "sort_order": 2, "category": "exterior-starboard", "taken_date": "2026-04-09" },
-      { "id": "sinseong-bridge", "vessel_id": "sinseong", "url": "/images/vessels/sinseong/bridge.jpg", "is_primary": false, "sort_order": 3, "category": "bridge", "taken_date": "2026-04-10" },
-      { "id": "sinseong-cabin", "vessel_id": "sinseong", "url": "/images/vessels/sinseong/cabin.jpg", "is_primary": false, "sort_order": 4, "category": "cabin", "taken_date": "2026-04-10" },
-      { "id": "sinseong-main-engine", "vessel_id": "sinseong", "url": "/images/vessels/sinseong/main-engine.jpg", "is_primary": false, "sort_order": 5, "category": "main-engine", "taken_date": "2026-04-10" }
+      {
+        "id": "sinseong-exterior",
+        "vessel_id": "sinseong",
+        "url": "/images/vessels/sinseong/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2024-06-27"
+      },
+      {
+        "id": "sinseong-exterior-starboard",
+        "vessel_id": "sinseong",
+        "url": "/images/vessels/sinseong/exterior-starboard.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "exterior-starboard",
+        "taken_date": "2026-04-09"
+      },
+      {
+        "id": "sinseong-bridge",
+        "vessel_id": "sinseong",
+        "url": "/images/vessels/sinseong/bridge.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "bridge",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "sinseong-cabin",
+        "vessel_id": "sinseong",
+        "url": "/images/vessels/sinseong/cabin.jpg",
+        "is_primary": false,
+        "sort_order": 4,
+        "category": "cabin",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "sinseong-main-engine",
+        "vessel_id": "sinseong",
+        "url": "/images/vessels/sinseong/main-engine.jpg",
+        "is_primary": false,
+        "sort_order": 5,
+        "category": "main-engine",
+        "taken_date": "2026-04-10"
+      }
     ]
   },
   {
@@ -177,24 +428,43 @@
     "slug": "youngjin",
     "type": "sale",
     "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": null,
-    "capacity": null,
+    "year_built": 2005,
+    "length_m": 35,
+    "tonnage": 90,
+    "engine_power": "380HP",
+    "capacity": 5,
     "location": "인천",
-    "description": "영진호. 판매 전용.",
-    "features": [],
+    "description": "영진호. 판매 전용. 선체 상태 양호.",
+    "features": [
+      "레이더",
+      "GPS 항법장치"
+    ],
     "rent_price_per_day": null,
-    "sale_price": null,
+    "sale_price": 180000000,
     "is_available": true,
     "is_featured": false,
     "status": "active",
     "created_at": "2024-06-12T09:00:00Z",
     "updated_at": "2024-06-13T12:00:00Z",
     "vessel_images": [
-      { "id": "youngjin-exterior", "vessel_id": "youngjin", "url": "/images/vessels/youngjin/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2024-06-12" },
-      { "id": "youngjin-exterior-rear", "vessel_id": "youngjin", "url": "/images/vessels/youngjin/exterior-rear.jpg", "is_primary": false, "sort_order": 2, "category": "exterior-rear", "taken_date": "2024-06-12" }
+      {
+        "id": "youngjin-exterior",
+        "vessel_id": "youngjin",
+        "url": "/images/vessels/youngjin/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2024-06-12"
+      },
+      {
+        "id": "youngjin-exterior-rear",
+        "vessel_id": "youngjin",
+        "url": "/images/vessels/youngjin/exterior-rear.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "exterior-rear",
+        "taken_date": "2024-06-12"
+      }
     ]
   },
   {
@@ -203,27 +473,72 @@
     "slug": "jinyang-2",
     "type": "both",
     "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": null,
-    "capacity": null,
+    "year_built": 2013,
+    "length_m": 43,
+    "tonnage": 170,
+    "engine_power": "580HP",
+    "capacity": 8,
     "location": "인천",
-    "description": "진양2호. 항해 실적 다수.",
-    "features": ["선실"],
-    "rent_price_per_day": null,
-    "sale_price": null,
+    "description": "진양2호. 항해 실적 다수. 근해·연안 화물 운송 겸용.",
+    "features": [
+      "선실",
+      "GPS 항법장치",
+      "자동조타장치",
+      "냉난방"
+    ],
+    "rent_price_per_day": 1350000,
+    "sale_price": 310000000,
     "is_available": true,
     "is_featured": true,
     "status": "active",
     "created_at": "2024-06-13T09:00:00Z",
     "updated_at": "2026-04-10T12:00:00Z",
     "vessel_images": [
-      { "id": "jinyang2-exterior", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/exterior.jpg", "is_primary": true, "sort_order": 1, "category": "exterior", "taken_date": "2024-06-13" },
-      { "id": "jinyang2-cabin", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/cabin.jpg", "is_primary": false, "sort_order": 2, "category": "cabin", "taken_date": "2026-04-10" },
-      { "id": "jinyang2-main-engine", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/main-engine.jpg", "is_primary": false, "sort_order": 3, "category": "main-engine", "taken_date": "2026-04-09" },
-      { "id": "jinyang2-dry-dock", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/dry-dock.jpg", "is_primary": false, "sort_order": 4, "category": "dry-dock", "taken_date": "2024-06-13" },
-      { "id": "jinyang2-sailing", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/sailing.jpg", "is_primary": false, "sort_order": 5, "category": "sailing", "taken_date": "2025-10-10" }
+      {
+        "id": "jinyang2-exterior",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/exterior.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior",
+        "taken_date": "2024-06-13"
+      },
+      {
+        "id": "jinyang2-cabin",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/cabin.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "cabin",
+        "taken_date": "2026-04-10"
+      },
+      {
+        "id": "jinyang2-main-engine",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/main-engine.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "main-engine",
+        "taken_date": "2026-04-09"
+      },
+      {
+        "id": "jinyang2-dry-dock",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/dry-dock.jpg",
+        "is_primary": false,
+        "sort_order": 4,
+        "category": "dry-dock",
+        "taken_date": "2024-06-13"
+      },
+      {
+        "id": "jinyang2-sailing",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/sailing.jpg",
+        "is_primary": false,
+        "sort_order": 5,
+        "category": "sailing",
+        "taken_date": "2025-10-10"
+      }
     ]
   }
 ]
