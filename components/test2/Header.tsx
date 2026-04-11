@@ -29,9 +29,9 @@ export default function Test2Header() {
   const isActive = (href: string) => currentUrl === href || currentUrl.startsWith(href + "&");
 
   return (
-    <header className="fixed top-8 left-0 right-0 z-50 bg-white border-b border-[#E6E7E9]">
+    <header className="fixed top-8 left-0 right-0 z-50 bg-white border-b border-border-light">
       {/* 상단 파란 띠 */}
-      <div className="bg-[#09388a] hidden md:block">
+      <div className="bg-navy-light hidden md:block">
         <div className="max-w-7xl mx-auto px-6 flex justify-between items-center h-9">
           <span className="text-white/60 text-xs">수연선박 | 선박 임대·판매 전문기업</span>
           <div className="flex items-center gap-6">
@@ -48,12 +48,12 @@ export default function Test2Header() {
         <div className="flex items-center justify-between h-[68px]">
           {/* 로고 */}
           <Link href="/test2" className="flex items-center gap-3">
-            <div className="w-9 h-9 bg-[#09388a] flex items-center justify-center text-white font-bold text-sm">
+            <div className="w-9 h-9 bg-navy-light flex items-center justify-center text-white font-bold text-sm">
               수연
             </div>
             <div>
-              <div className="text-[#001e42] font-bold text-lg leading-none tracking-tight">수연선박</div>
-              <div className="text-[#09388a] text-[10px] tracking-widest uppercase leading-none mt-0.5">Ship Trading Co.</div>
+              <div className="text-navy font-bold text-lg leading-none tracking-tight">수연선박</div>
+              <div className="text-navy-light text-[10px] tracking-widest uppercase leading-none mt-0.5">Ship Trading Co.</div>
             </div>
           </Link>
 
@@ -72,8 +72,8 @@ export default function Test2Header() {
                     href={link.href}
                     className={`flex items-center gap-1 px-5 h-full text-sm font-medium transition-colors border-b-2 ${
                       active
-                        ? "text-[#09388a] border-[#09388a]"
-                        : "text-[#001e42] hover:text-[#09388a] border-transparent hover:border-[#09388a]"
+                        ? "text-navy-light border-navy-light"
+                        : "text-navy hover:text-navy-light border-transparent hover:border-navy-light"
                     }`}
                   >
                     {link.label}
@@ -81,15 +81,15 @@ export default function Test2Header() {
                   </Link>
 
                   {link.children && openDropdown === link.label && (
-                    <div className="absolute top-full left-0 w-48 bg-white border border-[#E6E7E9] shadow-lg z-50">
+                    <div className="absolute top-full left-0 w-48 bg-white border border-border-light shadow-lg z-50">
                       {link.children.map((child) => (
                         <Link
                           key={child.href}
                           href={child.href}
-                          className={`block px-5 py-3 text-sm border-b border-[#E6E7E9] last:border-0 transition-colors ${
+                          className={`block px-5 py-3 text-sm border-b border-border-light last:border-0 transition-colors ${
                             isActive(child.href)
-                              ? "text-[#09388a] bg-[#F3F3F3] font-semibold"
-                              : "text-[#001e42] hover:text-[#09388a] hover:bg-[#F3F3F3]"
+                              ? "text-navy-light bg-surface font-semibold"
+                              : "text-navy hover:text-navy-light hover:bg-surface"
                           }`}
                         >
                           {child.label}
@@ -106,14 +106,14 @@ export default function Test2Header() {
           <div className="hidden md:flex items-center gap-3">
             <a
               href="tel:010-0000-0000"
-              className="bg-[#09388a] hover:bg-[#072d6e] text-white px-5 py-2.5 text-sm font-semibold transition-colors"
+              className="bg-navy-light hover:bg-navy-hover text-white px-5 py-2.5 text-sm font-semibold transition-colors"
             >
               무료 상담
             </a>
           </div>
 
           <button
-            className="md:hidden p-2.5 w-11 h-11 flex items-center justify-center text-[#001e42]"
+            className="md:hidden p-2.5 w-11 h-11 flex items-center justify-center text-navy"
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"}
             aria-expanded={menuOpen}
@@ -125,12 +125,12 @@ export default function Test2Header() {
 
       {/* 모바일 메뉴 */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-[#E6E7E9]" role="menu">
+        <div className="md:hidden bg-white border-t border-border-light" role="menu">
           {navLinks.map((link) => (
             <div key={link.label}>
               <Link
                 href={link.href}
-                className="block px-6 py-4 text-sm text-[#001e42] font-medium border-b border-[#E6E7E9] hover:bg-[#F3F3F3] transition-colors"
+                className="block px-6 py-4 text-sm text-navy font-medium border-b border-border-light hover:bg-surface transition-colors"
                 onClick={() => setMenuOpen(false)}
               >
                 {link.label}
@@ -139,7 +139,7 @@ export default function Test2Header() {
                 <Link
                   key={child.href}
                   href={child.href}
-                  className="block px-10 py-3 text-sm text-[#001e42]/60 border-b border-[#E6E7E9] hover:bg-[#F3F3F3] hover:text-[#09388a] transition-colors"
+                  className="block px-10 py-3 text-sm text-navy/60 border-b border-border-light hover:bg-surface hover:text-navy-light transition-colors"
                   onClick={() => setMenuOpen(false)}
                 >
                   {child.label}
@@ -148,7 +148,7 @@ export default function Test2Header() {
             </div>
           ))}
           <div className="px-6 py-4">
-            <a href="tel:010-0000-0000" className="flex items-center gap-2 text-sm font-semibold text-[#09388a]">
+            <a href="tel:010-0000-0000" className="flex items-center gap-2 text-sm font-semibold text-navy-light">
               <Phone className="w-4 h-4" />
               010-0000-0000
             </a>

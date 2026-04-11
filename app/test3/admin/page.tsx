@@ -23,10 +23,10 @@ export default async function Test3AdminPage() {
   return (
     <div className="bg-white min-h-screen">
       {/* 헤더 */}
-      <div className="bg-[#0a1628] py-12">
+      <div className="bg-navy-dark py-12">
         <div className="max-w-6xl mx-auto px-6 sm:px-8">
-          <div className="border-l-4 border-[#036EB8] pl-5">
-            <p className="text-[#036EB8] text-xs font-semibold uppercase tracking-wider mb-1">ADMIN</p>
+          <div className="border-l-4 border-ocean pl-5">
+            <p className="text-ocean text-xs font-semibold uppercase tracking-wider mb-1">ADMIN</p>
             <h1 className="text-white text-2xl font-bold">관리자 대시보드</h1>
             <p className="text-white/40 text-sm mt-1">수연선박 운영 현황</p>
           </div>
@@ -38,17 +38,17 @@ export default async function Test3AdminPage() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0 border border-gray-200">
           <div className="p-8 border-r border-gray-200">
             <div className="flex items-center gap-2 mb-4">
-              <Ship className="w-4 h-4 text-[#036EB8]" />
+              <Ship className="w-4 h-4 text-ocean" />
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">등록 선박</span>
             </div>
-            <div className="text-4xl font-bold text-[#036EB8]">
+            <div className="text-4xl font-bold text-ocean">
               {stats.vessels}
               <span className="text-base font-normal text-gray-400 ml-1">척</span>
             </div>
           </div>
           <div className="p-8 border-r border-gray-200">
             <div className="flex items-center gap-2 mb-4">
-              <Calendar className="w-4 h-4 text-[#036EB8]" />
+              <Calendar className="w-4 h-4 text-ocean" />
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">전체 예약</span>
             </div>
             <div className="text-4xl font-bold text-gray-900">
@@ -58,7 +58,7 @@ export default async function Test3AdminPage() {
           </div>
           <div className="p-8">
             <div className="flex items-center gap-2 mb-4">
-              <MessageCircle className="w-4 h-4 text-[#036EB8]" />
+              <MessageCircle className="w-4 h-4 text-ocean" />
               <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">처리 대기</span>
             </div>
             <div className="text-4xl font-bold text-gray-900">
@@ -74,14 +74,14 @@ export default async function Test3AdminPage() {
         {/* 최근 예약 */}
         <div>
           <div className="mb-5">
-            <h2 className="text-lg font-bold text-[#036EB8]">최근 예약/문의</h2>
-            <hr className="border-t-2 border-[#036EB8] w-10 mt-2" />
+            <h2 className="text-lg font-bold text-ocean">최근 예약/문의</h2>
+            <hr className="border-t-2 border-ocean w-10 mt-2" />
           </div>
           <div className="border border-gray-200 overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-[#0a1628]">
+                  <tr className="bg-navy-dark">
                     <th className="text-left px-5 py-3.5 text-xs font-semibold text-white/60 uppercase tracking-wider">고객명</th>
                     <th className="text-left px-5 py-3.5 text-xs font-semibold text-white/60 uppercase tracking-wider">연락처</th>
                     <th className="text-left px-5 py-3.5 text-xs font-semibold text-white/60 uppercase tracking-wider">선박</th>
@@ -98,7 +98,7 @@ export default async function Test3AdminPage() {
                       <td className="px-5 py-3.5 text-gray-500">{booking.customer_phone}</td>
                       <td className="px-5 py-3.5 text-gray-600">{booking.vessels?.title ?? "-"}</td>
                       <td className="px-5 py-3.5">
-                        <span className={`px-2.5 py-1 text-xs font-semibold ${booking.booking_type === "rent" ? "bg-[#036EB8]/10 text-[#036EB8]" : "bg-gray-100 text-gray-600"}`}>
+                        <span className={`px-2.5 py-1 text-xs font-semibold ${booking.booking_type === "rent" ? "bg-ocean/10 text-ocean" : "bg-gray-100 text-gray-600"}`}>
                           {booking.booking_type === "rent" ? "임대" : "구매문의"}
                         </span>
                       </td>
@@ -129,7 +129,7 @@ export default async function Test3AdminPage() {
         <div className="flex gap-3 flex-wrap">
           <Link
             href="/test3/vessels"
-            className="px-6 py-3 border border-[#036EB8] text-[#036EB8] hover:bg-[#036EB8] hover:text-white text-sm font-semibold transition-colors"
+            className="px-6 py-3 border border-ocean text-ocean hover:bg-ocean hover:text-white text-sm font-semibold transition-colors"
           >
             선박 목록
           </Link>

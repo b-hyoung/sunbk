@@ -3,13 +3,13 @@ import { COMPANY } from "@/constants/company";
 
 export default function Test2Footer() {
   return (
-    <footer className="bg-[#001e42] text-white/60 text-sm">
+    <footer className="bg-navy text-white/60 text-sm">
       <div className="max-w-7xl mx-auto px-6 py-14">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* 브랜드 */}
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-9 h-9 bg-[#09388a] flex items-center justify-center text-white font-bold text-sm">
+              <div className="w-9 h-9 bg-navy-light flex items-center justify-center text-white font-bold text-sm">
                 수연
               </div>
               <div>

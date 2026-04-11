@@ -46,7 +46,7 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
   return (
     <div className="bg-white min-h-screen">
       {/* ── 타이틀 헤더 ── */}
-      <div className="bg-[#0a1628] px-6 sm:px-8 pt-6 pb-10">
+      <div className="bg-navy-dark px-6 sm:px-8 pt-6 pb-10">
         {/* 브레드크럼 */}
         <nav aria-label="브레드크럼" className="flex items-center gap-2 text-sm text-white/60 mb-6">
           <Link href="/test3" className="hover:text-white/80 transition-colors">메인</Link>
@@ -55,7 +55,7 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
           <ChevronRight className="w-3.5 h-3.5" />
           <span className="text-white truncate max-w-[160px]">{vessel.title}</span>
         </nav>
-        <span className="inline-block text-[#036EB8] text-xs font-bold tracking-widest uppercase mb-3">
+        <span className="inline-block text-ocean text-xs font-bold tracking-widest uppercase mb-3">
           {vessel.vessel_type} · {typeLabel[vessel.type]}
         </span>
         <h1 className="text-white text-4xl sm:text-5xl font-bold">{vessel.title}</h1>
@@ -70,7 +70,7 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
 
       {/* ── 핵심 스펙 가로 바 ── */}
       {keyStats.length > 0 && (
-        <div className="bg-[#036EB8]">
+        <div className="bg-ocean">
           <div className="max-w-7xl mx-auto px-6 sm:px-8">
             <div className="flex overflow-x-auto scrollbar-hide divide-x divide-white/20">
               {keyStats.map(({ icon: Icon, label, value }) => (
@@ -94,8 +94,8 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
           {/* 좌측: 가격 + 예약 */}
           <aside className="lg:w-72 shrink-0">
             <div className="lg:sticky lg:top-28 space-y-0 border border-gray-200">
-              <div className="bg-[#0a1628] px-6 py-5">
-                <p className="text-[#036EB8] text-xs font-bold uppercase tracking-widest mb-1">가격 안내</p>
+              <div className="bg-navy-dark px-6 py-5">
+                <p className="text-ocean text-xs font-bold uppercase tracking-widest mb-1">가격 안내</p>
                 <p className="text-white/60 text-sm">{typeLabel[vessel.type]}</p>
               </div>
 
@@ -103,7 +103,7 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
                 {vessel.rent_price_per_day && (
                   <div>
                     <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">임대가</p>
-                    <p className="text-3xl font-bold text-[#036EB8]">
+                    <p className="text-3xl font-bold text-ocean">
                       {vessel.rent_price_per_day.toLocaleString()}
                       <span className="text-sm font-normal text-gray-400">원/일</span>
                     </p>
@@ -126,7 +126,7 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
                 <BookingButton vessel={vessel} basePath="test3" />
                 <a
                   href="tel:010-0000-0000"
-                  className="flex items-center justify-center gap-2 w-full border border-gray-300 hover:border-[#036EB8] hover:text-[#036EB8] text-gray-600 py-3.5 text-sm font-semibold transition-colors"
+                  className="flex items-center justify-center gap-2 w-full border border-gray-300 hover:border-ocean hover:text-ocean text-gray-600 py-3.5 text-sm font-semibold transition-colors"
                 >
                   <Phone className="w-4 h-4" />
                   전화 문의
@@ -140,8 +140,8 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
 
             {/* 선박 소개 */}
             <div>
-              <h2 className="text-xl font-bold text-[#036EB8] mb-2">선박 소개</h2>
-              <hr className="border-t-2 border-[#036EB8] w-12 mb-5" />
+              <h2 className="text-xl font-bold text-ocean mb-2">선박 소개</h2>
+              <hr className="border-t-2 border-ocean w-12 mb-5" />
               <p className="text-gray-600 leading-relaxed whitespace-pre-line text-base">{vessel.description}</p>
             </div>
 
@@ -149,12 +149,12 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
             <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
               {vessel.features && vessel.features.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-bold text-[#036EB8] mb-2">특징 및 옵션</h2>
-                  <hr className="border-t-2 border-[#036EB8] w-12 mb-5" />
+                  <h2 className="text-xl font-bold text-ocean mb-2">특징 및 옵션</h2>
+                  <hr className="border-t-2 border-ocean w-12 mb-5" />
                   <ul className="space-y-3">
                     {vessel.features.map((feature, i) => (
                       <li key={i} className="flex items-start gap-3 text-base text-gray-700">
-                        <span className="mt-2 w-1.5 h-1.5 bg-[#036EB8] shrink-0" />
+                        <span className="mt-2 w-1.5 h-1.5 bg-ocean shrink-0" />
                         {feature}
                       </li>
                     ))}
@@ -164,8 +164,8 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
 
               {specs.length > 0 && (
                 <div>
-                  <h2 className="text-xl font-bold text-[#036EB8] mb-2">선박 제원</h2>
-                  <hr className="border-t-2 border-[#036EB8] w-12 mb-5" />
+                  <h2 className="text-xl font-bold text-ocean mb-2">선박 제원</h2>
+                  <hr className="border-t-2 border-ocean w-12 mb-5" />
                   <dl className="space-y-0 border border-gray-200">
                     {specs.map((spec) => (
                       <div key={spec.label} className="flex border-b border-gray-100 last:border-b-0">
@@ -183,7 +183,7 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
             <div className="pt-4 border-t border-gray-100">
               <Link
                 href="/test3/vessels"
-                className="inline-flex items-center gap-2 text-base text-gray-400 hover:text-[#036EB8] transition-colors"
+                className="inline-flex items-center gap-2 text-base text-gray-400 hover:text-ocean transition-colors"
               >
                 ← 선박 목록으로
               </Link>

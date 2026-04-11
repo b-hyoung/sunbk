@@ -25,15 +25,15 @@ export default function Test3ContactPage() {
   return (
     <div className="bg-white min-h-screen">
       {/* 다크 헤더 */}
-      <div className="bg-[#0a1628] py-14">
+      <div className="bg-navy-dark py-14">
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           <nav aria-label="브레드크럼" className="flex items-center gap-2 text-xs text-white/40 mb-6">
             <Link href="/test3" className="hover:text-white/70 transition-colors">메인</Link>
             <span>〉</span>
             <span className="text-white/70">오시는길</span>
           </nav>
-          <div className="border-l-4 border-[#036EB8] pl-5">
-            <p className="text-[#036EB8] text-[10px] font-bold tracking-widest uppercase mb-2">LOCATION</p>
+          <div className="border-l-4 border-ocean pl-5">
+            <p className="text-ocean text-[10px] font-bold tracking-widest uppercase mb-2">LOCATION</p>
             <h1 className="text-white text-2xl font-bold mb-2">오시는길</h1>
             <p className="text-white/50 text-sm">
               {COMPANY.addressShort}에 위치한 {COMPANY.name}을 방문해주세요.
@@ -48,8 +48,8 @@ export default function Test3ContactPage() {
           {/* 지도 */}
           <div className="lg:col-span-2">
             <div className="mb-4">
-              <h2 className="text-lg font-bold text-[#036EB8]">지도</h2>
-              <hr className="border-t-2 border-[#036EB8] w-10 mt-2" />
+              <h2 className="text-lg font-bold text-ocean">지도</h2>
+              <hr className="border-t-2 border-ocean w-10 mt-2" />
             </div>
             <div className="overflow-hidden border border-gray-200">
               <iframe
@@ -64,7 +64,7 @@ export default function Test3ContactPage() {
               />
             </div>
             <div className="flex items-start gap-2 mt-4 text-sm text-gray-500">
-              <MapPin className="w-4 h-4 text-[#036EB8] shrink-0 mt-0.5" />
+              <MapPin className="w-4 h-4 text-ocean shrink-0 mt-0.5" />
               <p>{COMPANY.address}</p>
             </div>
           </div>
@@ -72,17 +72,17 @@ export default function Test3ContactPage() {
           {/* 연락처 */}
           <div>
             <div className="mb-6">
-              <h2 className="text-lg font-bold text-[#036EB8]">연락처</h2>
-              <hr className="border-t-2 border-[#036EB8] w-10 mt-2" />
+              <h2 className="text-lg font-bold text-ocean">연락처</h2>
+              <hr className="border-t-2 border-ocean w-10 mt-2" />
             </div>
             <div className="border border-gray-200 p-6 space-y-5 mb-4">
               {contactInfo.map((info) => (
                 <div key={info.label} className="flex items-start gap-3">
-                  <info.icon className="w-4 h-4 text-[#036EB8] shrink-0 mt-0.5" />
+                  <info.icon className="w-4 h-4 text-ocean shrink-0 mt-0.5" />
                   <div>
                     <p className="text-[10px] font-bold text-gray-400 uppercase tracking-wider mb-0.5">{info.label}</p>
                     {info.href ? (
-                      <a href={info.href} className="text-sm font-semibold text-gray-800 hover:text-[#036EB8] transition-colors">
+                      <a href={info.href} className="text-sm font-semibold text-gray-800 hover:text-ocean transition-colors">
                         {info.value}
                       </a>
                     ) : (
@@ -94,7 +94,7 @@ export default function Test3ContactPage() {
             </div>
             <a
               href={`tel:${COMPANY.phone}`}
-              className="flex items-center justify-center gap-2 w-full bg-[#036EB8] hover:bg-[#0257a0] text-white py-3.5 text-sm font-semibold transition-colors"
+              className="flex items-center justify-center gap-2 w-full bg-ocean hover:bg-ocean-hover text-white py-3.5 text-sm font-semibold transition-colors"
             >
               <Phone className="w-4 h-4" />
               전화 문의하기
@@ -107,20 +107,20 @@ export default function Test3ContactPage() {
       <section className="bg-gray-50 border-t border-gray-200 py-14">
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           <div className="mb-10">
-            <h2 className="text-lg font-bold text-[#036EB8]">찾아오시는 방법</h2>
-            <hr className="border-t-2 border-[#036EB8] w-10 mt-2" />
+            <h2 className="text-lg font-bold text-ocean">찾아오시는 방법</h2>
+            <hr className="border-t-2 border-ocean w-10 mt-2" />
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {directions.map((d) => (
               <div key={d.title} className="bg-white border border-gray-200 p-6">
                 <div className="flex items-center gap-2 mb-5">
-                  <d.icon className="w-4 h-4 text-[#036EB8]" />
+                  <d.icon className="w-4 h-4 text-ocean" />
                   <h3 className="font-bold text-gray-900 text-sm">{d.title}</h3>
                 </div>
                 <ol className="space-y-3">
                   {d.steps.map((step, i) => (
                     <li key={i} className="flex items-start gap-3 text-sm text-gray-600">
-                      <span className="shrink-0 w-5 h-5 bg-[#036EB8] text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                      <span className="shrink-0 w-5 h-5 bg-ocean text-white text-xs font-bold flex items-center justify-center mt-0.5">
                         {i + 1}
                       </span>
                       {step}

@@ -33,7 +33,7 @@ export default function ContactPage() {
           />
         </div>
         {/* 주소 오버레이 */}
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#001e42]/80 to-transparent pt-16 pb-5">
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-navy/80 to-transparent pt-16 pb-5">
           <div className="max-w-5xl mx-auto px-6 flex items-center gap-2 text-white text-sm">
             <MapPin className="w-4 h-4 shrink-0" />
             {COMPANY.address} {COMPANY.name}
@@ -42,7 +42,7 @@ export default function ContactPage() {
       </section>
 
       {/* ── 네비 바로가기 ── */}
-      <section className="bg-[#001e42]">
+      <section className="bg-navy">
         <div className="max-w-5xl mx-auto px-6 py-5">
           <NavButtons variant="navy" />
         </div>
@@ -50,18 +50,18 @@ export default function ContactPage() {
 
       {/* ── 연락처 가로 카드 ── */}
       <section className="max-w-5xl mx-auto px-6 py-12">
-        <h2 className="text-[#001e42] font-bold text-xl mb-6">연락처</h2>
+        <h2 className="text-navy font-bold text-xl mb-6">연락처</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
           {contactCards.map((c) => (
-            <div key={c.label} className="border border-[#E6E7E9] p-4">
+            <div key={c.label} className="border border-border-light p-4">
               <span className="text-lg mb-2 block">{c.emoji}</span>
-              <p className="text-xs text-[#001e42]/40 mb-1">{c.label}</p>
+              <p className="text-xs text-navy/40 mb-1">{c.label}</p>
               {c.href ? (
-                <a href={c.href} className="text-sm font-medium text-[#001e42] hover:text-[#09388a] transition-colors break-all">
+                <a href={c.href} className="text-sm font-medium text-navy hover:text-navy-light transition-colors break-all">
                   {c.value}
                 </a>
               ) : (
-                <p className="text-sm font-medium text-[#001e42]">{c.value}</p>
+                <p className="text-sm font-medium text-navy">{c.value}</p>
               )}
             </div>
           ))}
@@ -69,19 +69,19 @@ export default function ContactPage() {
       </section>
 
       {/* ── 교통편 (자가용 / 대중교통 나란히) ── */}
-      <section className="bg-[#F3F3F3] py-12">
+      <section className="bg-surface py-12">
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-[#001e42] font-bold text-xl mb-6">찾아오시는 방법</h2>
+          <h2 className="text-navy font-bold text-xl mb-6">찾아오시는 방법</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* 자가용 */}
-            <div className="bg-white border border-[#E6E7E9] p-6">
-              <h3 className="font-bold text-[#001e42] mb-4 flex items-center gap-2">
+            <div className="bg-white border border-border-light p-6">
+              <h3 className="font-bold text-navy mb-4 flex items-center gap-2">
                 🚗 자가용
               </h3>
               <ol className="space-y-2.5">
                 {COMPANY.directions.car.map((step, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[#001e42]/60">
-                    <span className="shrink-0 w-5 h-5 bg-[#09388a]/10 text-[#09388a] text-xs font-bold flex items-center justify-center mt-0.5">
+                  <li key={i} className="flex items-start gap-3 text-sm text-navy/60">
+                    <span className="shrink-0 w-5 h-5 bg-navy-light/10 text-navy-light text-xs font-bold flex items-center justify-center mt-0.5">
                       {i + 1}
                     </span>
                     {step}
@@ -91,14 +91,14 @@ export default function ContactPage() {
             </div>
 
             {/* 대중교통 */}
-            <div className="bg-white border border-[#E6E7E9] p-6">
-              <h3 className="font-bold text-[#001e42] mb-4 flex items-center gap-2">
+            <div className="bg-white border border-border-light p-6">
+              <h3 className="font-bold text-navy mb-4 flex items-center gap-2">
                 🚌 대중교통
               </h3>
               <ol className="space-y-2.5">
                 {COMPANY.directions.publicTransport.map((step, i) => (
-                  <li key={i} className="flex items-start gap-3 text-sm text-[#001e42]/60">
-                    <span className="shrink-0 w-5 h-5 bg-[#09388a]/10 text-[#09388a] text-xs font-bold flex items-center justify-center mt-0.5">
+                  <li key={i} className="flex items-start gap-3 text-sm text-navy/60">
+                    <span className="shrink-0 w-5 h-5 bg-navy-light/10 text-navy-light text-xs font-bold flex items-center justify-center mt-0.5">
                       {i + 1}
                     </span>
                     {step}
@@ -111,12 +111,12 @@ export default function ContactPage() {
       </section>
 
       {/* ── 전화 CTA ── */}
-      <section className="bg-[#001e42] py-12">
+      <section className="bg-navy py-12">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <p className="text-white/50 text-sm mb-4">방문 전 전화 예약을 권장드립니다</p>
           <a
             href={`tel:${COMPANY.phone}`}
-            className="inline-flex items-center gap-2 bg-[#09388a] hover:bg-[#072d6e] text-white px-10 py-4 text-base font-semibold transition-colors"
+            className="inline-flex items-center gap-2 bg-navy-light hover:bg-navy-hover text-white px-10 py-4 text-base font-semibold transition-colors"
           >
             <Phone className="w-5 h-5" />
             {COMPANY.phone}

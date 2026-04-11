@@ -21,7 +21,7 @@ export default function VesselCard({ vessel, basePath }: VesselCardProps) {
   return (
     <Link
       href={basePath ? `/${basePath}/vessels/${vessel.slug}` : `/vessels/${vessel.slug}`}
-      className="group flex flex-col bg-white border border-gray-200 overflow-hidden hover:border-[#036EB8] hover:shadow-lg hover:shadow-[#036EB8]/10 transition-[border-color,box-shadow] duration-200"
+      className="group flex flex-col bg-white border border-gray-200 overflow-hidden hover:border-ocean hover:shadow-lg hover:shadow-ocean/10 transition-[border-color,box-shadow] duration-200"
     >
       {/* 이미지 */}
       <div className="relative h-52 bg-gray-100 overflow-hidden shrink-0">
@@ -37,14 +37,14 @@ export default function VesselCard({ vessel, basePath }: VesselCardProps) {
           <div className="flex items-center justify-center h-full text-4xl opacity-20">🚢</div>
         )}
         {/* 타입 배지 */}
-        <span className="absolute top-0 left-0 text-xs font-semibold px-3 py-1.5 bg-[#036EB8] text-white">
+        <span className="absolute top-0 left-0 text-xs font-semibold px-3 py-1.5 bg-ocean text-white">
           {label}
         </span>
       </div>
 
       {/* 내용 */}
       <div className="flex flex-col flex-1 p-5">
-        <div className="text-xs font-semibold text-[#036EB8] mb-1 uppercase tracking-wider">
+        <div className="text-xs font-semibold text-ocean mb-1 uppercase tracking-wider">
           {vessel.vessel_type}
         </div>
         <h3 className="font-bold text-gray-900 mb-3 line-clamp-1 text-base">{vessel.title}</h3>
@@ -76,7 +76,7 @@ export default function VesselCard({ vessel, basePath }: VesselCardProps) {
           {vessel.rent_price_per_day && (
             <div className="flex justify-between items-baseline">
               <span className="text-xs text-gray-400">임대가</span>
-              <span className="text-sm font-bold text-[#036EB8]">
+              <span className="text-sm font-bold text-ocean">
                 {vessel.rent_price_per_day.toLocaleString()}
                 <span className="text-xs font-normal text-gray-400">원/일</span>
               </span>

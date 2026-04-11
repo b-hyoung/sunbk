@@ -47,7 +47,7 @@ export default function VesselFilter({ basePath, currentType, currentVesselType 
                 aria-current={active ? "page" : undefined}
                 className={`relative shrink-0 px-5 py-4 text-sm font-semibold transition-colors whitespace-nowrap ${
                   active
-                    ? "text-[#036EB8] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#036EB8]"
+                    ? "text-ocean after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-ocean"
                     : "text-gray-500 hover:text-gray-800"
                 }`}
               >
@@ -65,7 +65,7 @@ export default function VesselFilter({ basePath, currentType, currentVesselType 
             aria-current={!currentVesselType ? "page" : undefined}
             className={`relative shrink-0 px-5 py-4 text-sm font-semibold transition-colors whitespace-nowrap ${
               !currentVesselType
-                ? "text-[#036EB8] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#036EB8]"
+                ? "text-ocean after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-ocean"
                 : "text-gray-500 hover:text-gray-800"
             }`}
           >
@@ -80,7 +80,7 @@ export default function VesselFilter({ basePath, currentType, currentVesselType 
                 aria-current={active ? "page" : undefined}
                 className={`relative shrink-0 px-5 py-4 text-sm font-semibold transition-colors whitespace-nowrap ${
                   active
-                    ? "text-[#036EB8] after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-[#036EB8]"
+                    ? "text-ocean after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-ocean"
                     : "text-gray-500 hover:text-gray-800"
                 }`}
               >

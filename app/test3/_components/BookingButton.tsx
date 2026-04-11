@@ -18,7 +18,7 @@ export default function BookingButton({ vessel, basePath }: BookingButtonProps) 
       {canRent && (
         <Link
           href={basePath ? `/${basePath}/booking/${vessel.id}?type=rent` : `/booking/${vessel.id}?type=rent`}
-          className="flex items-center justify-center gap-2 w-full bg-[#036EB8] hover:bg-[#0257a0] text-white py-3.5 text-sm font-semibold transition-colors"
+          className="flex items-center justify-center gap-2 w-full bg-ocean hover:bg-ocean-hover text-white py-3.5 text-sm font-semibold transition-colors"
         >
           <Calendar className="w-4 h-4" />
           임대 예약하기
@@ -27,7 +27,7 @@ export default function BookingButton({ vessel, basePath }: BookingButtonProps) 
       {canBuy && (
         <Link
           href={basePath ? `/${basePath}/booking/${vessel.id}?type=inquiry` : `/booking/${vessel.id}?type=inquiry`}
-          className="flex items-center justify-center gap-2 w-full bg-[#0a1628] hover:bg-[#0d1f3c] text-white py-3.5 text-sm font-semibold transition-colors"
+          className="flex items-center justify-center gap-2 w-full bg-navy-dark hover:bg-navy-dark text-white py-3.5 text-sm font-semibold transition-colors"
         >
           <MessageCircle className="w-4 h-4" />
           구매 문의하기

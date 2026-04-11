@@ -28,6 +28,16 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* ── 수연선박 디자인 토큰 ── */
+  --color-navy: #001e42;
+  --color-navy-light: #09388a;
+  --color-navy-dark: #0a1628;
+  --color-navy-hover: #072d6e;
+  --color-ocean: #036EB8;
+  --color-ocean-hover: #0257a0;
+  --color-border-light: #E6E7E9;
+  --color-surface: #F3F3F3;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-sans);

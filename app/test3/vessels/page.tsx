@@ -19,9 +19,9 @@ interface SearchParams {
 
 const typeLabel: Record<string, string> = { rent: "임대", sale: "판매", both: "임대·판매" };
 const typeBadge: Record<string, string> = {
-  rent: "bg-[#036EB8] text-white",
-  sale: "bg-[#0a1628] text-white",
-  both: "bg-[#036EB8]/80 text-white",
+  rent: "bg-ocean text-white",
+  sale: "bg-navy-dark text-white",
+  both: "bg-ocean/80 text-white",
 };
 
 function VesselRow({ vessel }: { vessel: Vessel }) {
@@ -57,9 +57,9 @@ function VesselRow({ vessel }: { vessel: Vessel }) {
           <span className={`hidden sm:inline text-[10px] font-bold px-2 py-0.5 ${typeBadge[vessel.type]}`}>
             {typeLabel[vessel.type]}
           </span>
-          <span className="text-xs text-[#036EB8] font-semibold">{vessel.vessel_type}</span>
+          <span className="text-xs text-ocean font-semibold">{vessel.vessel_type}</span>
         </div>
-        <h3 className="font-bold text-gray-900 text-base mb-2 truncate group-hover:text-[#036EB8] transition-colors">
+        <h3 className="font-bold text-gray-900 text-base mb-2 truncate group-hover:text-ocean transition-colors">
           {vessel.title}
         </h3>
         <div className="flex flex-wrap gap-3 text-xs text-gray-400">
@@ -80,7 +80,7 @@ function VesselRow({ vessel }: { vessel: Vessel }) {
         {/* 가격 — 모바일에서는 정보 아래 */}
         <div className="flex items-center gap-4 mt-3 sm:hidden">
           {vessel.rent_price_per_day && (
-            <span className="text-sm font-bold text-[#036EB8]">
+            <span className="text-sm font-bold text-ocean">
               {vessel.rent_price_per_day.toLocaleString()}
               <span className="text-xs font-normal text-gray-400">원/일</span>
             </span>
@@ -100,7 +100,7 @@ function VesselRow({ vessel }: { vessel: Vessel }) {
       <div className="hidden sm:flex shrink-0 text-right items-center gap-4">
         <div>
           {vessel.rent_price_per_day && (
-            <div className="text-base font-bold text-[#036EB8]">
+            <div className="text-base font-bold text-ocean">
               {vessel.rent_price_per_day.toLocaleString()}
               <span className="text-xs font-normal text-gray-400">원/일</span>
             </div>
@@ -114,7 +114,7 @@ function VesselRow({ vessel }: { vessel: Vessel }) {
             </div>
           )}
         </div>
-        <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-[#036EB8] transition-colors" />
+        <ChevronRight className="w-4 h-4 text-gray-300 group-hover:text-ocean transition-colors" />
       </div>
     </Link>
   );
@@ -134,15 +134,15 @@ export default async function Test3VesselsPage({
   return (
     <div className="bg-white min-h-screen">
       {/* 다크 헤더 */}
-      <div className="bg-[#0a1628] py-12">
+      <div className="bg-navy-dark py-12">
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           <nav aria-label="브레드크럼" className="flex items-center gap-2 text-xs text-white/40 mb-5">
             <Link href="/test3" className="hover:text-white/70 transition-colors">메인</Link>
             <span>〉</span>
             <span className="text-white/70">선박 목록</span>
           </nav>
-          <div className="border-l-4 border-[#036EB8] pl-5">
-            <p className="text-[#036EB8] text-[10px] font-bold tracking-widest uppercase mb-1">VESSELS</p>
+          <div className="border-l-4 border-ocean pl-5">
+            <p className="text-ocean text-[10px] font-bold tracking-widest uppercase mb-1">VESSELS</p>
             <h1 className="text-white text-2xl font-bold">{pageTitle}</h1>
             <p className="text-white/40 text-sm mt-1">총 {vessels.length}척</p>
           </div>
@@ -156,7 +156,7 @@ export default async function Test3VesselsPage({
       <div className="max-w-7xl mx-auto px-6 sm:px-8 py-10">
         <div className="border border-gray-200 overflow-hidden">
           {/* 컬럼 헤더 */}
-          <div className="grid grid-cols-[auto_1fr_auto] gap-6 px-6 py-3 bg-[#0a1628]">
+          <div className="grid grid-cols-[auto_1fr_auto] gap-6 px-6 py-3 bg-navy-dark">
             <span className="w-36 text-[10px] font-semibold text-white/50 uppercase tracking-wider">이미지</span>
             <span className="text-[10px] font-semibold text-white/50 uppercase tracking-wider">선박 정보</span>
             <span className="text-[10px] font-semibold text-white/50 uppercase tracking-wider text-right pr-8">가격</span>
@@ -167,7 +167,7 @@ export default async function Test3VesselsPage({
           ) : (
             <div className="flex flex-col items-center justify-center py-24 text-gray-300">
               <p className="text-base text-gray-400">해당 조건의 선박이 없습니다.</p>
-              <Link href="/test3/vessels" className="mt-4 text-sm text-[#036EB8] hover:underline">
+              <Link href="/test3/vessels" className="mt-4 text-sm text-ocean hover:underline">
                 전체 선박 보기
               </Link>
             </div>

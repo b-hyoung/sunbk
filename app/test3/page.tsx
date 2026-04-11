@@ -36,11 +36,11 @@ function FeaturedRow({ vessel }: { vessel: Vessel }) {
         <div className="flex items-start justify-between gap-2">
           <div className="min-w-0">
             <div className="flex items-center gap-1.5 mb-1">
-              <span className="text-[10px] font-bold text-[#036EB8] uppercase tracking-wider">{vessel.vessel_type}</span>
+              <span className="text-[10px] font-bold text-ocean uppercase tracking-wider">{vessel.vessel_type}</span>
               <span className="text-[10px] text-gray-300">·</span>
               <span className="text-[10px] text-gray-400">{typeLabel[vessel.type]}</span>
             </div>
-            <h3 className="font-bold text-gray-900 text-sm mb-1.5 truncate group-hover:text-[#036EB8] transition-colors">
+            <h3 className="font-bold text-gray-900 text-sm mb-1.5 truncate group-hover:text-ocean transition-colors">
               {vessel.title}
             </h3>
             <div className="flex flex-wrap gap-2 text-xs text-gray-400">
@@ -51,7 +51,7 @@ function FeaturedRow({ vessel }: { vessel: Vessel }) {
           {/* 가격 우측 정렬 */}
           <div className="shrink-0 text-right">
             {vessel.rent_price_per_day && (
-              <div className="text-sm font-bold text-[#036EB8] whitespace-nowrap">
+              <div className="text-sm font-bold text-ocean whitespace-nowrap">
                 {(vessel.rent_price_per_day / 10000).toFixed(0)}만
                 <span className="text-xs font-normal text-gray-400">원/일</span>
               </div>
@@ -79,22 +79,22 @@ export default async function Test3HomePage() {
       {/* ── 풀스크린 히어로 (중앙 정렬) ── */}
       <section className="relative h-screen flex flex-col items-center justify-center overflow-hidden">
         <HeroVideo />
-        <div className="absolute inset-0 bg-[#0a1628]/75" />
+        <div className="absolute inset-0 bg-navy-dark/75" />
 
         {/* 중앙 콘텐츠 */}
         <div className="relative z-10 text-center px-6">
-          <p className="text-[#036EB8] text-xs font-bold tracking-[0.4em] uppercase mb-6">
+          <p className="text-ocean text-xs font-bold tracking-[0.4em] uppercase mb-6">
             수연선박 · SOOYEON SHIPPING
           </p>
           <h1 className="text-white font-bold text-4xl sm:text-5xl lg:text-6xl leading-tight mb-6">
             선박 임대·판매<br />전문 기업
           </h1>
-          <div className="w-12 h-0.5 bg-[#036EB8] mx-auto mb-6" />
+          <div className="w-12 h-0.5 bg-ocean mx-auto mb-6" />
           <p className="text-white/75 text-sm leading-relaxed mb-10">
             15년 경력 · 레저선 · 어선 · 화물선 · 여객선
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/test3/vessels" className="inline-flex items-center justify-center gap-2 bg-[#036EB8] hover:bg-[#0257a0] text-white px-8 py-3.5 text-sm font-semibold transition-colors">
+            <Link href="/test3/vessels" className="inline-flex items-center justify-center gap-2 bg-ocean hover:bg-ocean-hover text-white px-8 py-3.5 text-sm font-semibold transition-colors">
               선박 목록 보기 <ArrowRight className="w-4 h-4" />
             </Link>
             <a href="tel:010-0000-0000" className="inline-flex items-center justify-center gap-2 border border-white/30 hover:bg-white/10 text-white px-8 py-3.5 text-sm font-semibold transition-colors">
@@ -104,7 +104,7 @@ export default async function Test3HomePage() {
         </div>
 
         {/* 하단 카테고리 탭바 */}
-        <div className="absolute bottom-0 left-0 right-0 bg-[#0a1628]/90 backdrop-blur-sm border-t border-white/10">
+        <div className="absolute bottom-0 left-0 right-0 bg-navy-dark/90 backdrop-blur-sm border-t border-white/10">
           <div className="max-w-7xl mx-auto px-6 flex overflow-x-auto scrollbar-hide">
             {categories.map((cat) => (
               <Link
@@ -126,7 +126,7 @@ export default async function Test3HomePage() {
             <Link
               key={cat.key}
               href={cat.href}
-              className="shrink-0 px-4 py-3.5 text-sm font-semibold text-gray-500 hover:text-[#036EB8] transition-colors whitespace-nowrap border-b-2 border-transparent hover:border-[#036EB8]"
+              className="shrink-0 px-4 py-3.5 text-sm font-semibold text-gray-500 hover:text-ocean transition-colors whitespace-nowrap border-b-2 border-transparent hover:border-ocean"
             >
               {cat.label}
             </Link>
@@ -141,12 +141,12 @@ export default async function Test3HomePage() {
           {/* 좌측: 다크 사이드바 */}
           <aside className="hidden lg:flex flex-col w-56 shrink-0">
             {/* 회사 소개 블록 */}
-            <div className="bg-[#0a1628] p-6 mb-6">
-              <p className="text-[#036EB8] text-[10px] font-bold tracking-widest uppercase mb-3">ABOUT</p>
+            <div className="bg-navy-dark p-6 mb-6">
+              <p className="text-ocean text-[10px] font-bold tracking-widest uppercase mb-3">ABOUT</p>
               <h2 className="text-white text-sm font-bold leading-snug mb-4">
                 인천 소재<br />선박 임대·판매<br />전문 기업
               </h2>
-              <hr className="border-[#036EB8] mb-4" />
+              <hr className="border-ocean mb-4" />
               <div className="space-y-3 text-xs text-white/50">
                 <div><span className="block text-white/80 font-semibold">8척</span>운영 선박</div>
                 <div><span className="block text-white/80 font-semibold">15년+</span>영업 경력</div>
@@ -161,7 +161,7 @@ export default async function Test3HomePage() {
                 <Link
                   key={cat.key}
                   href={cat.href}
-                  className="flex items-center justify-between px-3 py-2.5 text-sm text-gray-600 hover:text-[#036EB8] hover:bg-gray-50 transition-colors border-l-2 border-transparent hover:border-[#036EB8]"
+                  className="flex items-center justify-between px-3 py-2.5 text-sm text-gray-600 hover:text-ocean hover:bg-gray-50 transition-colors border-l-2 border-transparent hover:border-ocean"
                 >
                   {cat.label}
                   <ArrowRight className="w-3 h-3 opacity-0 group-hover:opacity-100" />
@@ -172,7 +172,7 @@ export default async function Test3HomePage() {
             {/* 전화 문의 */}
             <div className="mt-auto pt-6 border-t border-gray-100">
               <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3">문의</p>
-              <a href="tel:010-0000-0000" className="flex items-center gap-2 text-sm font-bold text-[#036EB8] hover:text-[#0257a0] transition-colors">
+              <a href="tel:010-0000-0000" className="flex items-center gap-2 text-sm font-bold text-ocean hover:text-ocean-hover transition-colors">
                 <Phone className="w-3.5 h-3.5" />
                 010-0000-0000
               </a>
@@ -183,17 +183,17 @@ export default async function Test3HomePage() {
           <div className="flex-1 min-w-0">
             <div className="flex items-center justify-between mb-6">
               <div>
-                <p className="text-[#036EB8] text-[10px] font-bold tracking-widest uppercase mb-1">FEATURED VESSELS</p>
+                <p className="text-ocean text-[10px] font-bold tracking-widest uppercase mb-1">FEATURED VESSELS</p>
                 <h2 className="text-xl font-bold text-gray-900">추천 선박</h2>
               </div>
-              <Link href="/test3/vessels" className="text-xs font-semibold text-[#036EB8] hover:underline">
+              <Link href="/test3/vessels" className="text-xs font-semibold text-ocean hover:underline">
                 전체 목록 →
               </Link>
             </div>
 
             <div className="border border-gray-200 overflow-hidden">
               {/* 테이블 헤더 */}
-              <div className="grid grid-cols-[1fr_auto] bg-[#0a1628] px-6 py-3">
+              <div className="grid grid-cols-[1fr_auto] bg-navy-dark px-6 py-3">
                 <span className="text-[10px] font-semibold text-white/50 uppercase tracking-wider">선박 정보</span>
                 <span className="text-[10px] font-semibold text-white/50 uppercase tracking-wider">가격</span>
               </div>
@@ -206,7 +206,7 @@ export default async function Test3HomePage() {
 
               {/* 더보기 */}
               <div className="border-t border-gray-100">
-                <Link href="/test3/vessels" className="flex items-center justify-center gap-2 py-4 text-sm font-semibold text-[#036EB8] hover:bg-gray-50 transition-colors">
+                <Link href="/test3/vessels" className="flex items-center justify-center gap-2 py-4 text-sm font-semibold text-ocean hover:bg-gray-50 transition-colors">
                   전체 선박 보기 <ArrowRight className="w-4 h-4" />
                 </Link>
               </div>

@@ -8,8 +8,8 @@ export default function Test2AboutClient() {
   return (
     <div className="bg-white">
       {/* 히어로 */}
-      <section className="relative bg-[#001e42] py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-[#001e42]/80" />
+      <section className="relative bg-navy py-28 overflow-hidden">
+        <div className="absolute inset-0 bg-navy/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-white/75 text-xs font-bold tracking-[0.2em] uppercase mb-4">
             About Us
@@ -27,32 +27,32 @@ export default function Test2AboutClient() {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-2">Company</p>
-            <h2 className="text-[#001e42] text-2xl font-bold mb-4">회사 소개</h2>
-            <p className="text-[#001e42]/60 leading-relaxed mb-6">
+            <p className="text-navy-light text-xs font-bold tracking-[0.15em] uppercase mb-2">Company</p>
+            <h2 className="text-navy text-2xl font-bold mb-4">회사 소개</h2>
+            <p className="text-navy/60 leading-relaxed mb-6">
               {COMPANY.name}은 인천을 기반으로 선박 임대 및 판매 서비스를 제공하는 전문 기업입니다.
               다년간의 경험과 노하우를 바탕으로 고객의 목적에 맞는 최적의 선박을 제안해 드립니다.
             </p>
             <div className="space-y-4 text-sm">
               <div className="flex items-start gap-3">
-                <Anchor className="w-4 h-4 text-[#09388a] mt-0.5 shrink-0" />
+                <Anchor className="w-4 h-4 text-navy-light mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-medium text-[#001e42]">대표자</p>
-                  <p className="text-[#001e42]/60">{COMPANY.representative}</p>
+                  <p className="font-medium text-navy">대표자</p>
+                  <p className="text-navy/60">{COMPANY.representative}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <MapPin className="w-4 h-4 text-[#09388a] mt-0.5 shrink-0" />
+                <MapPin className="w-4 h-4 text-navy-light mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-medium text-[#001e42]">주소</p>
-                  <p className="text-[#001e42]/60">{COMPANY.address}</p>
+                  <p className="font-medium text-navy">주소</p>
+                  <p className="text-navy/60">{COMPANY.address}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <Clock className="w-4 h-4 text-[#09388a] mt-0.5 shrink-0" />
+                <Clock className="w-4 h-4 text-navy-light mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-medium text-[#001e42]">운영시간</p>
-                  <p className="text-[#001e42]/60">{COMPANY.hours}</p>
+                  <p className="font-medium text-navy">운영시간</p>
+                  <p className="text-navy/60">{COMPANY.hours}</p>
                 </div>
               </div>
             </div>
@@ -60,14 +60,14 @@ export default function Test2AboutClient() {
 
           {/* 작업현장 바로가기 */}
           <div className="flex flex-col justify-center">
-            <div className="bg-[#F3F3F3] p-8">
-              <h3 className="text-[#001e42] font-bold text-lg mb-3">작업현장 사진</h3>
-              <p className="text-[#001e42]/60 text-sm mb-6 leading-relaxed">
+            <div className="bg-surface p-8">
+              <h3 className="text-navy font-bold text-lg mb-3">작업현장 사진</h3>
+              <p className="text-navy/60 text-sm mb-6 leading-relaxed">
                 수연선박의 정비, 항해, 상가 작업 등 현장의 기록을 사진으로 확인하세요.
               </p>
               <Link
                 href="/test2/work"
-                className="inline-flex items-center gap-2 bg-[#09388a] hover:bg-[#072d6e] text-white px-6 py-3 text-sm font-semibold transition-colors"
+                className="inline-flex items-center gap-2 bg-navy-light hover:bg-navy-hover text-white px-6 py-3 text-sm font-semibold transition-colors"
               >
                 작업현장 보기 →
               </Link>
@@ -77,7 +77,7 @@ export default function Test2AboutClient() {
       </section>
 
       {/* CTA */}
-      <section className="bg-[#001e42] py-14">
+      <section className="bg-navy py-14">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h2 className="text-white text-xl font-bold mb-1">궁금한 점이 있으신가요?</h2>
@@ -86,7 +86,7 @@ export default function Test2AboutClient() {
           <div className="flex gap-3 shrink-0">
             <a
               href={`tel:${COMPANY.phone}`}
-              className="inline-flex items-center gap-2 bg-[#09388a] hover:bg-[#072d6e] text-white px-8 py-3.5 text-sm font-semibold transition-colors"
+              className="inline-flex items-center gap-2 bg-navy-light hover:bg-navy-hover text-white px-8 py-3.5 text-sm font-semibold transition-colors"
             >
               <Phone className="w-4 h-4" />
               {COMPANY.phone}

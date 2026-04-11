@@ -34,11 +34,11 @@ export default async function VesselsPage({
   return (
     <div className="bg-white min-h-screen">
       {/* 페이지 헤더 */}
-      <div className="border-b border-[#E6E7E9]">
+      <div className="border-b border-border-light">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-          <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-2">Vessels</p>
-          <h1 data-fade-up className="text-[#001e42] text-2xl font-bold mb-1">{pageTitle}</h1>
-          <p data-fade-up className="text-[#001e42]/40 text-sm">총 {vessels.length}척</p>
+          <p className="text-navy-light text-xs font-bold tracking-[0.15em] uppercase mb-2">Vessels</p>
+          <h1 data-fade-up className="text-navy text-2xl font-bold mb-1">{pageTitle}</h1>
+          <p data-fade-up className="text-navy/40 text-sm">총 {vessels.length}척</p>
         </div>
       </div>
 
@@ -60,13 +60,13 @@ export default async function VesselsPage({
                 ))}
               </div>
             ) : (
-              <div data-fade-in className="flex flex-col items-center justify-center py-32 text-[#001e42]/30">
+              <div data-fade-in className="flex flex-col items-center justify-center py-32 text-navy/30">
                 <Ship className="w-12 h-12 mb-4" />
-                <p className="text-base text-[#001e42]/40 mb-1">해당 조건의 선박이 없습니다.</p>
+                <p className="text-base text-navy/40 mb-1">해당 조건의 선박이 없습니다.</p>
                 {hasFilter && (
                   <Link
                     href="/test2/vessels"
-                    className="mt-4 px-4 py-2 text-sm text-[#09388a] border border-[#09388a]/30 hover:bg-[#09388a]/5 transition-colors"
+                    className="mt-4 px-4 py-2 text-sm text-navy-light border border-navy-light/30 hover:bg-navy-light/5 transition-colors"
                   >
                     필터 초기화하고 전체 보기
                   </Link>
