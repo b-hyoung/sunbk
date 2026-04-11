@@ -12,14 +12,14 @@ interface VesselGalleryProps {
   autoplayInterval?: number;
 }
 
-const FADE_DURATION = 500;
-
 export default function VesselGallery({
   images,
   vesselTitle,
   autoplayInterval = 5000,
 }: VesselGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [displayIndex, setDisplayIndex] = useState(0);
+  const [transitioning, setTransitioning] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [paused, setPaused] = useState(false);
 
@@ -31,7 +31,18 @@ export default function VesselGallery({
   const goTo = useCallback((i: number) => {
     if (i === indexRef.current) return;
     setActiveIndex(i);
+    setTransitioning(true);
   }, []);
+
+  // 전환 완료 후 displayIndex 동기화
+  useEffect(() => {
+    if (!transitioning) return;
+    const timer = setTimeout(() => {
+      setDisplayIndex(activeIndex);
+      setTransitioning(false);
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [transitioning, activeIndex]);
 
   const prev = useCallback(() => {
     goTo((indexRef.current - 1 + lengthRef.current) % lengthRef.current);
@@ -68,41 +79,47 @@ export default function VesselGallery({
     );
   }
 
-  const activeImage = images[activeIndex];
+  const showIndex = transitioning ? activeIndex : displayIndex;
 
   return (
     <>
-      <style>{`
-        @keyframes galleryFadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
-        }
-        .gallery-fade-in {
-          animation: galleryFadeIn ${FADE_DURATION}ms ease-in-out;
-        }
-      `}</style>
-
       {/* 메인 이미지 */}
       <div
-        className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-50 cursor-pointer group"
+        className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-900 cursor-pointer group"
         onClick={() => setLightboxOpen(true)}
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
+        {/* 하단 레이어: 이전 이미지 (전환 중에만 보임) */}
         <Image
-          key={`main-${activeIndex}`}
-          src={activeImage.url}
-          alt={`${vesselTitle} - ${getCategoryLabel(activeImage.category ?? "")}`}
+          src={images[displayIndex].url}
+          alt=""
           fill
-          className="object-cover gallery-fade-in"
-          priority={activeIndex === 0}
+          className="object-cover"
           sizes="(max-width: 1024px) 100vw, 66vw"
         />
-        {activeImage.category && (
+
+        {/* 상단 레이어: 새 이미지 (페이드인 + 미세 줌) */}
+        {transitioning && (
+          <Image
+            src={images[activeIndex].url}
+            alt={`${vesselTitle} - ${getCategoryLabel(images[activeIndex].category ?? "")}`}
+            fill
+            className="object-cover absolute inset-0"
+            style={{
+              animation: "galleryReveal 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards",
+            }}
+            sizes="(max-width: 1024px) 100vw, 66vw"
+          />
+        )}
+
+        {/* 카테고리 라벨 */}
+        {images[showIndex].category && (
           <span className="absolute top-3 left-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm z-10">
-            {getCategoryLabel(activeImage.category)}
+            {getCategoryLabel(images[showIndex].category!)}
           </span>
         )}
+
         <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10" />
 
         {/* 좌우 화살표 */}
@@ -133,8 +150,8 @@ export default function VesselGallery({
                 key={i}
                 onClick={(e) => { e.stopPropagation(); goTo(i); }}
                 aria-label={`사진 ${i + 1}`}
-                className={`w-2.5 h-2.5 rounded-full transition-colors ${
-                  i === activeIndex ? "bg-white" : "bg-white/40 hover:bg-white/60"
+                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
+                  i === activeIndex ? "bg-white scale-110" : "bg-white/40 hover:bg-white/60"
                 }`}
               />
             ))}
@@ -150,8 +167,8 @@ export default function VesselGallery({
               key={img.id}
               onClick={() => goTo(i)}
               aria-label={getCategoryLabel(img.category ?? "") + " 보기"}
-              className={`relative w-20 h-14 shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
-                i === activeIndex ? "border-blue-500" : "border-gray-100 hover:border-blue-300"
+              className={`relative w-20 h-14 shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
+                i === activeIndex ? "border-blue-500 ring-1 ring-blue-500/30" : "border-gray-100 hover:border-blue-300"
               }`}
             >
               <Image src={img.url} alt={getCategoryLabel(img.category ?? "")} fill className="object-cover" sizes="80px" />
@@ -194,16 +211,28 @@ export default function VesselGallery({
             className="relative w-full max-w-4xl mx-4 sm:mx-8 lg:mx-16 aspect-[16/9]"
             onClick={(e) => e.stopPropagation()}
           >
+            {/* 라이트박스 하단 레이어 */}
             <Image
-              key={`lightbox-${activeIndex}`}
-              src={images[activeIndex].url}
-              alt={`${vesselTitle} - ${getCategoryLabel(images[activeIndex].category ?? "")}`}
+              src={images[displayIndex].url}
+              alt=""
               fill
-              className="object-contain gallery-fade-in"
+              className="object-contain"
             />
+            {/* 라이트박스 상단 레이어 (페이드인) */}
+            {transitioning && (
+              <Image
+                src={images[activeIndex].url}
+                alt={`${vesselTitle} - ${getCategoryLabel(images[activeIndex].category ?? "")}`}
+                fill
+                className="object-contain absolute inset-0"
+                style={{
+                  animation: "galleryReveal 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards",
+                }}
+              />
+            )}
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 px-5 py-3 text-center">
               <p id="gallery-lightbox-title" className="text-white font-semibold">
-                {vesselTitle} — {getCategoryLabel(images[activeIndex].category ?? "")}
+                {vesselTitle} — {getCategoryLabel(images[showIndex].category ?? "")}
               </p>
             </div>
           </div>
@@ -221,6 +250,19 @@ export default function VesselGallery({
           </div>
         </div>
       )}
+
+      <style>{`
+        @keyframes galleryReveal {
+          from {
+            opacity: 0;
+            transform: scale(1.015);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+      `}</style>
     </>
   );
 }
