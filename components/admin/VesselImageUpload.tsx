@@ -1,54 +1,66 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useState } from "react";
 import Image from "next/image";
-import { Plus, X, Star } from "lucide-react";
+import { Plus, X, Star, Loader2 } from "lucide-react";
 import { VESSEL_FILTER_CATEGORIES } from "@/constants/photo-config";
 import type { VesselImage } from "@/lib/supabase";
 
 interface VesselImageUploadProps {
   images: VesselImage[];
   onChange: (images: VesselImage[]) => void;
+  vesselSlug: string;
 }
 
 const categoryOptions = VESSEL_FILTER_CATEGORIES.filter((c) => c.key !== "all");
 
-export default function VesselImageUpload({ images, onChange }: VesselImageUploadProps) {
+export default function VesselImageUpload({ images, onChange, vesselSlug }: VesselImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
-  const blobUrls = useRef<string[]>([]);
+  const [uploading, setUploading] = useState(false);
 
-  const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFiles = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
-    const newImages: VesselImage[] = files.map((file, i) => ({
-      id: `img-${Date.now()}-${i}`,
-      vessel_id: "",
-      url: URL.createObjectURL(file),
-      is_primary: images.length === 0 && i === 0,
-      sort_order: images.length + i + 1,
-      category: "exterior",
-    }));
-    blobUrls.current.push(...newImages.map((img) => img.url));
+    if (files.length === 0) return;
+
+    setUploading(true);
+    const newImages: VesselImage[] = [];
+
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("vesselSlug", vesselSlug || `vessel-${Date.now()}`);
+
+      try {
+        const res = await fetch("/api/admin/upload", { method: "POST", body: formData });
+        if (!res.ok) continue;
+        const { url } = await res.json();
+
+        newImages.push({
+          id: `img-${Date.now()}-${i}`,
+          vessel_id: "",
+          url,
+          is_primary: images.length === 0 && newImages.length === 0,
+          sort_order: images.length + newImages.length + 1,
+          category: "exterior",
+        });
+      } catch {
+        // skip failed uploads
+      }
+    }
+
     onChange([...images, ...newImages]);
     if (inputRef.current) inputRef.current.value = "";
+    setUploading(false);
   };
 
   const removeImage = (id: string) => {
-    const removed = images.find((img) => img.id === id);
-    if (removed?.url.startsWith("blob:")) {
-      URL.revokeObjectURL(removed.url);
-    }
     const filtered = images.filter((img) => img.id !== id);
     if (filtered.length > 0 && !filtered.some((img) => img.is_primary)) {
       filtered[0].is_primary = true;
     }
     onChange(filtered);
   };
-
-  useEffect(() => {
-    return () => {
-      blobUrls.current.forEach((url) => URL.revokeObjectURL(url));
-    };
-  }, []);
 
   const setPrimary = (id: string) => {
     onChange(images.map((img) => ({ ...img, is_primary: img.id === id })));
@@ -119,10 +131,20 @@ export default function VesselImageUpload({ images, onChange }: VesselImageUploa
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-colors"
+          disabled={uploading}
+          className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-colors disabled:opacity-50"
         >
-          <Plus className="w-6 h-6" />
-          <span className="text-xs">사진 추가</span>
+          {uploading ? (
+            <>
+              <Loader2 className="w-6 h-6 animate-spin" />
+              <span className="text-xs">업로드 중...</span>
+            </>
+          ) : (
+            <>
+              <Plus className="w-6 h-6" />
+              <span className="text-xs">사진 추가</span>
+            </>
+          )}
         </button>
       </div>
 

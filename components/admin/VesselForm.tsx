@@ -237,7 +237,7 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
       {/* 사진 */}
       <section>
         <h3 className="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">사진</h3>
-        <VesselImageUpload images={images} onChange={setImages} />
+        <VesselImageUpload images={images} onChange={setImages} vesselSlug={mode === "edit" ? vessel!.slug : toSlug(title) || `vessel-${Date.now()}`} />
       </section>
 
       {/* 제출 */}
