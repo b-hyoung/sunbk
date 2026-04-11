@@ -1,4 +1,5 @@
 export const runtime = "edge";
+export const dynamic = "force-dynamic";
 import { getVessels } from "@/lib/data";
 import Test2VesselCard from "@/components/test2/VesselCard";
 import VesselFilter from "@/app/test1/_components/VesselFilter";

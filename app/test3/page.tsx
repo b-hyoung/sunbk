@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import Link from "next/link";
 import { Phone, ArrowRight, MapPin, Ruler, Users } from "lucide-react";
 import { getFeaturedVessels } from "@/lib/data";
