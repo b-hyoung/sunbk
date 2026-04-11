@@ -32,7 +32,7 @@ export default async function Test2HomePage() {
           <source src="https://videos.pexels.com/video-files/4438522/4438522-hd_1920_1080_30fps.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-gradient-to-r from-[#001e42]/90 via-[#001e42]/60 to-transparent" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 md:py-40">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 py-32 md:py-40">
           <div className="max-w-2xl">
             <p data-hero className="text-white/75 text-xs font-bold tracking-[0.2em] uppercase mb-6">
               선박 임대·판매 전문기업
@@ -70,7 +70,7 @@ export default async function Test2HomePage() {
 
       {/* ── 통계 ── */}
       <section className="bg-[#09388a]">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 divide-x divide-white/20">
             {stats.map((s) => (
               <div key={s.label} data-fade-up className="text-center px-6 py-8">
@@ -84,7 +84,7 @@ export default async function Test2HomePage() {
 
       {/* ── 선박 카테고리 ── */}
       <section className="bg-white py-20">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div data-fade-up className="mb-12">
             <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-2">선박 종류</p>
             <h2 className="text-[#001e42] text-2xl font-bold">보유 선박 카테고리</h2>
@@ -112,7 +112,7 @@ export default async function Test2HomePage() {
 
       {/* ── 추천 선박 ── */}
       <section className="bg-[#F3F3F3] py-20">
-        <div className="max-w-7xl mx-auto px-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div data-fade-up className="flex items-end justify-between mb-12">
             <div>
               <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-2">Featured</p>

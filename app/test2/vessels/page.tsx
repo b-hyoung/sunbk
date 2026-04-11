@@ -35,14 +35,14 @@ export default async function VesselsPage({
     <div className="bg-white min-h-screen">
       {/* 페이지 헤더 */}
       <div className="border-b border-[#E6E7E9]">
-        <div className="max-w-7xl mx-auto px-6 py-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-2">Vessels</p>
           <h1 data-fade-up className="text-[#001e42] text-2xl font-bold mb-1">{pageTitle}</h1>
           <p data-fade-up className="text-[#001e42]/40 text-sm">총 {vessels.length}척</p>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-6 lg:py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:py-10">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
           {/* 필터 */}
           <aside data-fade-in className="w-full lg:w-48 shrink-0">

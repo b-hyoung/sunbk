@@ -10,7 +10,7 @@ export default function Test2AboutClient() {
       {/* 히어로 */}
       <section className="relative bg-[#001e42] py-28 overflow-hidden">
         <div className="absolute inset-0 bg-[#001e42]/80" />
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-white/75 text-xs font-bold tracking-[0.2em] uppercase mb-4">
             About Us
           </p>
@@ -24,7 +24,7 @@ export default function Test2AboutClient() {
       </section>
 
       {/* 회사 소개 */}
-      <section className="max-w-7xl mx-auto px-6 py-20">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
             <p className="text-[#09388a] text-xs font-bold tracking-[0.15em] uppercase mb-2">Company</p>
@@ -78,7 +78,7 @@ export default function Test2AboutClient() {
 
       {/* CTA */}
       <section className="bg-[#001e42] py-14">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h2 className="text-white text-xl font-bold mb-1">궁금한 점이 있으신가요?</h2>
             <p className="text-white/50 text-sm">선박 전문 상담사가 친절하게 안내해드립니다.</p>

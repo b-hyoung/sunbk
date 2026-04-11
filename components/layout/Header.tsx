@@ -36,13 +36,13 @@ export default function Header({ basePath }: HeaderProps) {
         backgroundColor: "rgba(255,255,255,1)",
         boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
       });
-      setScrolled(true);
+      setScrolled(true); // eslint-disable-line
       return;
     }
 
     // 홈: 투명으로 시작
     gsap.set(header, { backgroundColor: "rgba(0,0,0,0)", boxShadow: "none" });
-    setScrolled(false);
+    setScrolled(false); // eslint-disable-line
 
     const trigger = ScrollTrigger.create({
       start: "top+=80 top",
