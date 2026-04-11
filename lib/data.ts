@@ -6,7 +6,7 @@
 
 import type { Vessel, Booking } from "./supabase";
 import { createClient } from "@supabase/supabase-js";
-import { PHOTO_DATA_MODE, getCategoryLabel } from "@/constants/photo-config";
+import { PHOTO_DATA_MODE, getCategoryLabel, getPhotoGroup } from "@/constants/photo-config";
 import type { VesselImage } from "./supabase";
 import workPhotosJson from "@/data/work-photos.json";
 import { VESSEL_OVERRIDES } from "@/constants/vessels-data";
@@ -248,25 +248,19 @@ export async function createBooking(input: CreateBookingInput): Promise<Booking>
 
 // ── 사진 조회 ────────────────────────────────────────────────────────────
 
-interface WorkPhotoItem {
+export interface WorkPhotoItem {
   id: string;
   src: string;
   title: string;
   ship: string;
   vessel_id: string;
   category: string;
+  group: "vessel" | "work";
   taken_date?: string;
 }
 
-/** 전체 작업 사진 목록 (work 페이지용) */
-export async function getAllWorkPhotos(): Promise<WorkPhotoItem[]> {
-  if (PHOTO_DATA_MODE === "split") {
-    return workPhotosJson as WorkPhotoItem[];
-  }
-
-  // unified 모드: 모든 선박의 vessel_images를 합침
-  const vessels = USE_LOCAL ? localVessels() : await getVesselsFromSupabase();
-  return vessels.flatMap((v) =>
+function toWorkPhotoItems(vessels: Vessel[], groupFilter?: "vessel" | "work"): WorkPhotoItem[] {
+  const items = vessels.flatMap((v) =>
     (v.vessel_images ?? []).map((img) => ({
       id: img.id,
       src: img.url,
@@ -274,21 +268,45 @@ export async function getAllWorkPhotos(): Promise<WorkPhotoItem[]> {
       ship: v.title,
       vessel_id: v.id,
       category: img.category ?? "exterior",
+      group: getPhotoGroup(img.category ?? "exterior"),
       taken_date: img.taken_date,
     }))
   );
+  if (groupFilter) return items.filter((p) => p.group === groupFilter);
+  return items;
 }
 
-/** 특정 선박의 사진 (카테고리 필터 옵션) */
+/** 작업현장 사진 (work 그룹만: 상가, 항해, 환경정화 등) */
+export async function getAllWorkPhotos(): Promise<WorkPhotoItem[]> {
+  if (PHOTO_DATA_MODE === "split") {
+    return workPhotosJson as WorkPhotoItem[];
+  }
+  const vessels = USE_LOCAL ? localVessels() : await getVesselsFromSupabase();
+  return toWorkPhotoItems(vessels, "work");
+}
+
+/** 선박 사진 (vessel 그룹만: 외관, 조타실, 기관실 등) */
+export async function getAllVesselPhotos(): Promise<WorkPhotoItem[]> {
+  const vessels = USE_LOCAL ? localVessels() : await getVesselsFromSupabase();
+  return toWorkPhotoItems(vessels, "vessel");
+}
+
+/** 전체 사진 (그룹 구분 없이) */
+export async function getAllPhotos(): Promise<WorkPhotoItem[]> {
+  const vessels = USE_LOCAL ? localVessels() : await getVesselsFromSupabase();
+  return toWorkPhotoItems(vessels);
+}
+
+/** 특정 선박의 사진 (그룹 필터 옵션) */
 export async function getVesselPhotos(
   vesselId: string,
-  category?: string
+  groupFilter?: "vessel" | "work"
 ): Promise<VesselImage[]> {
   const vessel = await getVesselById(vesselId);
   if (!vessel) return [];
   let images = vessel.vessel_images ?? [];
-  if (category) {
-    images = images.filter((img) => img.category === category);
+  if (groupFilter) {
+    images = images.filter((img) => getPhotoGroup(img.category ?? "exterior") === groupFilter);
   }
   return images;
 }

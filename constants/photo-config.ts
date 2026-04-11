@@ -1,23 +1,24 @@
 export type PhotoDataMode = "unified" | "split";
+export type PhotoGroup = "vessel" | "work";
 
-/** 사진 카테고리 정의 */
-export const PHOTO_CATEGORIES = {
-  exterior: "외관",
-  "exterior-starboard": "외관(우현)",
-  "exterior-rear": "외관(후면)",
-  bridge: "조타실",
-  "engine-room": "기관실",
-  cabin: "선실",
-  "main-engine": "주기관",
-  generator: "발전기",
-  "generator-filter": "발전기(연료필터)",
-  "generator-nameplate": "발전기(명판)",
-  "generator-oil-filter": "발전기(오일필터)",
-  engine: "엔진",
-  "dry-dock": "상가(정비)",
-  sailing: "항해",
-  cleanup: "환경정화",
-} as const;
+/** 사진 카테고리 정의 — group으로 선박/작업현장 구분 */
+export const PHOTO_CATEGORIES: Record<string, { label: string; group: PhotoGroup }> = {
+  exterior:              { label: "외관",             group: "vessel" },
+  "exterior-starboard":  { label: "외관(우현)",       group: "vessel" },
+  "exterior-rear":       { label: "외관(후면)",       group: "vessel" },
+  bridge:                { label: "조타실",           group: "vessel" },
+  "engine-room":         { label: "기관실",           group: "vessel" },
+  cabin:                 { label: "선실",             group: "vessel" },
+  "main-engine":         { label: "주기관",           group: "vessel" },
+  generator:             { label: "발전기",           group: "vessel" },
+  "generator-filter":    { label: "발전기(연료필터)",  group: "vessel" },
+  "generator-nameplate": { label: "발전기(명판)",     group: "vessel" },
+  "generator-oil-filter":{ label: "발전기(오일필터)",  group: "vessel" },
+  engine:                { label: "엔진",             group: "vessel" },
+  "dry-dock":            { label: "상가(정비)",       group: "work" },
+  sailing:               { label: "항해",             group: "work" },
+  cleanup:               { label: "환경정화",         group: "work" },
+};
 
 export type PhotoCategory = keyof typeof PHOTO_CATEGORIES;
 
@@ -28,13 +29,26 @@ export type PhotoCategory = keyof typeof PHOTO_CATEGORIES;
  */
 export const PHOTO_DATA_MODE: PhotoDataMode = "unified";
 
-/** 카테고리 한글 라벨 가져오기 */
+/** 카테고리 한글 라벨 */
 export function getCategoryLabel(category: string): string {
-  return PHOTO_CATEGORIES[category as PhotoCategory] ?? category;
+  return PHOTO_CATEGORIES[category]?.label ?? category;
 }
 
-/** 작업현장 필터에 표시할 메인 카테고리 */
+/** 카테고리 → 그룹 (vessel / work) */
+export function getPhotoGroup(category: string): PhotoGroup {
+  return PHOTO_CATEGORIES[category]?.group ?? "vessel";
+}
+
+/** 작업현장 필터 (work 그룹 카테고리만) */
 export const WORK_FILTER_CATEGORIES = [
+  { key: "all", label: "전체" },
+  { key: "dry-dock", label: "상가(정비)" },
+  { key: "sailing", label: "항해" },
+  { key: "cleanup", label: "환경정화" },
+] as const;
+
+/** 선박 사진 필터 (vessel 그룹 카테고리만) */
+export const VESSEL_FILTER_CATEGORIES = [
   { key: "all", label: "전체" },
   { key: "exterior", label: "외관" },
   { key: "bridge", label: "조타실" },
@@ -42,7 +56,4 @@ export const WORK_FILTER_CATEGORIES = [
   { key: "cabin", label: "선실" },
   { key: "main-engine", label: "주기관" },
   { key: "generator", label: "발전기" },
-  { key: "dry-dock", label: "상가(정비)" },
-  { key: "sailing", label: "항해" },
-  { key: "cleanup", label: "환경정화" },
 ] as const;

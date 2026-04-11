@@ -1,5 +1,5 @@
 export const runtime = "edge";
-import { getVesselBySlug } from "@/lib/data";
+import { getVesselBySlug, getVesselPhotos } from "@/lib/data";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import VesselGallery from "@/components/vessels/VesselGallery";
@@ -24,7 +24,7 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
   const vessel = await getVesselBySlug(slug);
   if (!vessel) notFound();
 
-  const images = vessel.vessel_images ?? [];
+  const images = await getVesselPhotos(vessel.id, "vessel");
 
   const specs = [
     { label: "선박 종류", value: vessel.vessel_type },
