@@ -109,7 +109,7 @@ export default function VesselImageUpload({ images, onChange }: VesselImageUploa
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
-          className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-blue-400 hover:text-blue-500 transition-colors"
+          className="aspect-square border-2 border-dashed border-gray-300 rounded-lg flex flex-col items-center justify-center gap-2 text-gray-400 hover:border-blue-600 hover:text-blue-600 transition-colors"
         >
           <Plus className="w-6 h-6" />
           <span className="text-xs">사진 추가</span>
