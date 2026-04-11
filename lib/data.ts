@@ -9,6 +9,7 @@ import { createClient } from "@supabase/supabase-js";
 import { PHOTO_DATA_MODE, getCategoryLabel } from "@/constants/photo-config";
 import type { VesselImage } from "./supabase";
 import workPhotosJson from "@/data/work-photos.json";
+import { VESSEL_OVERRIDES } from "@/constants/vessels-data";
 
 // 항상 로컬 JSON 사용 (Supabase 연동 시 false로 변경)
 const USE_LOCAL = true;
@@ -25,8 +26,13 @@ function getSupabaseAdmin() {
 import vesselsJson from "@/data/vessels.json";
 import bookingsJson from "@/data/bookings.json";
 
+/** 로컬 JSON에 constants/vessels-data.ts의 오버라이드를 병합 */
 function localVessels(): Vessel[] {
-  return vesselsJson as unknown as Vessel[];
+  return (vesselsJson as unknown as Vessel[]).map((v) => {
+    const override = VESSEL_OVERRIDES[v.id];
+    if (!override) return v;
+    return { ...v, ...override, vessel_images: v.vessel_images };
+  });
 }
 
 function localBookings() {
