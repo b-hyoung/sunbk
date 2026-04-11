@@ -52,12 +52,12 @@ export default function VesselGallery({
     goTo((indexRef.current + 1) % lengthRef.current);
   }, [goTo]);
 
-  // 자동 슬라이드
+  // 자동 슬라이드 — activeIndex 변경 시 타이머 리셋
   useEffect(() => {
     if (autoplayInterval <= 0 || paused || lightboxOpen || images.length <= 1) return;
-    const timer = setInterval(next, autoplayInterval);
-    return () => clearInterval(timer);
-  }, [autoplayInterval, paused, lightboxOpen, images.length, next]);
+    const timer = setTimeout(next, autoplayInterval);
+    return () => clearTimeout(timer);
+  }, [autoplayInterval, paused, lightboxOpen, images.length, next, activeIndex]);
 
   // 라이트박스 키보드
   useEffect(() => {
