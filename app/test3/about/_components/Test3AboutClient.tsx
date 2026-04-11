@@ -1,84 +1,87 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Phone, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Phone, Anchor, MapPin, Clock } from "lucide-react";
 import { COMPANY } from "@/constants/company";
 
-interface WorkPhoto {
-  id: number;
-  src: string;
-  title: string;
-  ship: string;
-}
-
-export default function Test3AboutClient({ photos }: { photos: WorkPhoto[] }) {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  const openLightbox = (i: number) => setLightboxIndex(i);
-  const closeLightbox = () => setLightboxIndex(null);
-  const prev = () => setLightboxIndex((i) => (i! - 1 + photos.length) % photos.length);
-  const next = () => setLightboxIndex((i) => (i! + 1) % photos.length);
-
+export default function Test3AboutClient() {
   return (
     <div className="bg-white">
-      {/* ── 히어로 ── */}
+      {/* 히어로 */}
       <div className="bg-[#0a1628] py-14">
         <div className="max-w-7xl mx-auto px-6 sm:px-8">
           <nav aria-label="브레드크럼" className="flex items-center gap-2 text-xs text-white/40 mb-6">
             <Link href="/test3" className="hover:text-white/70 transition-colors">메인</Link>
             <span>〉</span>
-            <span className="text-white/70">작업사진</span>
+            <span className="text-white/70">회사소개</span>
           </nav>
           <div className="border-l-4 border-[#036EB8] pl-5">
-            <p className="text-[#036EB8] text-[10px] font-bold tracking-widest uppercase mb-2">WORK PHOTOS</p>
-            <h1 className="text-white text-2xl font-bold mb-2">현장의 기록</h1>
+            <p className="text-[#036EB8] text-[10px] font-bold tracking-widest uppercase mb-2">ABOUT US</p>
+            <h1 className="text-white text-2xl font-bold mb-2">{COMPANY.name}</h1>
             <p className="text-white/50 text-sm">
-              해상 작업부터 화물 하역, 다이버 작업까지 — {COMPANY.name}의 다양한 현장을 확인하세요.
+              선박 임대·판매 전문기업. 신뢰와 전문성으로 바다 위의 파트너가 되겠습니다.
             </p>
           </div>
         </div>
       </div>
 
-      {/* ── 작업사진 그리드 ── */}
+      {/* 회사 소개 */}
       <section className="max-w-7xl mx-auto px-6 sm:px-8 py-16">
-        <div className="flex items-center justify-between mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
           <div>
-            <h2 className="text-xl font-bold text-[#036EB8]">작업사진</h2>
-            <hr className="border-t-2 border-[#036EB8] w-10 mt-2" />
-          </div>
-          <p className="text-xs text-gray-400">사진을 클릭하시면 크게 보실 수 있습니다.</p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {photos.map((photo, i) => (
-            <div
-              key={photo.id}
-              className="group cursor-pointer"
-              onClick={() => openLightbox(i)}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-gray-100 border border-gray-200 group-hover:border-[#036EB8] transition-colors">
-                <Image
-                  src={photo.src}
-                  alt={photo.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  unoptimized
-                />
-                {/* 호버 오버레이 */}
-                <div className="absolute inset-0 bg-[#036EB8]/0 group-hover:bg-[#036EB8]/20 transition-colors duration-300" />
+            <div className="flex items-center gap-3 mb-6">
+              <h2 className="text-xl font-bold text-[#036EB8]">회사 소개</h2>
+              <hr className="border-t-2 border-[#036EB8] w-10" />
+            </div>
+            <p className="text-gray-500 leading-relaxed mb-6 text-sm">
+              {COMPANY.name}은 인천을 기반으로 선박 임대 및 판매 서비스를 제공하는 전문 기업입니다.
+              다년간의 경험과 노하우를 바탕으로 고객의 목적에 맞는 최적의 선박을 제안해 드립니다.
+            </p>
+            <div className="space-y-4 text-sm">
+              <div className="flex items-start gap-3">
+                <Anchor className="w-4 h-4 text-[#036EB8] mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">대표자</p>
+                  <p className="text-gray-500">{COMPANY.representative}</p>
+                </div>
               </div>
-              <div className="mt-3 pl-1">
-                <p className="text-[#036EB8] font-bold text-sm">{photo.title}</p>
-                <p className="text-gray-400 text-xs mt-0.5">▨ {photo.ship}</p>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-[#036EB8] mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">주소</p>
+                  <p className="text-gray-500">{COMPANY.address}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Clock className="w-4 h-4 text-[#036EB8] mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">운영시간</p>
+                  <p className="text-gray-500">{COMPANY.hours}</p>
+                </div>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* 작업현장 바로가기 */}
+          <div className="flex flex-col justify-center">
+            <div className="bg-gray-50 border border-gray-200 p-8">
+              <h3 className="text-[#036EB8] font-bold text-base mb-3">작업현장 사진</h3>
+              <hr className="border-t-2 border-[#036EB8] w-10 mb-4" />
+              <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+                수연선박의 정비, 항해, 상가 작업 등 현장의 기록을 사진으로 확인하세요.
+              </p>
+              <Link
+                href="/test3/work"
+                className="inline-flex items-center gap-2 bg-[#036EB8] hover:bg-[#0257a0] text-white px-6 py-3 text-sm font-semibold transition-colors"
+              >
+                작업현장 보기 →
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* CTA */}
       <section className="bg-[#0a1628] py-16">
         <div className="max-w-7xl mx-auto px-6 sm:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div>
@@ -102,56 +105,6 @@ export default function Test3AboutClient({ photos }: { photos: WorkPhoto[] }) {
           </div>
         </div>
       </section>
-
-      {/* ── 라이트박스 ── */}
-      {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
-          onClick={closeLightbox}
-        >
-          <button
-            className="absolute top-5 right-5 text-white/60 hover:text-white transition-colors"
-            onClick={closeLightbox}
-          >
-            <X className="w-7 h-7" />
-          </button>
-
-          <button
-            className="absolute left-4 text-white/60 hover:text-white transition-colors p-2"
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
-
-          <div
-            className="relative w-full max-w-3xl mx-16 aspect-[4/3]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              src={photos[lightboxIndex].src}
-              alt={photos[lightboxIndex].title}
-              fill
-              className="object-contain"
-              unoptimized
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-[#0a1628]/80 border-t border-[#036EB8]/30 px-5 py-3 text-center">
-              <p className="text-white font-semibold text-sm">{photos[lightboxIndex].title}</p>
-              <p className="text-white/50 text-xs mt-0.5">▨ {photos[lightboxIndex].ship}</p>
-            </div>
-          </div>
-
-          <button
-            className="absolute right-4 text-white/60 hover:text-white transition-colors p-2"
-            onClick={(e) => { e.stopPropagation(); next(); }}
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
-
-          <div className="absolute bottom-5 text-white/40 text-xs">
-            {lightboxIndex + 1} / {photos.length}
-          </div>
-        </div>
-      )}
     </div>
   );
 }

@@ -1,78 +1,81 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
-import { Phone, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { Phone, Anchor, MapPin, Clock } from "lucide-react";
+import { COMPANY } from "@/constants/company";
 
-interface WorkPhoto {
-  id: number;
-  src: string;
-  title: string;
-  ship: string;
-}
-
-export default function AboutClient({ photos }: { photos: WorkPhoto[] }) {
-  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-
-  const openLightbox = (i: number) => setLightboxIndex(i);
-  const closeLightbox = () => setLightboxIndex(null);
-  const prev = () => setLightboxIndex((i) => (i! - 1 + photos.length) % photos.length);
-  const next = () => setLightboxIndex((i) => (i! + 1) % photos.length);
-
+export default function AboutClient() {
   return (
     <div className="bg-white">
-      {/* ── 히어로 ── */}
+      {/* 히어로 */}
       <section className="relative bg-gray-900 py-28 overflow-hidden">
-        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-20" poster="/hero-bg.jpg">
-          <source src="https://videos.pexels.com/video-files/6472920/6472920-hd_1920_1080_24fps.mp4" type="video/mp4" />
-        </video>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 opacity-90" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">
-            Work Photos
+            About Us
           </p>
           <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
-            현장의 기록,<br />수연선박의 작업사진
+            {COMPANY.name}
           </h1>
           <p className="text-white/60 text-lg max-w-lg leading-relaxed">
-            해상 작업부터 화물 하역, 다이버 작업까지 — 수연선박의 다양한 현장을 사진으로 확인하세요.
+            선박 임대·판매 전문기업. 신뢰와 전문성으로 바다 위의 파트너가 되겠습니다.
           </p>
         </div>
       </section>
 
-      {/* ── 작업사진 ── */}
+      {/* 회사 소개 */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
-        <div className="mb-10">
-          <h2 className="text-gray-900 mb-2">작업사진</h2>
-          <p className="text-sm text-gray-400">❈ 사진을 클릭하시면 크게 보실 수 있습니다.</p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-          {photos.map((photo, i) => (
-            <div
-              key={photo.id}
-              className="group cursor-pointer"
-              onClick={() => openLightbox(i)}
-            >
-              <div className="relative aspect-[4/3] overflow-hidden bg-gray-100">
-                <Image
-                  src={photo.src}
-                  alt={photo.title}
-                  fill
-                  className="object-cover group-hover:scale-105 transition-transform duration-300"
-                  unoptimized
-                />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div>
+            <h2 className="text-gray-900 mb-4">회사 소개</h2>
+            <p className="text-gray-500 leading-relaxed mb-6">
+              {COMPANY.name}은 인천을 기반으로 선박 임대 및 판매 서비스를 제공하는 전문 기업입니다.
+              다년간의 경험과 노하우를 바탕으로 고객의 목적에 맞는 최적의 선박을 제안해 드립니다.
+            </p>
+            <div className="space-y-4 text-sm">
+              <div className="flex items-start gap-3">
+                <Anchor className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">대표자</p>
+                  <p className="text-gray-500">{COMPANY.representative}</p>
+                </div>
               </div>
-              <div className="mt-3">
-                <p className="text-[#407EC0] font-bold text-base">{photo.title}</p>
-                <p className="text-gray-400 text-sm mt-0.5">▨ {photo.ship}</p>
+              <div className="flex items-start gap-3">
+                <MapPin className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">주소</p>
+                  <p className="text-gray-500">{COMPANY.address}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Clock className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">운영시간</p>
+                  <p className="text-gray-500">{COMPANY.hours}</p>
+                </div>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* 작업현장 바로가기 */}
+          <div className="flex flex-col justify-center">
+            <div className="bg-gray-50 rounded-2xl p-8">
+              <h3 className="text-gray-900 font-bold text-lg mb-3">작업현장 사진</h3>
+              <p className="text-gray-500 text-sm mb-6 leading-relaxed">
+                수연선박의 정비, 항해, 상가 작업 등 현장의 기록을 사진으로 확인하세요.
+              </p>
+              <Link
+                href="/test1/work"
+                className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
+              >
+                작업현장 보기 →
+              </Link>
+            </div>
+          </div>
         </div>
       </section>
 
-      {/* ── CTA ── */}
+      {/* CTA */}
       <section className="border-t border-gray-100 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="bg-blue-600 rounded-2xl px-8 py-14 md:py-16 text-center">
@@ -82,11 +85,11 @@ export default function AboutClient({ photos }: { photos: WorkPhoto[] }) {
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
               <a
-                href="tel:010-0000-0000"
+                href={`tel:${COMPANY.phone}`}
                 className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-blue-50 px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
               >
                 <Phone className="w-4 h-4" />
-                010-0000-0000
+                {COMPANY.phone}
               </a>
               <Link
                 href="/test1/contact"
@@ -98,56 +101,6 @@ export default function AboutClient({ photos }: { photos: WorkPhoto[] }) {
           </div>
         </div>
       </section>
-
-      {/* ── 라이트박스 ── */}
-      {lightboxIndex !== null && (
-        <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
-          onClick={closeLightbox}
-        >
-          <button
-            className="absolute top-5 right-5 text-white/70 hover:text-white transition-colors"
-            onClick={closeLightbox}
-          >
-            <X className="w-7 h-7" />
-          </button>
-
-          <button
-            className="absolute left-4 text-white/70 hover:text-white transition-colors p-2"
-            onClick={(e) => { e.stopPropagation(); prev(); }}
-          >
-            <ChevronLeft className="w-8 h-8" />
-          </button>
-
-          <div
-            className="relative w-full max-w-3xl mx-16 aspect-[4/3]"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <Image
-              src={photos[lightboxIndex].src}
-              alt={photos[lightboxIndex].title}
-              fill
-              className="object-contain"
-              unoptimized
-            />
-            <div className="absolute bottom-0 left-0 right-0 bg-black/50 px-5 py-3 text-center">
-              <p className="text-white font-semibold">{photos[lightboxIndex].title}</p>
-              <p className="text-white/60 text-sm">▨ {photos[lightboxIndex].ship}</p>
-            </div>
-          </div>
-
-          <button
-            className="absolute right-4 text-white/70 hover:text-white transition-colors p-2"
-            onClick={(e) => { e.stopPropagation(); next(); }}
-          >
-            <ChevronRight className="w-8 h-8" />
-          </button>
-
-          <div className="absolute bottom-5 text-white/50 text-sm">
-            {lightboxIndex + 1} / {photos.length}
-          </div>
-        </div>
-      )}
     </div>
   );
 }
