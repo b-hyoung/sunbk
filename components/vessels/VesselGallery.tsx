@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { getCategoryLabel } from "@/constants/photo-config";
@@ -19,29 +19,28 @@ export default function VesselGallery({
   autoplayInterval = 5000,
 }: VesselGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [prevIndex, setPrevIndex] = useState(0);
+  const [fading, setFading] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [paused, setPaused] = useState(false);
-  const [sliding, setSliding] = useState(false);
-  const [slideDir, setSlideDir] = useState<"left" | "right">("right");
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const slideTo = useCallback((nextIndex: number, dir: "left" | "right") => {
-    if (sliding) return;
-    setSlideDir(dir);
-    setSliding(true);
-    // 짧은 딜레이 후 인덱스 교체 — CSS transition과 동기화
-    setTimeout(() => {
-      setActiveIndex(nextIndex);
-      setSliding(false);
-    }, 300);
-  }, [sliding]);
+  const goTo = useCallback((nextIndex: number) => {
+    if (nextIndex === activeIndex || fading) return;
+    setPrevIndex(activeIndex);
+    setActiveIndex(nextIndex);
+    setFading(true);
+    if (timerRef.current) clearTimeout(timerRef.current);
+    timerRef.current = setTimeout(() => setFading(false), 500);
+  }, [activeIndex, fading]);
 
   const prev = useCallback(
-    () => slideTo((activeIndex - 1 + images.length) % images.length, "right"),
-    [activeIndex, images.length, slideTo],
+    () => goTo((activeIndex - 1 + images.length) % images.length),
+    [activeIndex, images.length, goTo],
   );
   const next = useCallback(
-    () => slideTo((activeIndex + 1) % images.length, "left"),
-    [activeIndex, images.length, slideTo],
+    () => goTo((activeIndex + 1) % images.length),
+    [activeIndex, images.length, goTo],
   );
 
   // 자동 슬라이드
@@ -82,26 +81,29 @@ export default function VesselGallery({
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        <div
-          className="absolute inset-0 transition-transform duration-300 ease-out"
-          style={{
-            transform: sliding
-              ? `translateX(${slideDir === "left" ? "-8%" : "8%"})`
-              : "translateX(0)",
-            opacity: sliding ? 0 : 1,
-            transition: "transform 300ms ease-out, opacity 300ms ease-out",
-          }}
-        >
+        {/* 이전 이미지 (페이드아웃) */}
+        {fading && (
           <Image
-            key={activeImage.id}
-            src={activeImage.url}
-            alt={`${vesselTitle} - ${getCategoryLabel(activeImage.category ?? "")}`}
+            src={images[prevIndex].url}
+            alt=""
             fill
-            className="object-cover"
-            priority={activeIndex === 0}
+            className="object-cover absolute inset-0"
             sizes="(max-width: 1024px) 100vw, 66vw"
           />
-        </div>
+        )}
+        {/* 현재 이미지 (페이드인) */}
+        <Image
+          src={activeImage.url}
+          alt={`${vesselTitle} - ${getCategoryLabel(activeImage.category ?? "")}`}
+          fill
+          className="object-cover absolute inset-0"
+          style={{
+            opacity: fading ? 0 : 1,
+            transition: "opacity 500ms ease-in-out",
+          }}
+          priority={activeIndex === 0}
+          sizes="(max-width: 1024px) 100vw, 66vw"
+        />
         {activeImage.category && (
           <span className="absolute top-3 left-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
             {getCategoryLabel(activeImage.category)}
@@ -135,7 +137,7 @@ export default function VesselGallery({
             {images.map((_, i) => (
               <button
                 key={i}
-                onClick={(e) => { e.stopPropagation(); slideTo(i, i > activeIndex ? "left" : "right"); }}
+                onClick={(e) => { e.stopPropagation(); goTo(i); }}
                 aria-label={`사진 ${i + 1}`}
                 className={`w-2.5 h-2.5 rounded-full transition-colors ${
                   i === activeIndex ? "bg-white" : "bg-white/40 hover:bg-white/60"
@@ -152,7 +154,7 @@ export default function VesselGallery({
           {images.map((img, i) => (
             <button
               key={img.id}
-              onClick={() => slideTo(i, i > activeIndex ? "left" : "right")}
+              onClick={() => goTo(i)}
               aria-label={getCategoryLabel(img.category ?? "") + " 보기"}
               className={`relative w-20 h-14 shrink-0 rounded-lg overflow-hidden border-2 transition-colors ${
                 i === activeIndex ? "border-blue-500" : "border-gray-100 hover:border-blue-300"
