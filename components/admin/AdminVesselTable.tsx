@@ -42,6 +42,7 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
   return (
     <div className="border border-gray-100 rounded-2xl overflow-hidden">
       <div className="overflow-x-auto">
+        <p className="text-xs text-gray-400 px-4 py-2 md:hidden">← 좌우로 스크롤하세요</p>
         <table className="w-full text-sm">
           <caption className="sr-only">선박 관리 목록</caption>
           <thead>
@@ -87,7 +88,7 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
                     <div className="flex items-center justify-end gap-1">
                       <Link
                         href={`/test1/admin/vessels/${v.id}/edit`}
-                        className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         aria-label="수정"
                       >
                         <Pencil className="w-4 h-4" />
@@ -95,7 +96,7 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
                       <button
                         onClick={() => setConfirmId(v.id)}
                         disabled={deleting === v.id}
-                        className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                        className="p-2.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
                         aria-label="삭제"
                       >
                         <Trash2 className="w-4 h-4" />

@@ -131,7 +131,7 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
       {/* 제원 */}
       <section>
         <h3 className="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">제원</h3>
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
           <div>
             <label htmlFor="year-built" className={labelClass}>건조 연도</label>
             <input id="year-built" type="number" value={yearBuilt} onChange={(e) => setYearBuilt(e.target.value)} className={inputClass} placeholder="예: 2015" />
