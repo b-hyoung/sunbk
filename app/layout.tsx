@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     default: "수연선박 | 선박 임대·판매 전문",
     template: "%s | 수연선박",
   },
-  description: "국내 최고 수준의 선박 임대·판매 전문 업체. 레저선, 어선, 화물선 등 다양한 선박을 합리적인 가격에 이용하세요.",
+  description: "선박 임대·판매 전문 업체. 어선, 화물선 등 다양한 선박을 합리적인 가격에 이용하세요.",
   keywords: ["선박 임대", "선박 판매", "보트 렌탈", "요트 임대", "어선 판매", "선박 전문"],
   openGraph: {
     type: "website",

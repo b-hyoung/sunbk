@@ -9,7 +9,7 @@ interface VesselFilterProps {
   currentVesselType?: string;
 }
 
-const VESSEL_TYPES = ["레저선", "어선", "화물선", "여객선"];
+const VESSEL_TYPES = ["어선", "화물선"];
 
 export default function VesselFilter({ basePath, currentType, currentVesselType }: VesselFilterProps) {
   const pathname = usePathname();

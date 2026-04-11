@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "선박 목록",
-  description: "임대 및 판매 가능한 선박 목록을 확인하세요. 레저선, 어선, 화물선, 여객선 등 다양한 선박을 보유하고 있습니다.",
+  description: "임대 및 판매 가능한 선박 목록을 확인하세요. 어선, 화물선 등 다양한 선박을 보유하고 있습니다.",
 };
 
 interface SearchParams {

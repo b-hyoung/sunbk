@@ -5,17 +5,14 @@ import VesselCard from "@/app/test1/_components/VesselCard";
 import HeroVideo from "@/components/layout/HeroVideo";
 
 const stats = [
-  { value: "50", suffix: "+", label: "보유 선박" },
-  { value: "200", suffix: "+", label: "누적 거래" },
-  { value: "98", suffix: "%", label: "고객 만족도" },
-  { value: "15", suffix: "년", label: "영업 경력" },
+  { value: "10", suffix: "척", label: "운영 선박" },
+  { value: "인천", suffix: "", label: "소재지" },
+  { value: "365", suffix: "일", label: "연중 상담" },
 ];
 
 const vesselCategories = [
-  { label: "레저선", icon: "⛵", href: "/vessels?vessel_type=레저선" },
   { label: "어선", icon: "🎣", href: "/vessels?vessel_type=어선" },
   { label: "화물선", icon: "🚢", href: "/vessels?vessel_type=화물선" },
-  { label: "여객선", icon: "🛳️", href: "/vessels?vessel_type=여객선" },
 ];
 
 export default async function HomePage() {
@@ -35,8 +32,8 @@ export default async function HomePage() {
               최적의 선박을<br />합리적인 가격으로
             </h1>
             <p data-hero className="text-white/70 text-lg leading-relaxed mb-10 max-w-lg">
-              15년 경력의 선박 전문가가 레저선부터 어선·화물선까지,
-              고객님의 목적에 맞는 최고의 선박을 추천해드립니다.
+              선박 전문가가 어선·화물선 등
+              고객님의 목적에 맞는 최적의 선박을 제안해드립니다.
             </p>
             <div data-hero className="flex flex-wrap gap-3">
               <Link

@@ -7,10 +7,8 @@ import type { Vessel } from "@/lib/supabase";
 
 const categories = [
   { label: "전체", href: "/test3/vessels", key: "all" },
-  { label: "레저선", href: "/test3/vessels?vessel_type=레저선", key: "레저선" },
   { label: "어선", href: "/test3/vessels?vessel_type=어선", key: "어선" },
   { label: "화물선", href: "/test3/vessels?vessel_type=화물선", key: "화물선" },
-  { label: "여객선", href: "/test3/vessels?vessel_type=여객선", key: "여객선" },
 ];
 
 const typeLabel: Record<string, string> = { rent: "임대", sale: "판매", both: "임대·판매" };
@@ -91,7 +89,7 @@ export default async function Test3HomePage() {
           </h1>
           <div className="w-12 h-0.5 bg-ocean mx-auto mb-6" />
           <p className="text-white/75 text-sm leading-relaxed mb-10">
-            15년 경력 · 레저선 · 어선 · 화물선 · 여객선
+            어선 · 화물선 전문
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <Link href="/test3/vessels" className="inline-flex items-center justify-center gap-2 bg-ocean hover:bg-ocean-hover text-white px-8 py-3.5 text-sm font-semibold transition-colors">
@@ -148,9 +146,9 @@ export default async function Test3HomePage() {
               </h2>
               <hr className="border-ocean mb-4" />
               <div className="space-y-3 text-xs text-white/50">
-                <div><span className="block text-white/80 font-semibold">8척</span>운영 선박</div>
-                <div><span className="block text-white/80 font-semibold">15년+</span>영업 경력</div>
+                <div><span className="block text-white/80 font-semibold">10척</span>운영 선박</div>
                 <div><span className="block text-white/80 font-semibold">인천</span>소재지</div>
+                <div><span className="block text-white/80 font-semibold">365일</span>연중 상담</div>
               </div>
             </div>
 

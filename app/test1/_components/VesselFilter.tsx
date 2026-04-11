@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 
-const vesselTypes = ["레저선", "어선", "화물선", "여객선", "예인선", "기타"];
+const vesselTypes = ["어선", "화물선"];
 
 interface VesselFilterProps {
   basePath: string;

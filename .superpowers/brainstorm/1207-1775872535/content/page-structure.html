@@ -1,0 +1,178 @@
+<h2>섹션 2: 페이지 구조 변경 계획</h2>
+<p class="subtitle">기존 페이지 수정 + 신규 페이지 추가 — 전체 흐름을 한눈에</p>
+
+<!-- 전체 사이트맵 다이어그램 -->
+<div class="mockup" style="margin-bottom:32px;">
+  <div class="mockup-header">사이트맵 — 변경 전 vs 후</div>
+  <div class="mockup-body" style="padding:24px;">
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:32px;">
+      <!-- Before -->
+      <div>
+        <div style="font-weight:700;color:#ef4444;margin-bottom:12px;font-size:14px;">BEFORE (현재)</div>
+        <div style="font-family:monospace;font-size:12px;line-height:2;color:#555;">
+          /testN/<br>
+          ├── <span style="color:#888;">vessels/</span> — 가상 선박 6척, 이미지 1장<br>
+          ├── <span style="color:#888;">vessels/[slug]</span> — 대표 이미지 1장만<br>
+          ├── <span style="color:#e67e22;">about/</span> — 회사소개 + 작업사진 혼합<br>
+          ├── <span style="color:#888;">booking/</span><br>
+          ├── <span style="color:#888;">contact/</span><br>
+          └── <span style="color:#888;">admin/</span>
+        </div>
+      </div>
+      <!-- After -->
+      <div>
+        <div style="font-weight:700;color:#22c55e;margin-bottom:12px;font-size:14px;">AFTER (변경 후)</div>
+        <div style="font-family:monospace;font-size:12px;line-height:2;color:#555;">
+          /testN/<br>
+          ├── <span style="color:#036EB8;font-weight:700;">vessels/</span> — 실제 선박 8척, 다중 이미지<br>
+          ├── <span style="color:#036EB8;font-weight:700;">vessels/[slug]</span> — 부위별 갤러리 확장<br>
+          ├── <span style="color:#22c55e;font-weight:700;">work/</span> — 🆕 작업현장 전용 페이지<br>
+          ├── <span style="color:#036EB8;font-weight:700;">about/</span> — 회사소개만 (사진은 /work로 이관)<br>
+          ├── <span style="color:#888;">booking/</span><br>
+          ├── <span style="color:#888;">contact/</span><br>
+          └── <span style="color:#888;">admin/</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 선박 상세 페이지 변경 -->
+<div class="section">
+  <h3>1. 선박 상세 페이지 (vessels/[slug]) — 갤러리 확장</h3>
+  <div class="split">
+    <div class="mockup">
+      <div class="mockup-header">현재 — 이미지 1장</div>
+      <div class="mockup-body" style="padding:16px;">
+        <div style="background:#e5e7eb;border-radius:8px;height:180px;display:flex;align-items:center;justify-content:center;color:#9ca3af;font-size:13px;">
+          대표 이미지 1장<br>(Unsplash 스톡)
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:#888;">
+          ↓ 선박 소개 / 제원 / 예약 버튼
+        </div>
+      </div>
+    </div>
+    <div class="mockup">
+      <div class="mockup-header">변경 후 — 부위별 갤러리</div>
+      <div class="mockup-body" style="padding:16px;">
+        <div style="background:#036EB8;border-radius:8px;height:180px;display:flex;align-items:center;justify-content:center;color:white;font-size:13px;font-weight:600;">
+          메인 이미지 (외관)<br>
+          <span style="font-weight:400;font-size:11px;">클릭 시 라이트박스</span>
+        </div>
+        <div style="display:flex;gap:6px;margin-top:8px;">
+          <div style="background:#dbeafe;border-radius:4px;height:48px;flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:#036EB8;">조타실</div>
+          <div style="background:#dbeafe;border-radius:4px;height:48px;flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:#036EB8;">기관실</div>
+          <div style="background:#dbeafe;border-radius:4px;height:48px;flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:#036EB8;">선실</div>
+          <div style="background:#dbeafe;border-radius:4px;height:48px;flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:#036EB8;">주기관</div>
+          <div style="background:#dbeafe;border-radius:4px;height:48px;flex:1;display:flex;align-items:center;justify-content:center;font-size:10px;color:#036EB8;">+2</div>
+        </div>
+        <div style="margin-top:12px;font-size:12px;color:#888;">
+          ↓ 카테고리 라벨 표시 / 선박 소개 / 제원
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 작업현장 페이지 (신규) -->
+<div class="section" style="margin-top:32px;">
+  <h3>2. 작업현장 페이지 (/testN/work) — 🆕 신규</h3>
+  <div class="mockup">
+    <div class="mockup-header">와이어프레임 — /testN/work</div>
+    <div class="mockup-body" style="padding:20px;">
+      <!-- 히어로 -->
+      <div style="background:#0f172a;border-radius:8px;padding:24px;margin-bottom:16px;">
+        <div style="font-size:10px;color:#60a5fa;letter-spacing:2px;margin-bottom:4px;">WORK & MAINTENANCE</div>
+        <div style="color:white;font-weight:700;font-size:16px;margin-bottom:4px;">수연선박의 작업현장</div>
+        <div style="color:rgba(255,255,255,0.5);font-size:11px;">정비, 항해, 상가 작업 등 현장의 기록을 확인하세요</div>
+      </div>
+
+      <!-- 필터 바 -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <div style="background:#036EB8;color:white;padding:4px 12px;border-radius:20px;font-size:11px;">전체</div>
+        <div style="background:#f1f5f9;padding:4px 12px;border-radius:20px;font-size:11px;color:#555;">외관</div>
+        <div style="background:#f1f5f9;padding:4px 12px;border-radius:20px;font-size:11px;color:#555;">조타실</div>
+        <div style="background:#f1f5f9;padding:4px 12px;border-radius:20px;font-size:11px;color:#555;">기관실</div>
+        <div style="background:#f1f5f9;padding:4px 12px;border-radius:20px;font-size:11px;color:#555;">정비/상가</div>
+        <div style="background:#f1f5f9;padding:4px 12px;border-radius:20px;font-size:11px;color:#555;">항해</div>
+      </div>
+
+      <!-- 선박별 필터 -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+        <div style="border:1px solid #036EB8;color:#036EB8;padding:4px 12px;border-radius:20px;font-size:11px;">전체 선박</div>
+        <div style="border:1px solid #e2e8f0;padding:4px 12px;border-radius:20px;font-size:11px;color:#888;">수연1호</div>
+        <div style="border:1px solid #e2e8f0;padding:4px 12px;border-radius:20px;font-size:11px;color:#888;">수연5호</div>
+        <div style="border:1px solid #e2e8f0;padding:4px 12px;border-radius:20px;font-size:11px;color:#888;">신성호</div>
+        <div style="border:1px solid #e2e8f0;padding:4px 12px;border-radius:20px;font-size:11px;color:#888;">...</div>
+      </div>
+
+      <!-- 사진 그리드 -->
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;">
+        <div style="background:#e2e8f0;border-radius:6px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#64748b;">
+          <div>📷</div>
+          <div style="font-weight:600;">수연1호 조타실</div>
+          <div style="color:#94a3b8;font-size:9px;">2026.04.10</div>
+        </div>
+        <div style="background:#e2e8f0;border-radius:6px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#64748b;">
+          <div>📷</div>
+          <div style="font-weight:600;">수연5호 주기관</div>
+          <div style="color:#94a3b8;font-size:9px;">2026.04.09</div>
+        </div>
+        <div style="background:#e2e8f0;border-radius:6px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#64748b;">
+          <div>📷</div>
+          <div style="font-weight:600;">진양2호 항해</div>
+          <div style="color:#94a3b8;font-size:9px;">2025.10.10</div>
+        </div>
+        <div style="background:#e2e8f0;border-radius:6px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#64748b;">
+          <div>📷</div>
+          <div style="font-weight:600;">신성호 우현</div>
+          <div style="color:#94a3b8;font-size:9px;">2026.04.09</div>
+        </div>
+        <div style="background:#e2e8f0;border-radius:6px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#64748b;">
+          <div>📷</div>
+          <div style="font-weight:600;">수연6호 환경정화</div>
+          <div style="color:#94a3b8;font-size:9px;">2026.03.20</div>
+        </div>
+        <div style="background:#e2e8f0;border-radius:6px;aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:10px;color:#64748b;">
+          <div>📷</div>
+          <div style="font-weight:600;">수연1호 발전기</div>
+          <div style="color:#94a3b8;font-size:9px;">2026.04.10</div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px;font-size:11px;color:#94a3b8;text-align:center;">
+        클릭 시 라이트박스 (기존 about 페이지와 동일 패턴)
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- about 페이지 변경 -->
+<div class="section" style="margin-top:32px;">
+  <h3>3. about 페이지 — 회사소개로 정리</h3>
+  <p style="font-size:13px;color:#555;line-height:1.7;">
+    현재 about 페이지는 작업사진 갤러리가 메인 콘텐츠. 사진이 /work로 이관되면:
+  </p>
+  <ul style="font-size:13px;color:#555;line-height:2;margin-top:8px;">
+    <li>회사 소개 (수연선박 소개, 연혁, 대표 인사말 등)</li>
+    <li>작업현장 바로가기 링크 → "/testN/work"</li>
+    <li>CTA (전화문의 / 온라인문의) 유지</li>
+  </ul>
+</div>
+
+<!-- 네비게이션 변경 -->
+<div class="section" style="margin-top:32px;">
+  <h3>4. 네비게이션 메뉴 추가</h3>
+  <div class="mockup">
+    <div class="mockup-header">헤더 네비게이션</div>
+    <div class="mockup-body" style="padding:16px;">
+      <div style="display:flex;gap:24px;font-size:13px;padding:8px 0;border-bottom:2px solid #e2e8f0;">
+        <span style="color:#555;">홈</span>
+        <span style="color:#555;">선박 목록</span>
+        <span style="color:#036EB8;font-weight:700;border-bottom:2px solid #036EB8;padding-bottom:8px;margin-bottom:-2px;">작업현장 🆕</span>
+        <span style="color:#555;">회사소개</span>
+        <span style="color:#555;">문의하기</span>
+      </div>
+    </div>
+  </div>
+</div>

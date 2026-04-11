@@ -4,17 +4,14 @@ import { getFeaturedVessels } from "@/lib/data";
 import Test2VesselCard from "@/components/test2/VesselCard";
 
 const stats = [
-  { value: "8척", label: "운영 선박" },
-  { value: "15년+", label: "영업 경력" },
+  { value: "10척", label: "운영 선박" },
   { value: "인천", label: "소재지" },
   { value: "365일", label: "연중 상담" },
 ];
 
 const categories = [
-  { icon: "⛵", label: "레저선", href: "/test2/vessels?vessel_type=레저선" },
   { icon: "🎣", label: "어선", href: "/test2/vessels?vessel_type=어선" },
   { icon: "🚢", label: "화물선", href: "/test2/vessels?vessel_type=화물선" },
-  { icon: "🛳️", label: "여객선", href: "/test2/vessels?vessel_type=여객선" },
 ];
 
 export default async function Test2HomePage() {
@@ -41,7 +38,7 @@ export default async function Test2HomePage() {
               최적의 선박을<br />합리적인 가격으로
             </h1>
             <p data-hero className="text-white/75 text-lg leading-relaxed mb-10 max-w-xl">
-              15년간 축적된 선박 전문 네트워크로 레저선부터 화물선까지, 고객님의 목적에 맞는 최고의 선박을 연결해드립니다.
+              선박 전문 네트워크로 어선·화물선 등 고객님의 목적에 맞는 최적의 선박을 연결해드립니다.
             </p>
             <div data-hero className="flex flex-wrap gap-3">
               <Link
