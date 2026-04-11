@@ -90,7 +90,7 @@ export default async function Test3HomePage() {
             선박 임대·판매<br />전문 기업
           </h1>
           <div className="w-12 h-0.5 bg-[#036EB8] mx-auto mb-6" />
-          <p className="text-white/60 text-sm leading-relaxed mb-10">
+          <p className="text-white/75 text-sm leading-relaxed mb-10">
             15년 경력 · 레저선 · 어선 · 화물선 · 여객선
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
@@ -148,9 +148,9 @@ export default async function Test3HomePage() {
               </h2>
               <hr className="border-[#036EB8] mb-4" />
               <div className="space-y-3 text-xs text-white/50">
-                <div><span className="block text-white/80 font-semibold">50+</span>보유 선박</div>
-                <div><span className="block text-white/80 font-semibold">200+</span>누적 거래</div>
-                <div><span className="block text-white/80 font-semibold">15년</span>영업 경력</div>
+                <div><span className="block text-white/80 font-semibold">8척</span>운영 선박</div>
+                <div><span className="block text-white/80 font-semibold">15년+</span>영업 경력</div>
+                <div><span className="block text-white/80 font-semibold">인천</span>소재지</div>
               </div>
             </div>
 

@@ -9,9 +9,9 @@ export default function Test2AboutClient() {
     <div className="bg-white">
       {/* 히어로 */}
       <section className="relative bg-[#001e42] py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-[#001e42]/90 via-[#001e42]/60 to-transparent" />
+        <div className="absolute inset-0 bg-[#001e42]/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <p className="text-white/60 text-xs font-bold tracking-[0.2em] uppercase mb-4">
+          <p className="text-white/75 text-xs font-bold tracking-[0.2em] uppercase mb-4">
             About Us
           </p>
           <h1 className="text-white font-bold text-4xl md:text-5xl mb-5 max-w-xl leading-tight">

@@ -5,10 +5,10 @@ import VesselCard from "@/app/test1/_components/VesselCard";
 import HeroVideo from "@/components/layout/HeroVideo";
 
 const stats = [
-  { value: "50", suffix: "+", label: "보유 선박" },
-  { value: "200", suffix: "+", label: "누적 거래" },
-  { value: "98", suffix: "%", label: "고객 만족도" },
-  { value: "15", suffix: "년", label: "영업 경력" },
+  { value: "8", suffix: "척", label: "운영 선박" },
+  { value: "15", suffix: "년+", label: "영업 경력" },
+  { value: "인천", suffix: "", label: "소재지" },
+  { value: "365", suffix: "일", label: "연중 상담" },
 ];
 
 const vesselCategories = [

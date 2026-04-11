@@ -4,10 +4,10 @@ import { getFeaturedVessels } from "@/lib/data";
 import Test2VesselCard from "@/components/test2/VesselCard";
 
 const stats = [
-  { value: "50+", label: "보유 선박" },
-  { value: "200+", label: "누적 거래" },
-  { value: "98%", label: "고객 만족도" },
-  { value: "15년", label: "영업 경력" },
+  { value: "8척", label: "운영 선박" },
+  { value: "15년+", label: "영업 경력" },
+  { value: "인천", label: "소재지" },
+  { value: "365일", label: "연중 상담" },
 ];
 
 const categories = [
@@ -34,13 +34,13 @@ export default async function Test2HomePage() {
         <div className="absolute inset-0 bg-gradient-to-r from-[#001e42]/90 via-[#001e42]/60 to-transparent" />
         <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 md:py-40">
           <div className="max-w-2xl">
-            <p data-hero className="text-white/60 text-xs font-bold tracking-[0.2em] uppercase mb-6">
+            <p data-hero className="text-white/75 text-xs font-bold tracking-[0.2em] uppercase mb-6">
               선박 임대·판매 전문기업
             </p>
             <h1 data-hero className="text-white font-bold leading-tight mb-6 text-4xl md:text-5xl">
               최적의 선박을<br />합리적인 가격으로
             </h1>
-            <p data-hero className="text-white/60 text-lg leading-relaxed mb-10 max-w-xl">
+            <p data-hero className="text-white/75 text-lg leading-relaxed mb-10 max-w-xl">
               15년간 축적된 선박 전문 네트워크로 레저선부터 화물선까지, 고객님의 목적에 맞는 최고의 선박을 연결해드립니다.
             </p>
             <div data-hero className="flex flex-wrap gap-3">

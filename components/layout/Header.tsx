@@ -42,7 +42,7 @@ export default function Header({ basePath }: HeaderProps) {
     }
 
     // 홈: 투명으로 시작
-    gsap.set(header, { backgroundColor: "rgba(0,0,0,0)", backdropFilter: "blur(0px)", boxShadow: "none" });
+    gsap.set(header, { backgroundColor: "rgba(0,0,0,0)", boxShadow: "none" });
     setScrolled(false);
 
     const trigger = ScrollTrigger.create({
@@ -51,7 +51,6 @@ export default function Header({ basePath }: HeaderProps) {
         setScrolled(true);
         gsap.to(header, {
           backgroundColor: "rgba(255,255,255,1)",
-          backdropFilter: "blur(12px)",
           duration: 0.35,
           ease: "power2.out",
           boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
@@ -61,7 +60,6 @@ export default function Header({ basePath }: HeaderProps) {
         setScrolled(false);
         gsap.to(header, {
           backgroundColor: "rgba(0,0,0,0)",
-          backdropFilter: "blur(0px)",
           duration: 0.35,
           ease: "power2.out",
           boxShadow: "none",
@@ -76,9 +74,9 @@ export default function Header({ basePath }: HeaderProps) {
     const header = headerRef.current;
     if (!header) return;
     if (menuOpen && !scrolled) {
-      gsap.to(header, { backgroundColor: "rgba(15,23,42,0.95)", backdropFilter: "blur(12px)", duration: 0.2 });
+      gsap.to(header, { backgroundColor: "rgba(15,23,42,0.98)", duration: 0.2 });
     } else if (!scrolled) {
-      gsap.to(header, { backgroundColor: "rgba(0,0,0,0)", backdropFilter: "blur(0px)", duration: 0.2 });
+      gsap.to(header, { backgroundColor: "rgba(0,0,0,0)", duration: 0.2 });
     }
   }, [menuOpen, scrolled]);
 
@@ -147,7 +145,7 @@ export default function Header({ basePath }: HeaderProps) {
 
       {/* 모바일 메뉴 */}
       {menuOpen && (
-        <div className={`md:hidden border-t ${scrolled ? "bg-white border-gray-100" : "bg-slate-900/95 backdrop-blur-xl border-white/10"}`}>
+        <div className={`md:hidden border-t ${scrolled ? "bg-white border-gray-100" : "bg-slate-900/95 border-white/10"}`}>
           <nav className="flex flex-col py-2">
             {navLinks.map((link) => (
               <Link

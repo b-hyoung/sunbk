@@ -15,7 +15,7 @@ export default async function WorkPage() {
     <div className="bg-white min-h-screen">
       {/* 히어로 */}
       <section className="relative bg-gray-900 py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 opacity-90" />
+        <div className="absolute inset-0 bg-gray-900/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">
             Work & Maintenance
@@ -23,7 +23,7 @@ export default async function WorkPage() {
           <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
             수연선박의 작업현장
           </h1>
-          <p className="text-white/60 text-lg max-w-lg leading-relaxed">
+          <p className="text-white/75 text-lg max-w-lg leading-relaxed">
             정비, 항해, 상가 작업 등 현장의 기록을 사진으로 확인하세요.
           </p>
         </div>

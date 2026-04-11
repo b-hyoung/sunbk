@@ -9,7 +9,7 @@ export default function AboutClient() {
     <div className="bg-white">
       {/* 히어로 */}
       <section className="relative bg-gray-900 py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-blue-900 opacity-90" />
+        <div className="absolute inset-0 bg-gray-900/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">
             About Us
@@ -17,7 +17,7 @@ export default function AboutClient() {
           <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
             {COMPANY.name}
           </h1>
-          <p className="text-white/60 text-lg max-w-lg leading-relaxed">
+          <p className="text-white/75 text-lg max-w-lg leading-relaxed">
             선박 임대·판매 전문기업. 신뢰와 전문성으로 바다 위의 파트너가 되겠습니다.
           </p>
         </div>
