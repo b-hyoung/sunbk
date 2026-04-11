@@ -9,9 +9,10 @@ import type { VesselImage } from "@/lib/supabase";
 interface VesselGalleryProps {
   images: VesselImage[];
   vesselTitle: string;
-  /** 자동 슬라이드 간격 (ms). 0이면 비활성. 기본 5000ms */
   autoplayInterval?: number;
 }
+
+const FADE_DURATION = 500;
 
 export default function VesselGallery({
   images,
@@ -19,45 +20,35 @@ export default function VesselGallery({
   autoplayInterval = 5000,
 }: VesselGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const [prevIndex, setPrevIndex] = useState(0);
-  const [fading, setFading] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [paused, setPaused] = useState(false);
-  const fadeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+
   const indexRef = useRef(0);
-
+  const lengthRef = useRef(images.length);
   useEffect(() => { indexRef.current = activeIndex; }, [activeIndex]);
+  useEffect(() => { lengthRef.current = images.length; }, [images.length]);
 
-  const goTo = useCallback((nextIndex: number) => {
-    const curr = indexRef.current;
-    if (nextIndex === curr) return;
-    setPrevIndex(curr);
-    setActiveIndex(nextIndex);
-    setFading(true);
-    clearTimeout(fadeTimer.current);
-    fadeTimer.current = setTimeout(() => setFading(false), 500);
+  const goTo = useCallback((i: number) => {
+    if (i === indexRef.current) return;
+    setActiveIndex(i);
   }, []);
 
   const prev = useCallback(() => {
-    const curr = indexRef.current;
-    const nextIdx = (curr - 1 + images.length) % images.length;
-    goTo(nextIdx);
-  }, [images.length, goTo]);
+    goTo((indexRef.current - 1 + lengthRef.current) % lengthRef.current);
+  }, [goTo]);
 
   const next = useCallback(() => {
-    const curr = indexRef.current;
-    const nextIdx = (curr + 1) % images.length;
-    goTo(nextIdx);
-  }, [images.length, goTo]);
+    goTo((indexRef.current + 1) % lengthRef.current);
+  }, [goTo]);
 
-  // 자동 슬라이드 — ref로 안정적 interval
+  // 자동 슬라이드
   useEffect(() => {
     if (autoplayInterval <= 0 || paused || lightboxOpen || images.length <= 1) return;
     const timer = setInterval(next, autoplayInterval);
     return () => clearInterval(timer);
   }, [autoplayInterval, paused, lightboxOpen, images.length, next]);
 
-  // 키보드 네비게이션 (라이트박스)
+  // 라이트박스 키보드
   useEffect(() => {
     if (!lightboxOpen) return;
     const handler = (e: KeyboardEvent) => {
@@ -81,6 +72,16 @@ export default function VesselGallery({
 
   return (
     <>
+      <style>{`
+        @keyframes galleryFadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .gallery-fade-in {
+          animation: galleryFadeIn ${FADE_DURATION}ms ease-in-out;
+        }
+      `}</style>
+
       {/* 메인 이미지 */}
       <div
         className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-50 cursor-pointer group"
@@ -88,48 +89,34 @@ export default function VesselGallery({
         onMouseEnter={() => setPaused(true)}
         onMouseLeave={() => setPaused(false)}
       >
-        {/* 이전 이미지 (페이드아웃) */}
-        {fading && (
-          <Image
-            src={images[prevIndex].url}
-            alt=""
-            fill
-            className="object-cover absolute inset-0"
-            sizes="(max-width: 1024px) 100vw, 66vw"
-          />
-        )}
-        {/* 현재 이미지 (페이드인) */}
         <Image
+          key={`main-${activeIndex}`}
           src={activeImage.url}
           alt={`${vesselTitle} - ${getCategoryLabel(activeImage.category ?? "")}`}
           fill
-          className="object-cover absolute inset-0"
-          style={{
-            opacity: fading ? 0 : 1,
-            transition: "opacity 500ms ease-in-out",
-          }}
+          className="object-cover gallery-fade-in"
           priority={activeIndex === 0}
           sizes="(max-width: 1024px) 100vw, 66vw"
         />
         {activeImage.category && (
-          <span className="absolute top-3 left-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
+          <span className="absolute top-3 left-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm z-10">
             {getCategoryLabel(activeImage.category)}
           </span>
         )}
-        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors" />
+        <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors z-10" />
 
-        {/* 좌우 화살표 (이미지 2장 이상일 때) */}
+        {/* 좌우 화살표 */}
         {images.length > 1 && (
           <>
             <button
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity z-20"
               onClick={(e) => { e.stopPropagation(); prev(); }}
               aria-label="이전 사진"
             >
               <ChevronLeft className="w-6 h-6" />
             </button>
             <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/30 hover:bg-black/50 text-white rounded-full p-2.5 opacity-0 group-hover:opacity-100 transition-opacity z-20"
               onClick={(e) => { e.stopPropagation(); next(); }}
               aria-label="다음 사진"
             >
@@ -140,7 +127,7 @@ export default function VesselGallery({
 
         {/* 인디케이터 닷 */}
         {images.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
             {images.map((_, i) => (
               <button
                 key={i}
@@ -207,25 +194,12 @@ export default function VesselGallery({
             className="relative w-full max-w-4xl mx-4 sm:mx-8 lg:mx-16 aspect-[16/9]"
             onClick={(e) => e.stopPropagation()}
           >
-            {/* 이전 이미지 (페이드아웃) */}
-            {fading && (
-              <Image
-                src={images[prevIndex].url}
-                alt=""
-                fill
-                className="object-contain absolute inset-0"
-              />
-            )}
-            {/* 현재 이미지 (페이드인) */}
             <Image
+              key={`lightbox-${activeIndex}`}
               src={images[activeIndex].url}
               alt={`${vesselTitle} - ${getCategoryLabel(images[activeIndex].category ?? "")}`}
               fill
-              className="object-contain absolute inset-0"
-              style={{
-                opacity: fading ? 0 : 1,
-                transition: "opacity 400ms ease-in-out",
-              }}
+              className="object-contain gallery-fade-in"
             />
             <div className="absolute bottom-0 left-0 right-0 bg-black/50 px-5 py-3 text-center">
               <p id="gallery-lightbox-title" className="text-white font-semibold">
