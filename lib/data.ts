@@ -6,6 +6,9 @@
 
 import type { Vessel, Booking } from "./supabase";
 import { createClient } from "@supabase/supabase-js";
+import { PHOTO_DATA_MODE, getCategoryLabel } from "@/constants/photo-config";
+import type { VesselImage } from "./supabase";
+import workPhotosJson from "@/data/work-photos.json";
 
 // 항상 로컬 JSON 사용 (Supabase 연동 시 false로 변경)
 const USE_LOCAL = true;
@@ -28,6 +31,18 @@ function localVessels(): Vessel[] {
 
 function localBookings() {
   return bookingsJson;
+}
+
+async function getVesselsFromSupabase(): Promise<Vessel[]> {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+  );
+  const { data } = await supabase
+    .from("vessels")
+    .select("*, vessel_images(*)")
+    .eq("status", "active");
+  return data ?? [];
 }
 
 // ── 퍼블릭 함수 ──────────────────────────────────────────────────────────
@@ -223,4 +238,51 @@ export async function createBooking(input: CreateBookingInput): Promise<Booking>
 
   if (error) throw new Error(error.message);
   return data;
+}
+
+// ── 사진 조회 ────────────────────────────────────────────────────────────
+
+interface WorkPhotoItem {
+  id: string;
+  src: string;
+  title: string;
+  ship: string;
+  vessel_id: string;
+  category: string;
+  taken_date?: string;
+}
+
+/** 전체 작업 사진 목록 (work 페이지용) */
+export async function getAllWorkPhotos(): Promise<WorkPhotoItem[]> {
+  if (PHOTO_DATA_MODE === "split") {
+    return workPhotosJson as WorkPhotoItem[];
+  }
+
+  // unified 모드: 모든 선박의 vessel_images를 합침
+  const vessels = USE_LOCAL ? localVessels() : await getVesselsFromSupabase();
+  return vessels.flatMap((v) =>
+    (v.vessel_images ?? []).map((img) => ({
+      id: img.id,
+      src: img.url,
+      title: getCategoryLabel(img.category ?? "exterior"),
+      ship: v.title,
+      vessel_id: v.id,
+      category: img.category ?? "exterior",
+      taken_date: img.taken_date,
+    }))
+  );
+}
+
+/** 특정 선박의 사진 (카테고리 필터 옵션) */
+export async function getVesselPhotos(
+  vesselId: string,
+  category?: string
+): Promise<VesselImage[]> {
+  const vessel = await getVesselById(vesselId);
+  if (!vessel) return [];
+  let images = vessel.vessel_images ?? [];
+  if (category) {
+    images = images.filter((img) => img.category === category);
+  }
+  return images;
 }
