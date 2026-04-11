@@ -35,6 +35,8 @@ export interface VesselImage {
   url: string
   is_primary: boolean
   sort_order: number
+  category?: string
+  taken_date?: string
 }
 
 export interface Booking {
