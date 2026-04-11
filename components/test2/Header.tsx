@@ -113,8 +113,10 @@ export default function Test2Header() {
           </div>
 
           <button
-            className="md:hidden p-2 text-[#001e42]"
+            className="md:hidden p-2.5 w-11 h-11 flex items-center justify-center text-[#001e42]"
             onClick={() => setMenuOpen(!menuOpen)}
+            aria-label={menuOpen ? "메뉴 닫기" : "메뉴 열기"}
+            aria-expanded={menuOpen}
           >
             {menuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
@@ -123,7 +125,7 @@ export default function Test2Header() {
 
       {/* 모바일 메뉴 */}
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-[#E6E7E9]">
+        <div className="md:hidden bg-white border-t border-[#E6E7E9]" role="menu">
           {navLinks.map((link) => (
             <div key={link.label}>
               <Link
