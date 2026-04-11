@@ -77,31 +77,30 @@ export default function VesselImageUpload({ images, onChange, vesselSlug }: Vess
           <div key={img.id} className="relative group border border-gray-200 rounded-lg overflow-hidden">
             <div className="relative aspect-square bg-gray-100">
               <Image src={img.url} alt="" fill className="object-cover" sizes="200px" unoptimized />
-              {img.is_primary && (
-                <span className="absolute top-1.5 left-1.5 bg-blue-600 text-white text-[10px] px-1.5 py-0.5 rounded-full flex items-center gap-0.5">
-                  <Star className="w-2.5 h-2.5" /> 대표
-                </span>
-              )}
-              <div className="absolute top-1.5 right-1.5 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                {!img.is_primary && (
-                  <button
-                    type="button"
-                    onClick={() => setPrimary(img.id)}
-                    className="bg-white/90 hover:bg-white text-gray-600 rounded-full p-1"
-                    aria-label="대표 이미지로 설정"
-                  >
-                    <Star className="w-3.5 h-3.5" />
-                  </button>
-                )}
-                <button
-                  type="button"
-                  onClick={() => removeImage(img.id)}
-                  className="bg-red-500/90 hover:bg-red-500 text-white rounded-full p-1"
-                  aria-label="사진 삭제"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
+
+              {/* 대표 이미지 별 — 항상 표시 */}
+              <button
+                type="button"
+                onClick={() => setPrimary(img.id)}
+                className={`absolute top-1.5 left-1.5 rounded-full p-1 transition-colors ${
+                  img.is_primary
+                    ? "bg-blue-600 text-white"
+                    : "bg-black/30 text-white/60 hover:bg-blue-600 hover:text-white"
+                }`}
+                title="대표 이미지 변경"
+              >
+                <Star className={`w-3.5 h-3.5 ${img.is_primary ? "fill-current" : ""}`} />
+              </button>
+
+              {/* 삭제 버튼 */}
+              <button
+                type="button"
+                onClick={() => removeImage(img.id)}
+                className="absolute top-1.5 right-1.5 bg-black/30 hover:bg-red-500 text-white/60 hover:text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-all"
+                aria-label="사진 삭제"
+              >
+                <X className="w-3.5 h-3.5" />
+              </button>
             </div>
             <div className="p-2 space-y-1">
               <select
