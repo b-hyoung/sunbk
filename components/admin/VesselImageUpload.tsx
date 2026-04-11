@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import Image from "next/image";
 import { Plus, X, Star } from "lucide-react";
 import { VESSEL_FILTER_CATEGORIES } from "@/constants/photo-config";
@@ -15,6 +15,7 @@ const categoryOptions = VESSEL_FILTER_CATEGORIES.filter((c) => c.key !== "all");
 
 export default function VesselImageUpload({ images, onChange }: VesselImageUploadProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const blobUrls = useRef<string[]>([]);
 
   const handleFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = Array.from(e.target.files ?? []);
@@ -26,17 +27,28 @@ export default function VesselImageUpload({ images, onChange }: VesselImageUploa
       sort_order: images.length + i + 1,
       category: "exterior",
     }));
+    blobUrls.current.push(...newImages.map((img) => img.url));
     onChange([...images, ...newImages]);
     if (inputRef.current) inputRef.current.value = "";
   };
 
   const removeImage = (id: string) => {
+    const removed = images.find((img) => img.id === id);
+    if (removed?.url.startsWith("blob:")) {
+      URL.revokeObjectURL(removed.url);
+    }
     const filtered = images.filter((img) => img.id !== id);
     if (filtered.length > 0 && !filtered.some((img) => img.is_primary)) {
       filtered[0].is_primary = true;
     }
     onChange(filtered);
   };
+
+  useEffect(() => {
+    return () => {
+      blobUrls.current.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, []);
 
   const setPrimary = (id: string) => {
     onChange(images.map((img) => ({ ...img, is_primary: img.id === id })));

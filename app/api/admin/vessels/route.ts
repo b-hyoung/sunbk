@@ -10,6 +10,13 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   const body = await req.json();
 
+  if (!body.title?.trim()) {
+    return NextResponse.json({ error: "선박명은 필수입니다." }, { status: 400 });
+  }
+  if (!body.slug?.trim()) {
+    return NextResponse.json({ error: "슬러그는 필수입니다." }, { status: 400 });
+  }
+
   const vessel: Vessel = {
     id: body.id || `vessel-${Date.now()}`,
     title: body.title,

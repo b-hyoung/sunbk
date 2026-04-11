@@ -21,6 +21,11 @@ export async function PUT(
 ) {
   const { id } = await params;
   const body = await req.json();
+
+  if (body.title !== undefined && !body.title?.trim()) {
+    return NextResponse.json({ error: "선박명은 필수입니다." }, { status: 400 });
+  }
+
   const updated = updateVesselInStore(id, {
     ...body,
     updated_at: new Date().toISOString(),
