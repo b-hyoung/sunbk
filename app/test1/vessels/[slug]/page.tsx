@@ -2,8 +2,8 @@ export const runtime = "edge";
 import { getVesselBySlug } from "@/lib/data";
 import type { Vessel } from "@/lib/supabase";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
+import VesselGallery from "@/components/vessels/VesselGallery";
 import { Phone, MapPin, Ruler, Users, Calendar, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import BookingButton from "@/app/test1/_components/BookingButton";
@@ -41,7 +41,6 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
   if (!vessel) notFound();
 
   const images = vessel.vessel_images ?? [];
-  const primaryImage = images.find((img) => img.is_primary) ?? images[0];
 
   const specs = [
     { label: "선박 종류", value: vessel.vessel_type },
@@ -74,35 +73,7 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
           <div className="lg:col-span-2 space-y-10">
             {/* 메인 이미지 */}
             <div data-fade-up>
-              <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-gray-50">
-                {primaryImage ? (
-                  <Image
-                    src={primaryImage.url}
-                    alt={vessel.title}
-                    fill
-                    className="object-cover"
-                    priority
-                  />
-                ) : (
-                  <div className="flex items-center justify-center h-full text-gray-200 text-8xl select-none">
-                    🚢
-                  </div>
-                )}
-              </div>
-
-              {/* 썸네일 */}
-              {images.length > 1 && (
-                <div className="flex gap-2 mt-2 overflow-x-auto">
-                  {images.map((img) => (
-                    <div
-                      key={img.id}
-                      className="relative w-20 h-14 shrink-0 rounded-lg overflow-hidden border border-gray-100 hover:border-blue-300 transition-colors"
-                    >
-                      <Image src={img.url} alt="" fill className="object-cover" />
-                    </div>
-                  ))}
-                </div>
-              )}
+              <VesselGallery images={images} vesselTitle={vessel.title} />
             </div>
 
             {/* 선박 소개 */}

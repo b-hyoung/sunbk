@@ -1,8 +1,8 @@
 export const runtime = "edge";
 import { getVesselBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
+import VesselGallery from "@/components/vessels/VesselGallery";
 import { Phone, MapPin, Ruler, Users, Calendar, Anchor, ChevronRight, MessageCircle } from "lucide-react";
 import { COMPANY } from "@/constants/company";
 import type { Metadata } from "next";
@@ -29,7 +29,6 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
   if (!vessel) notFound();
 
   const images = vessel.vessel_images ?? [];
-  const primaryImage = images.find((img) => img.is_primary) ?? images[0];
 
   const specs = [
     { icon: Anchor, label: "선박 종류", value: vessel.vessel_type },
@@ -43,60 +42,31 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
 
   return (
     <div className="bg-white min-h-screen">
-      {/* ── 풀폭 히어로 이미지 ── */}
-      <section className="relative bg-[#001e42]">
-        <div className="relative aspect-[4/3] md:aspect-[3/1] max-h-[500px] w-full overflow-hidden">
-          {primaryImage ? (
-            <Image
-              src={primaryImage.url}
-              alt={vessel.title}
-              fill
-              className="object-cover"
-              priority
-            />
-          ) : (
-            <div className="flex items-center justify-center h-full text-white/10 text-9xl">🚢</div>
-          )}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#001e42] via-[#001e42]/30 to-transparent" />
-        </div>
-
-        {/* 이미지 위 타이틀 오버레이 */}
-        <div className="absolute bottom-0 left-0 right-0">
-          <div className="max-w-5xl mx-auto px-6 pb-8">
-            {/* 브레드크럼 */}
-            <nav className="hidden md:flex items-center gap-1.5 text-xs text-white/50 mb-4">
-              <Link href="/test2" className="hover:text-white/70 transition-colors">홈</Link>
-              <ChevronRight className="w-3 h-3" />
-              <Link href="/test2/vessels" className="hover:text-white/70 transition-colors">선박 목록</Link>
-              <ChevronRight className="w-3 h-3" />
-              <span className="text-white/70">{vessel.title}</span>
-            </nav>
-            <span className="inline-block text-xs font-bold px-3 py-1 bg-[#09388a] text-white mb-3">
-              {typeLabel[vessel.type]}
-            </span>
-            <h1 className="text-white font-bold text-3xl md:text-4xl leading-tight">{vessel.title}</h1>
-            <p className="text-white/50 text-sm mt-2">{vessel.vessel_type}</p>
-          </div>
+      {/* ── 타이틀 헤더 ── */}
+      <section className="bg-[#001e42]">
+        <div className="max-w-5xl mx-auto px-6 py-8">
+          {/* 브레드크럼 */}
+          <nav className="hidden md:flex items-center gap-1.5 text-xs text-white/50 mb-4">
+            <Link href="/test2" className="hover:text-white/70 transition-colors">홈</Link>
+            <ChevronRight className="w-3 h-3" />
+            <Link href="/test2/vessels" className="hover:text-white/70 transition-colors">선박 목록</Link>
+            <ChevronRight className="w-3 h-3" />
+            <span className="text-white/70">{vessel.title}</span>
+          </nav>
+          <span className="inline-block text-xs font-bold px-3 py-1 bg-[#09388a] text-white mb-3">
+            {typeLabel[vessel.type]}
+          </span>
+          <h1 className="text-white font-bold text-3xl md:text-4xl leading-tight">{vessel.title}</h1>
+          <p className="text-white/50 text-sm mt-2">{vessel.vessel_type}</p>
         </div>
       </section>
 
-      {/* ── 썸네일 스트립 ── */}
-      {images.length > 1 && (
-        <div className="bg-[#F3F3F3] border-b border-[#E6E7E9]">
-          <div className="max-w-5xl mx-auto px-6 py-3">
-            <div className="flex gap-2 overflow-x-auto scrollbar-hide">
-              {images.map((img) => (
-                <div
-                  key={img.id}
-                  className="relative w-24 h-16 shrink-0 rounded-none overflow-hidden border-2 border-transparent hover:border-[#09388a] transition-colors"
-                >
-                  <Image src={img.url} alt="" fill className="object-cover" />
-                </div>
-              ))}
-            </div>
-          </div>
+      {/* ── 갤러리 ── */}
+      <div className="max-w-5xl mx-auto px-6 py-6">
+        <div data-fade-up>
+          <VesselGallery images={images} vesselTitle={vessel.title} />
         </div>
-      )}
+      </div>
 
       {/* ── 가격 + CTA 바 ── */}
       <section className="border-b border-[#E6E7E9] bg-white sticky top-[100px] md:top-[136px] z-40">

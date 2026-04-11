@@ -1,8 +1,8 @@
 export const runtime = "edge";
 import { getVesselBySlug } from "@/lib/data";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import Link from "next/link";
+import VesselGallery from "@/components/vessels/VesselGallery";
 import { Phone, MapPin, Ruler, Users, Calendar, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import BookingButton from "@/app/test3/_components/BookingButton";
@@ -25,7 +25,6 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
   if (!vessel) notFound();
 
   const images = vessel.vessel_images ?? [];
-  const primaryImage = images.find((img) => img.is_primary) ?? images[0];
 
   const specs = [
     { label: "선박 종류", value: vessel.vessel_type },
@@ -46,56 +45,27 @@ export default async function Test3VesselDetailPage({ params }: { params: Promis
 
   return (
     <div className="bg-white min-h-screen">
-      {/* ── 풀위드 히어로 이미지 ── */}
-      <div className="relative h-[60vh] min-h-[360px] bg-[#0a1628] overflow-hidden">
-        {primaryImage ? (
-          <Image
-            src={primaryImage.url}
-            alt={vessel.title}
-            fill
-            sizes="100vw"
-            className="object-cover opacity-70"
-            priority
-          />
-        ) : (
-          <div className="flex items-center justify-center h-full text-8xl opacity-10">🚢</div>
-        )}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a1628] via-[#0a1628]/20 to-transparent" />
-
+      {/* ── 타이틀 헤더 ── */}
+      <div className="bg-[#0a1628] px-6 sm:px-8 pt-6 pb-10">
         {/* 브레드크럼 */}
-        <div className="absolute top-6 left-6 sm:left-8">
-          <nav aria-label="브레드크럼" className="flex items-center gap-2 text-sm text-white/60">
-            <Link href="/test3" className="hover:text-white/80 transition-colors">메인</Link>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <Link href="/test3/vessels" className="hover:text-white/80 transition-colors">선박 목록</Link>
-            <ChevronRight className="w-3.5 h-3.5" />
-            <span className="text-white truncate max-w-[160px]">{vessel.title}</span>
-          </nav>
-        </div>
+        <nav aria-label="브레드크럼" className="flex items-center gap-2 text-sm text-white/60 mb-6">
+          <Link href="/test3" className="hover:text-white/80 transition-colors">메인</Link>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <Link href="/test3/vessels" className="hover:text-white/80 transition-colors">선박 목록</Link>
+          <ChevronRight className="w-3.5 h-3.5" />
+          <span className="text-white truncate max-w-[160px]">{vessel.title}</span>
+        </nav>
+        <span className="inline-block text-[#036EB8] text-xs font-bold tracking-widest uppercase mb-3">
+          {vessel.vessel_type} · {typeLabel[vessel.type]}
+        </span>
+        <h1 className="text-white text-4xl sm:text-5xl font-bold">{vessel.title}</h1>
+      </div>
 
-        {/* 하단 타이틀 오버레이 */}
-        <div className="absolute bottom-0 left-0 right-0 px-6 sm:px-8 pb-10">
-          <span className="inline-block text-[#036EB8] text-xs font-bold tracking-widest uppercase mb-3">
-            {vessel.vessel_type} · {typeLabel[vessel.type]}
-          </span>
-          <h1 className="text-white text-4xl sm:text-5xl font-bold">{vessel.title}</h1>
+      {/* ── 갤러리 ── */}
+      <div className="max-w-7xl mx-auto px-6 sm:px-8 py-6">
+        <div data-fade-up>
+          <VesselGallery images={images} vesselTitle={vessel.title} />
         </div>
-
-        {/* 썸네일 (우하단) */}
-        {images.length > 1 && (
-          <div className="absolute bottom-6 right-6 flex gap-2">
-            {images.slice(0, 4).map((img, i) => (
-              <div key={img.id} className="relative w-16 h-12 overflow-hidden border border-white/20">
-                <Image src={img.url} alt={`${vessel.title} 사진 ${i + 1}`} fill sizes="64px" className="object-cover opacity-80 hover:opacity-100 transition-opacity" />
-                {i === 3 && images.length > 4 && (
-                  <div className="absolute inset-0 bg-black/50 flex items-center justify-center text-white text-sm font-bold">
-                    +{images.length - 4}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
-        )}
       </div>
 
       {/* ── 핵심 스펙 가로 바 ── */}
