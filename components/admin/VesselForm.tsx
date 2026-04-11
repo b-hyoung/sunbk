@@ -10,17 +10,19 @@ interface VesselFormProps {
   mode: "create" | "edit";
 }
 
+const KOREAN_TO_ROMAN: Record<string, string> = {
+  수연: "suyeon", 신성: "sinseong", 영진: "youngjin", 진양: "jinyang",
+  대한: "daehan", 제일: "jeil", 한라: "halla", 동해: "donghae",
+  서해: "seohae", 남해: "namhae", 인천: "incheon", 부산: "busan",
+};
+
 function toSlug(title: string): string {
-  return title
-    .replace(/\s+/g, "-")
-    .replace(/호$/, "")
-    .toLowerCase()
-    .replace(/[^a-z0-9가-힣-]/g, "")
-    .replace(/수연/, "suyeon-")
-    .replace(/신성/, "sinseong")
-    .replace(/영진/, "youngjin")
-    .replace(/진양/, "jinyang-")
-    || `vessel-${Date.now()}`;
+  let slug = title.replace(/\s+/g, "-").replace(/호$/, "").toLowerCase();
+  for (const [kr, en] of Object.entries(KOREAN_TO_ROMAN)) {
+    slug = slug.replace(new RegExp(kr, "g"), en);
+  }
+  slug = slug.replace(/[^a-z0-9-]/g, "").replace(/-+/g, "-").replace(/^-|-$/g, "");
+  return slug || `vessel-${Date.now()}`;
 }
 
 const VESSEL_TYPES = ["어선", "화물선"];
