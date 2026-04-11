@@ -1,4 +1,3 @@
-export const runtime = "edge";
 import { getAllWorkPhotos } from "@/lib/data";
 import WorkGallery from "@/components/work/WorkGallery";
 import type { Metadata } from "next";

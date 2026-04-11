@@ -1,54 +1,74 @@
 import type { Vessel, VesselImage } from "./supabase";
-import vesselsJson from "@/data/vessels.json";
 import { VESSEL_OVERRIDES } from "@/constants/vessels-data";
+import { readFileSync, writeFileSync } from "fs";
+import path from "path";
 
-function loadInitialVessels(): Vessel[] {
-  return (vesselsJson as unknown as Vessel[]).map((v) => {
+const JSON_PATH = path.join(process.cwd(), "data", "vessels.json");
+
+function readVessels(): Vessel[] {
+  const raw = readFileSync(JSON_PATH, "utf-8");
+  const vessels = JSON.parse(raw) as Vessel[];
+  return vessels.map((v) => {
     const override = VESSEL_OVERRIDES[v.id];
     if (!override) return v;
     return { ...v, ...override, vessel_images: v.vessel_images };
   });
 }
 
-let vessels: Vessel[] = loadInitialVessels();
+function writeVessels(vessels: Vessel[]): void {
+  const raw = vessels.map((v) => {
+    const { ...data } = v;
+    return data;
+  });
+  writeFileSync(JSON_PATH, JSON.stringify(raw, null, 2), "utf-8");
+}
 
 export function getAllVesselsFromStore(): Vessel[] {
-  return vessels;
+  return readVessels();
 }
 
 export function getVesselFromStore(id: string): Vessel | null {
-  return vessels.find((v) => v.id === id) ?? null;
+  return readVessels().find((v) => v.id === id) ?? null;
 }
 
 export function addVesselToStore(vessel: Vessel): Vessel {
-  vessels = [...vessels, vessel];
+  const vessels = readVessels();
+  vessels.push(vessel);
+  writeVessels(vessels);
   return vessel;
 }
 
 export function updateVesselInStore(id: string, updates: Partial<Vessel>): Vessel | null {
+  const vessels = readVessels();
   const index = vessels.findIndex((v) => v.id === id);
   if (index === -1) return null;
   vessels[index] = { ...vessels[index], ...updates, vessel_images: updates.vessel_images ?? vessels[index].vessel_images };
-  vessels = [...vessels];
+  writeVessels(vessels);
   return vessels[index];
 }
 
 export function deleteVesselFromStore(id: string): boolean {
-  const before = vessels.length;
-  vessels = vessels.filter((v) => v.id !== id);
-  return vessels.length < before;
+  const vessels = readVessels();
+  const filtered = vessels.filter((v) => v.id !== id);
+  if (filtered.length === vessels.length) return false;
+  writeVessels(filtered);
+  return true;
 }
 
 export function addImageToVessel(vesselId: string, image: VesselImage): Vessel | null {
+  const vessels = readVessels();
   const vessel = vessels.find((v) => v.id === vesselId);
   if (!vessel) return null;
   vessel.vessel_images = [...(vessel.vessel_images ?? []), image];
+  writeVessels(vessels);
   return vessel;
 }
 
 export function removeImageFromVessel(vesselId: string, imageId: string): Vessel | null {
+  const vessels = readVessels();
   const vessel = vessels.find((v) => v.id === vesselId);
   if (!vessel) return null;
   vessel.vessel_images = (vessel.vessel_images ?? []).filter((img) => img.id !== imageId);
+  writeVessels(vessels);
   return vessel;
 }
