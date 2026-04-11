@@ -41,6 +41,7 @@ export default function VesselGallery({ images, vesselTitle }: VesselGalleryProp
           fill
           className="object-cover"
           priority
+          sizes="(max-width: 1024px) 100vw, 66vw"
         />
         {activeImage.category && (
           <span className="absolute top-3 left-3 bg-black/50 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">

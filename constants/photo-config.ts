@@ -44,4 +44,5 @@ export const WORK_FILTER_CATEGORIES = [
   { key: "generator", label: "발전기" },
   { key: "dry-dock", label: "상가(정비)" },
   { key: "sailing", label: "항해" },
+  { key: "cleanup", label: "환경정화" },
 ] as const;

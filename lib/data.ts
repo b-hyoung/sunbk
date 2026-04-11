@@ -144,7 +144,7 @@ export async function getVesselById(id: string): Promise<Vessel | null> {
   );
   const { data } = await supabase
     .from("vessels")
-    .select("*")
+    .select("*, vessel_images(*)")
     .eq("id", id)
     .eq("status", "active")
     .single();

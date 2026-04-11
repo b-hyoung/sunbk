@@ -1,6 +1,6 @@
 export const runtime = "edge";
 import { getAllWorkPhotos } from "@/lib/data";
-import WorkGallery from "./_components/WorkGallery";
+import WorkGallery from "@/components/work/WorkGallery";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
