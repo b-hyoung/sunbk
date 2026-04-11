@@ -64,7 +64,7 @@ export default function VesselImageUpload({ images, onChange }: VesselImageUploa
                     type="button"
                     onClick={() => setPrimary(img.id)}
                     className="bg-white/90 hover:bg-white text-gray-600 rounded-full p-1"
-                    title="대표 이미지로 설정"
+                    aria-label="대표 이미지로 설정"
                   >
                     <Star className="w-3.5 h-3.5" />
                   </button>
@@ -73,7 +73,7 @@ export default function VesselImageUpload({ images, onChange }: VesselImageUploa
                   type="button"
                   onClick={() => removeImage(img.id)}
                   className="bg-red-500/90 hover:bg-red-500 text-white rounded-full p-1"
-                  title="삭제"
+                  aria-label="사진 삭제"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -111,6 +111,7 @@ export default function VesselImageUpload({ images, onChange }: VesselImageUploa
         multiple
         onChange={handleFiles}
         className="hidden"
+        aria-label="사진 파일 선택"
       />
     </div>
   );

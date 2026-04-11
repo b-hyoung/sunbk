@@ -93,9 +93,9 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
   const labelClass = "block text-sm font-medium text-gray-700 mb-1.5";
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8">
+    <form onSubmit={handleSubmit} className="space-y-8" aria-describedby="form-error">
       {error && (
-        <div className="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg">{error}</div>
+        <div id="form-error" role="alert" className="bg-red-50 text-red-600 text-sm px-4 py-3 rounded-lg">{error}</div>
       )}
 
       {/* 기본정보 */}
@@ -103,27 +103,27 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
         <h3 className="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">기본정보</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>선박명 *</label>
-            <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} className={inputClass} placeholder="예: 수연1호" />
+            <label htmlFor="vessel-title" className={labelClass}>선박명 *</label>
+            <input id="vessel-title" type="text" value={title} onChange={(e) => setTitle(e.target.value)} className={inputClass} placeholder="예: 수연1호" required />
           </div>
           <div>
-            <label className={labelClass}>선종</label>
-            <select value={vesselType} onChange={(e) => setVesselType(e.target.value)} className={inputClass}>
+            <label htmlFor="vessel-type" className={labelClass}>선종</label>
+            <select id="vessel-type" value={vesselType} onChange={(e) => setVesselType(e.target.value)} className={inputClass}>
               <option value="어선">어선</option>
               <option value="화물선">화물선</option>
             </select>
           </div>
           <div>
-            <label className={labelClass}>거래유형</label>
-            <select value={type} onChange={(e) => setType(e.target.value as Vessel["type"])} className={inputClass}>
+            <label htmlFor="trade-type" className={labelClass}>거래유형</label>
+            <select id="trade-type" value={type} onChange={(e) => setType(e.target.value as Vessel["type"])} className={inputClass}>
               <option value="rent">임대</option>
               <option value="sale">판매</option>
               <option value="both">임대·판매</option>
             </select>
           </div>
           <div>
-            <label className={labelClass}>정박 위치</label>
-            <input type="text" value={location} onChange={(e) => setLocation(e.target.value)} className={inputClass} placeholder="예: 인천" />
+            <label htmlFor="location" className={labelClass}>정박 위치</label>
+            <input id="location" type="text" value={location} onChange={(e) => setLocation(e.target.value)} className={inputClass} placeholder="예: 인천" />
           </div>
         </div>
       </section>
@@ -133,24 +133,24 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
         <h3 className="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">제원</h3>
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div>
-            <label className={labelClass}>건조 연도</label>
-            <input type="number" value={yearBuilt} onChange={(e) => setYearBuilt(e.target.value)} className={inputClass} placeholder="예: 2015" />
+            <label htmlFor="year-built" className={labelClass}>건조 연도</label>
+            <input id="year-built" type="number" value={yearBuilt} onChange={(e) => setYearBuilt(e.target.value)} className={inputClass} placeholder="예: 2015" />
           </div>
           <div>
-            <label className={labelClass}>전장 (m)</label>
-            <input type="number" step="0.1" value={lengthM} onChange={(e) => setLengthM(e.target.value)} className={inputClass} placeholder="예: 45" />
+            <label htmlFor="length-m" className={labelClass}>전장 (m)</label>
+            <input id="length-m" type="number" step="0.1" value={lengthM} onChange={(e) => setLengthM(e.target.value)} className={inputClass} placeholder="예: 45" />
           </div>
           <div>
-            <label className={labelClass}>톤수</label>
-            <input type="number" value={tonnage} onChange={(e) => setTonnage(e.target.value)} className={inputClass} placeholder="예: 199" />
+            <label htmlFor="tonnage" className={labelClass}>톤수</label>
+            <input id="tonnage" type="number" value={tonnage} onChange={(e) => setTonnage(e.target.value)} className={inputClass} placeholder="예: 199" />
           </div>
           <div>
-            <label className={labelClass}>엔진 출력</label>
-            <input type="text" value={enginePower} onChange={(e) => setEnginePower(e.target.value)} className={inputClass} placeholder="예: 미쯔비시 750HP" />
+            <label htmlFor="engine-power" className={labelClass}>엔진 출력</label>
+            <input id="engine-power" type="text" value={enginePower} onChange={(e) => setEnginePower(e.target.value)} className={inputClass} placeholder="예: 미쯔비시 750HP" />
           </div>
           <div>
-            <label className={labelClass}>승선 정원</label>
-            <input type="number" value={capacity} onChange={(e) => setCapacity(e.target.value)} className={inputClass} placeholder="예: 8" />
+            <label htmlFor="capacity" className={labelClass}>승선 정원</label>
+            <input id="capacity" type="number" value={capacity} onChange={(e) => setCapacity(e.target.value)} className={inputClass} placeholder="예: 8" />
           </div>
         </div>
       </section>
@@ -160,12 +160,12 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
         <h3 className="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">가격</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className={labelClass}>임대가 (원/일)</label>
-            <input type="number" value={rentPrice} onChange={(e) => setRentPrice(e.target.value)} className={inputClass} placeholder="예: 1500000" />
+            <label htmlFor="rent-price" className={labelClass}>임대가 (원/일)</label>
+            <input id="rent-price" type="number" value={rentPrice} onChange={(e) => setRentPrice(e.target.value)} className={inputClass} placeholder="예: 1500000" />
           </div>
           <div>
-            <label className={labelClass}>판매가 (원)</label>
-            <input type="number" value={salePrice} onChange={(e) => setSalePrice(e.target.value)} className={inputClass} placeholder="예: 350000000" />
+            <label htmlFor="sale-price" className={labelClass}>판매가 (원)</label>
+            <input id="sale-price" type="number" value={salePrice} onChange={(e) => setSalePrice(e.target.value)} className={inputClass} placeholder="예: 350000000" />
           </div>
         </div>
       </section>
@@ -175,12 +175,12 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
         <h3 className="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">상세정보</h3>
         <div className="space-y-4">
           <div>
-            <label className={labelClass}>설명</label>
-            <textarea value={description} onChange={(e) => setDescription(e.target.value)} rows={4} className={inputClass} placeholder="선박 소개를 작성해주세요." />
+            <label htmlFor="description" className={labelClass}>설명</label>
+            <textarea id="description" value={description} onChange={(e) => setDescription(e.target.value)} rows={4} className={inputClass} placeholder="선박 소개를 작성해주세요." />
           </div>
           <div>
-            <label className={labelClass}>특징/옵션 (쉼표로 구분)</label>
-            <input type="text" value={featuresStr} onChange={(e) => setFeaturesStr(e.target.value)} className={inputClass} placeholder="예: GPS 항법장치, 냉난방, 자동조타장치" />
+            <label htmlFor="features" className={labelClass}>특징/옵션 (쉼표로 구분)</label>
+            <input id="features" type="text" value={featuresStr} onChange={(e) => setFeaturesStr(e.target.value)} className={inputClass} placeholder="예: GPS 항법장치, 냉난방, 자동조타장치" />
           </div>
         </div>
       </section>
@@ -190,8 +190,8 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
         <h3 className="text-base font-semibold text-gray-900 mb-4 pb-2 border-b border-gray-100">상태</h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className={labelClass}>상태</label>
-            <select value={status} onChange={(e) => setStatus(e.target.value as Vessel["status"])} className={inputClass}>
+            <label htmlFor="status" className={labelClass}>상태</label>
+            <select id="status" value={status} onChange={(e) => setStatus(e.target.value as Vessel["status"])} className={inputClass}>
               <option value="active">운영중</option>
               <option value="inactive">비활성</option>
               <option value="sold">판매완료</option>

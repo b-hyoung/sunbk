@@ -24,9 +24,9 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
   const router = useRouter();
   const [vessels, setVessels] = useState(initial);
   const [deleting, setDeleting] = useState<string | null>(null);
+  const [confirmId, setConfirmId] = useState<string | null>(null);
 
-  const handleDelete = async (id: string, title: string) => {
-    if (!confirm(`"${title}" 선박을 삭제하시겠습니까?`)) return;
+  const handleDelete = async (id: string) => {
     setDeleting(id);
     try {
       const res = await fetch(`/api/admin/vessels/${id}`, { method: "DELETE" });
@@ -43,22 +43,23 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
     <div className="border border-gray-100 rounded-2xl overflow-hidden">
       <div className="overflow-x-auto">
         <table className="w-full text-sm">
+          <caption className="sr-only">선박 관리 목록</caption>
           <thead>
             <tr className="bg-gray-50 border-b border-gray-100">
-              <th className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide w-16">사진</th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">선박명</th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">선종</th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">거래</th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">가격</th>
-              <th className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">상태</th>
-              <th className="text-right px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide w-24">관리</th>
+              <th scope="col" className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide w-16">사진</th>
+              <th scope="col" className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">선박명</th>
+              <th scope="col" className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">선종</th>
+              <th scope="col" className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">거래</th>
+              <th scope="col" className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">가격</th>
+              <th scope="col" className="text-left px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide">상태</th>
+              <th scope="col" className="text-right px-6 py-3 text-xs font-medium text-gray-400 uppercase tracking-wide w-24">관리</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-50">
             {vessels.map((v) => {
               const primary = v.vessel_images?.find((img) => img.is_primary) ?? v.vessel_images?.[0];
               return (
-                <tr key={v.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={v.id} className="hover:bg-gray-50 transition-colors relative">
                   <td className="px-6 py-3">
                     <div className="relative w-12 h-9 rounded overflow-hidden bg-gray-100">
                       {primary ? (
@@ -87,19 +88,36 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
                       <Link
                         href={`/test1/admin/vessels/${v.id}/edit`}
                         className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
-                        title="수정"
+                        aria-label="수정"
                       >
                         <Pencil className="w-4 h-4" />
                       </Link>
                       <button
-                        onClick={() => handleDelete(v.id, v.title)}
+                        onClick={() => setConfirmId(v.id)}
                         disabled={deleting === v.id}
                         className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
-                        title="삭제"
+                        aria-label="삭제"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
+                    {confirmId === v.id && (
+                      <div className="absolute inset-0 bg-white/95 flex items-center justify-center gap-3 z-10">
+                        <span className="text-sm text-gray-600">삭제하시겠습니까?</span>
+                        <button
+                          onClick={() => { handleDelete(v.id); setConfirmId(null); }}
+                          className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold"
+                        >
+                          삭제
+                        </button>
+                        <button
+                          onClick={() => setConfirmId(null)}
+                          className="border border-gray-200 hover:bg-gray-50 text-gray-600 px-3 py-1.5 rounded-lg text-xs font-medium"
+                        >
+                          취소
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               );
