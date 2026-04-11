@@ -23,27 +23,34 @@ export default function VesselGallery({
   const [fading, setFading] = useState(false);
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [paused, setPaused] = useState(false);
-  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const fadeTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const indexRef = useRef(0);
+
+  useEffect(() => { indexRef.current = activeIndex; }, [activeIndex]);
 
   const goTo = useCallback((nextIndex: number) => {
-    if (nextIndex === activeIndex || fading) return;
-    setPrevIndex(activeIndex);
+    const curr = indexRef.current;
+    if (nextIndex === curr) return;
+    setPrevIndex(curr);
     setActiveIndex(nextIndex);
     setFading(true);
-    if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setFading(false), 500);
-  }, [activeIndex, fading]);
+    clearTimeout(fadeTimer.current);
+    fadeTimer.current = setTimeout(() => setFading(false), 500);
+  }, []);
 
-  const prev = useCallback(
-    () => goTo((activeIndex - 1 + images.length) % images.length),
-    [activeIndex, images.length, goTo],
-  );
-  const next = useCallback(
-    () => goTo((activeIndex + 1) % images.length),
-    [activeIndex, images.length, goTo],
-  );
+  const prev = useCallback(() => {
+    const curr = indexRef.current;
+    const nextIdx = (curr - 1 + images.length) % images.length;
+    goTo(nextIdx);
+  }, [images.length, goTo]);
 
-  // 자동 슬라이드
+  const next = useCallback(() => {
+    const curr = indexRef.current;
+    const nextIdx = (curr + 1) % images.length;
+    goTo(nextIdx);
+  }, [images.length, goTo]);
+
+  // 자동 슬라이드 — ref로 안정적 interval
   useEffect(() => {
     if (autoplayInterval <= 0 || paused || lightboxOpen || images.length <= 1) return;
     const timer = setInterval(next, autoplayInterval);
