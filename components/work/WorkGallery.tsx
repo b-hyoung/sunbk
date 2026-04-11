@@ -120,7 +120,7 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
       {/* 라이트박스 */}
       {lightboxIndex !== null && (
         <div
-          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center"
+          className="fixed inset-0 z-[60] bg-black/90 flex items-center justify-center"
           onClick={closeLightbox}
           role="dialog"
           aria-modal="true"
