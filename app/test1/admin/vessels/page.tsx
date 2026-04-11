@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { Plus, ChevronLeft } from "lucide-react";
 import { getAllVesselsFromStore } from "@/lib/admin-store";

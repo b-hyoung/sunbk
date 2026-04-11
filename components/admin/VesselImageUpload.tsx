@@ -91,16 +91,26 @@ export default function VesselImageUpload({ images, onChange }: VesselImageUploa
                 </button>
               </div>
             </div>
-            <div className="p-2">
+            <div className="p-2 space-y-1">
               <select
-                value={img.category ?? "exterior"}
-                onChange={(e) => setCategory(img.id, e.target.value)}
+                value={categoryOptions.some((c) => c.key === img.category) ? img.category ?? "exterior" : "__custom__"}
+                onChange={(e) => setCategory(img.id, e.target.value === "__custom__" ? "" : e.target.value)}
                 className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 text-gray-600"
               >
                 {categoryOptions.map((cat) => (
                   <option key={cat.key} value={cat.key}>{cat.label}</option>
                 ))}
+                <option value="__custom__">기타 (직접 입력)</option>
               </select>
+              {!categoryOptions.some((c) => c.key === img.category) && img.category !== "exterior" && (
+                <input
+                  type="text"
+                  value={img.category ?? ""}
+                  onChange={(e) => setCategory(img.id, e.target.value)}
+                  className="w-full text-xs border border-gray-200 rounded px-2 py-1.5 text-gray-600"
+                  placeholder="카테고리 입력"
+                />
+              )}
             </div>
           </div>
         ))}

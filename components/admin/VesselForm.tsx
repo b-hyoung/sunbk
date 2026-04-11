@@ -23,13 +23,26 @@ function toSlug(title: string): string {
     || `vessel-${Date.now()}`;
 }
 
+const VESSEL_TYPES = ["어선", "화물선"];
+
+function formatPrice(value: string): string {
+  const num = value.replace(/[^0-9]/g, "");
+  return num ? Number(num).toLocaleString() : "";
+}
+
+function unformatPrice(value: string): string {
+  return value.replace(/[^0-9]/g, "");
+}
+
 export default function VesselForm({ vessel, mode }: VesselFormProps) {
   const router = useRouter();
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const [title, setTitle] = useState(vessel?.title ?? "");
-  const [vesselType, setVesselType] = useState(vessel?.vessel_type ?? "화물선");
+  const initType = vessel?.vessel_type ?? "화물선";
+  const [vesselType, setVesselType] = useState(VESSEL_TYPES.includes(initType) ? initType : "기타");
+  const [customVesselType, setCustomVesselType] = useState(VESSEL_TYPES.includes(initType) ? "" : initType);
   const [type, setType] = useState(vessel?.type ?? "both");
   const [yearBuilt, setYearBuilt] = useState(vessel?.year_built?.toString() ?? "");
   const [lengthM, setLengthM] = useState(vessel?.length_m?.toString() ?? "");
@@ -46,6 +59,8 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
   const [status, setStatus] = useState(vessel?.status ?? "active");
   const [images, setImages] = useState<VesselImage[]>(vessel?.vessel_images ?? []);
 
+  const actualVesselType = vesselType === "기타" ? customVesselType : vesselType;
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title.trim()) { setError("선박명을 입력해주세요."); return; }
@@ -58,15 +73,15 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
       title: title.trim(),
       slug,
       type,
-      vessel_type: vesselType,
+      vessel_type: actualVesselType,
       year_built: yearBuilt ? Number(yearBuilt) : null,
       length_m: lengthM ? Number(lengthM) : null,
       tonnage: tonnage ? Number(tonnage) : null,
       engine_power: enginePower || null,
       capacity: capacity ? Number(capacity) : null,
       location: location || null,
-      rent_price_per_day: rentPrice ? Number(rentPrice) : null,
-      sale_price: salePrice ? Number(salePrice) : null,
+      rent_price_per_day: rentPrice ? Number(unformatPrice(rentPrice)) : null,
+      sale_price: salePrice ? Number(unformatPrice(salePrice)) : null,
       description: description || null,
       features: featuresStr ? featuresStr.split(",").map((s) => s.trim()).filter(Boolean) : [],
       is_available: isAvailable,
@@ -109,9 +124,20 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
           <div>
             <label htmlFor="vessel-type" className={labelClass}>선종</label>
             <select id="vessel-type" value={vesselType} onChange={(e) => setVesselType(e.target.value)} className={inputClass}>
-              <option value="어선">어선</option>
-              <option value="화물선">화물선</option>
+              {VESSEL_TYPES.map((vt) => (
+                <option key={vt} value={vt}>{vt}</option>
+              ))}
+              <option value="기타">기타 (직접 입력)</option>
             </select>
+            {vesselType === "기타" && (
+              <input
+                type="text"
+                value={customVesselType}
+                onChange={(e) => setCustomVesselType(e.target.value)}
+                className={`${inputClass} mt-2`}
+                placeholder="선종을 입력해주세요"
+              />
+            )}
           </div>
           <div>
             <label htmlFor="trade-type" className={labelClass}>거래유형</label>
@@ -161,11 +187,11 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
             <label htmlFor="rent-price" className={labelClass}>임대가 (원/일)</label>
-            <input id="rent-price" type="number" value={rentPrice} onChange={(e) => setRentPrice(e.target.value)} className={inputClass} placeholder="예: 1500000" />
+            <input id="rent-price" type="text" inputMode="numeric" value={formatPrice(rentPrice)} onChange={(e) => setRentPrice(unformatPrice(e.target.value))} className={inputClass} placeholder="예: 1,500,000" />
           </div>
           <div>
             <label htmlFor="sale-price" className={labelClass}>판매가 (원)</label>
-            <input id="sale-price" type="number" value={salePrice} onChange={(e) => setSalePrice(e.target.value)} className={inputClass} placeholder="예: 350000000" />
+            <input id="sale-price" type="text" inputMode="numeric" value={formatPrice(salePrice)} onChange={(e) => setSalePrice(unformatPrice(e.target.value))} className={inputClass} placeholder="예: 350,000,000" />
           </div>
         </div>
       </section>
