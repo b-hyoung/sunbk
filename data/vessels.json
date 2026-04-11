@@ -223,8 +223,7 @@
       { "id": "jinyang2-cabin", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/cabin.jpg", "is_primary": false, "sort_order": 2, "category": "cabin", "taken_date": "2026-04-10" },
       { "id": "jinyang2-main-engine", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/main-engine.jpg", "is_primary": false, "sort_order": 3, "category": "main-engine", "taken_date": "2026-04-09" },
       { "id": "jinyang2-dry-dock", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/dry-dock.jpg", "is_primary": false, "sort_order": 4, "category": "dry-dock", "taken_date": "2024-06-13" },
-      { "id": "jinyang2-sailing", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/sailing.jpg", "is_primary": false, "sort_order": 5, "category": "sailing", "taken_date": "2025-10-10" },
-      { "id": "jinyang2-sailing-2", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/sailing-2.jpg", "is_primary": false, "sort_order": 6, "category": "sailing", "taken_date": "2026-04-09" }
+      { "id": "jinyang2-sailing", "vessel_id": "jinyang-2", "url": "/images/vessels/jinyang2/sailing.jpg", "is_primary": false, "sort_order": 5, "category": "sailing", "taken_date": "2025-10-10" }
     ]
   }
 ]

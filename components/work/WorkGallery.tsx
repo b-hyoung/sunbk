@@ -88,7 +88,7 @@ export default function WorkGallery({ photos }: WorkGalleryProps) {
             className="group cursor-pointer text-left"
             onClick={() => openLightbox(i)}
           >
-            <div className="relative aspect-[4/3] overflow-hidden rounded-lg bg-gray-100">
+            <div className="relative aspect-square overflow-hidden rounded-lg bg-gray-100">
               <Image
                 src={photo.src}
                 alt={`${photo.ship} ${photo.title}`}
