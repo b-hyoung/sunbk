@@ -14,7 +14,8 @@ const navLinks = [
       { href: "/test2/vessels?type=sale", label: "선박 판매" },
     ],
   },
-  { label: "작업사진", href: "/test2/about" },
+  { label: "작업현장", href: "/test2/work" },
+  { label: "회사소개", href: "/test2/about" },
   { label: "오시는길", href: "/test2/contact" },
 ];
 

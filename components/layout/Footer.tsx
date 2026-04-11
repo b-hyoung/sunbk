@@ -1,7 +1,7 @@
 import Link from "next/link";
 import {
   Anchor, MapPin,
-  CalendarDays, Tag, Camera,
+  CalendarDays, Tag, Camera, Wrench,
   ExternalLink,
 } from "lucide-react";
 import { getNavLinks } from "@/constants/enums";
@@ -14,7 +14,8 @@ interface FooterProps {
 const navIcons: Record<string, React.ElementType> = {
   "선박 임대": CalendarDays,
   "선박 판매": Tag,
-  "작업사진": Camera,
+  "작업현장": Wrench,
+  "회사소개": Camera,
   "오시는길": MapPin,
 };
 

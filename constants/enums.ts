@@ -5,6 +5,7 @@ export enum Routes {
     ROOT = "/",
     MENU = "menu",
     ABOUT = "about",
+    WORK = "work",
     CONTACT = "contact",
     AUTH = "auth",
 
@@ -24,7 +25,8 @@ export function getNavLinks(basePath?: string) {
     { href: `${base}/${Routes.VESSELS}`,                     label: "선박 목록" },
     { href: `${base}/${Routes.VESSELS}?type=rent`,           label: "선박 임대" },
     { href: `${base}/${Routes.VESSELS}?type=sale`,           label: "선박 판매" },
-    { href: `${base}/${Routes.ABOUT}`,                       label: "작업사진" },
+    { href: `${base}/${Routes.WORK}`,                        label: "작업현장" },
+    { href: `${base}/${Routes.ABOUT}`,                       label: "회사소개" },
     { href: `${base}/${Routes.CONTACT}`,                     label: "오시는길" },
   ];
 }
