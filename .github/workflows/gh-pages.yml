@@ -155,6 +155,26 @@ jobs:
             fs.writeFileSync(editPage, c);
           }
 
+          // 모든 파일에서 force-dynamic 제거
+          const glob = require("path");
+          function walkDir(dir) {
+            const entries = fs.readdirSync(dir, { withFileTypes: true });
+            for (const e of entries) {
+              const full = dir + "/" + e.name;
+              if (e.isDirectory() && !e.name.startsWith("node_modules") && !e.name.startsWith(".")) {
+                walkDir(full);
+              } else if (e.isFile() && (e.name.endsWith(".tsx") || e.name.endsWith(".ts"))) {
+                let c = fs.readFileSync(full, "utf8");
+                if (c.includes('export const dynamic = "force-dynamic"')) {
+                  c = c.replace(/^export const dynamic = "force-dynamic";\n?/gm, "");
+                  fs.writeFileSync(full, c);
+                  console.log("Removed force-dynamic: " + full);
+                }
+              }
+            }
+          }
+          walkDir("app");
+
           console.log("Static export patches applied!");
           SCRIPT
 
