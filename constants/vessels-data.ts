@@ -1,8 +1,8 @@
 /**
- * 선박 데이터 — 선박관리카드(hwpx) 기반 실제 제원
+ * 선박 데이터 — 선박관리카드(hwpx) + 사진 기반 실제 제원
  *
  * 가격은 미확인 → null.
- * 사진·관리카드로 확인 안 되는 features는 제거.
+ * features는 관리카드·사진으로 확인된 것만.
  */
 
 import type { Vessel } from "@/lib/supabase";
@@ -21,8 +21,17 @@ export const VESSEL_OVERRIDES: Record<
     capacity: 4,
     location: "인천 연안부두",
     description:
-      "1983년 일본 본와조선 건조, 강선. 미쯔비시 주기관 탑재, 생활발전기 완비. 예항력 15.55톤(2,000톤 이상). 인천항 기반 근해 예인·화물 운송.",
-    features: ["미쯔비시 주기관", "생활발전기", "경유필터", "오일필터"],
+      "1983년 일본 본와조선 건조, 강선.\n미쯔비시 주기관 탑재, 생활발전기 완비.\n예항력 15.55톤(2,000톤 이상).\n인천항 기반 근해 예인·화물 운송.\n\n주요 작업 이력:\n· 2023.12 충남 태안 (현대스틸, 임대)\n· 2024.11 광양 작업 (대양건설)\n· 2025.4 한강 준설 아라뱃길 (유호산업)",
+    features: [
+      "미쯔비시 주기관",
+      "생활발전기",
+      "경유필터",
+      "오일필터",
+      "조타실",
+      "기관실",
+      "예항력 15.55톤(2,000톤 이상)",
+      "선원 4명 승선",
+    ],
     rent_price_per_day: null,
     sale_price: null,
     type: "both",
@@ -54,8 +63,14 @@ export const VESSEL_OVERRIDES: Record<
     capacity: 16,
     location: "인천 연안부두",
     description:
-      "1995년 경남 고성 세모조선 건조, FRP선. 선실, 조타실 완비.",
-    features: ["선실", "조타실"],
+      "1995년 경남 고성 세모조선 건조, FRP선.\n선실, 조타실 완비. 여객12명+선원4명 승선 가능.\n항해구역: 연해(국내).\n\n주요 작업 이력:\n· 2024.3 제주도 (현대스틸, 임대)\n· 2025.5 전북 구시포 현장 (삼원개발, 은성오엔씨 임대)",
+    features: [
+      "선실",
+      "조타실",
+      "주기관",
+      "여객 12명 + 선원 4명 승선",
+      "연해 항해구역",
+    ],
     rent_price_per_day: null,
     sale_price: null,
     type: "both",
@@ -71,8 +86,15 @@ export const VESSEL_OVERRIDES: Record<
     capacity: 16,
     location: "인천 연안부두",
     description:
-      "2010년 전남 여수 신우조선 건조, FRP선. 환경정화 활동 참여 이력. 선원실, 조타실 완비.",
-    features: ["선원실", "조타실", "환경정화 참여"],
+      "2010년 전남 여수 신우조선 건조, FRP선.\n선원실, 조타실 완비. 여객12명+선원4명 승선 가능.\n환경정화 활동 참여 이력.\n항해구역: 연해(국내).\n\n주요 작업 이력:\n· 2024.4 전북 (UST 21, 임대)\n· 2025.6 완도 해상 지오뷰 측량작업",
+    features: [
+      "선원실",
+      "조타실",
+      "주기관",
+      "환경정화 참여",
+      "여객 12명 + 선원 4명 승선",
+      "연해 항해구역",
+    ],
     rent_price_per_day: null,
     sale_price: null,
     type: "both",
@@ -104,8 +126,14 @@ export const VESSEL_OVERRIDES: Record<
     capacity: 12,
     location: "인천 연안부두",
     description:
-      "1989년 전남 고흥 형제조선 건조, FRP선. 도선(임시승선10명, 선원2명). 선실, 조타실 완비.",
-    features: ["선실", "조타실"],
+      "1989년 전남 고흥 형제조선 건조, FRP선.\n도선(임시승선10명, 선원2명). 선실, 조타실 완비.\n연해구역(국내) 항해.\n\n주요 작업 이력:\n· 2024.6 강원 고성 올포랜드(주)\n· 2025.8 경남 거제 작업 (지오스토리)",
+    features: [
+      "선실",
+      "조타실",
+      "주기관",
+      "임시승선 10명 + 선원 2명",
+      "연해 항해구역",
+    ],
     rent_price_per_day: null,
     sale_price: null,
     type: "both",
@@ -121,8 +149,10 @@ export const VESSEL_OVERRIDES: Record<
     capacity: 10,
     location: "인천 연안부두",
     description:
-      "1997년 전남 고흥 남해FRP조선소 건조. 통선(여객8명, 선원2명). 판매 전용.",
-    features: [],
+      "1997년 전남 고흥 남해FRP조선소 건조.\n통선(여객8명, 선원2명).\n\n주요 작업 이력:\n· 2023.3 거제 (지오스토리)\n· 2024.3 전남 영광 (지오스토리)\n· 2025.6 전북 군산 위도 (지오스토리)",
+    features: [
+      "여객 8명 + 선원 2명 승선",
+    ],
     rent_price_per_day: null,
     sale_price: null,
     type: "sale",
@@ -138,8 +168,12 @@ export const VESSEL_OVERRIDES: Record<
     capacity: 11,
     location: "인천 연안부두",
     description:
-      "1984년 일본 장포조선 건조, 강선. 통선(여객10명, 선원1명). 항해 실적 다수.",
-    features: ["선실"],
+      "1984년 일본 장포조선 건조, 강선.\n통선(여객10명, 선원1명).\n\n주요 작업 이력:\n· 2024.3 전남 영광 (지오스토리)\n· 2025.11 한강 아라뱃길 (유호건설)",
+    features: [
+      "선실",
+      "주기관",
+      "여객 10명 + 선원 1명 승선",
+    ],
     rent_price_per_day: null,
     sale_price: null,
     type: "both",
