@@ -51,7 +51,7 @@ export const VESSEL_OVERRIDES: Record<
     length_m: 18,
     tonnage: 24,
     engine_power: null,
-    capacity: null,
+    capacity: 16,
     location: "인천 연안부두",
     description:
       "1995년 경남 고성 세모조선 건조, FRP선. 선실, 조타실 완비.",
@@ -72,7 +72,7 @@ export const VESSEL_OVERRIDES: Record<
     location: "인천 연안부두",
     description:
       "2010년 전남 여수 신우조선 건조, FRP선. 환경정화 활동 참여 이력. 선원실, 조타실 완비.",
-    features: ["선원실", "조타실"],
+    features: ["선원실", "조타실", "환경정화 참여"],
     rent_price_per_day: null,
     sale_price: null,
     type: "both",

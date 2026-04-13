@@ -259,7 +259,7 @@ function toWorkPhotoItems(vessels: Vessel[], groupFilter?: "vessel" | "work"): W
     (v.vessel_images ?? []).map((img) => ({
       id: img.id,
       src: img.url,
-      title: getCategoryLabel(img.category ?? "exterior"),
+      title: `${getCategoryLabel(img.category ?? "exterior")}(${v.title})`,
       ship: v.title,
       vessel_id: v.id,
       category: img.category ?? "exterior",
