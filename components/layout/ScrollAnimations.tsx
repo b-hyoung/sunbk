@@ -58,11 +58,12 @@ export default function ScrollAnimations() {
         });
       });
 
-      // 통계 숫자 카운트업
+      // 통계 숫자 카운트업 (숫자가 아닌 값은 스킵)
       document.querySelectorAll("[data-count]").forEach((el) => {
         const raw = (el as HTMLElement).dataset.count ?? "0";
         const suffix = raw.replace(/[0-9]/g, "");
         const target = parseInt(raw);
+        if (isNaN(target)) return;
         ScrollTrigger.create({
           trigger: el,
           start: "top 95%",
