@@ -1,0 +1,169 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      # next.config.ts에 output: "export" + basePath 임시 적용
+      - name: Configure for GitHub Pages
+        run: |
+          cat > next.config.ts << 'EOF'
+          import type { NextConfig } from "next";
+          const nextConfig: NextConfig = {
+            output: "export",
+            basePath: "/sunbk",
+            images: { unoptimized: true },
+          };
+          export default nextConfig;
+          EOF
+
+      # 동적 라우트에 generateStaticParams 추가 + searchParams 제거
+      - name: Patch for static export
+        run: |
+          node << 'SCRIPT'
+          const fs = require("fs");
+          const path = require("path");
+          const vessels = require("./data/vessels.json");
+
+          // generateStaticParams를 추가할 파일들
+          const slugFiles = [
+            "app/(test1)/vessels/[slug]/page.tsx",
+            "app/test1/vessels/[slug]/page.tsx",
+            "app/test2/vessels/[slug]/page.tsx",
+            "app/test3/vessels/[slug]/page.tsx",
+          ];
+          const vesselIdFiles = [
+            "app/(test1)/booking/[vesselId]/page.tsx",
+            "app/test1/booking/[vesselId]/page.tsx",
+            "app/test2/booking/[vesselId]/page.tsx",
+            "app/test3/booking/[vesselId]/page.tsx",
+          ];
+
+          const slugParams = JSON.stringify(vessels.map(v => ({ slug: v.slug })));
+          const idParams = JSON.stringify(vessels.map(v => ({ vesselId: v.id })));
+
+          for (const f of slugFiles) {
+            if (!fs.existsSync(f)) continue;
+            let c = fs.readFileSync(f, "utf8");
+            if (!c.includes("generateStaticParams")) {
+              c = `import _vd from "@/data/vessels.json";\nexport async function generateStaticParams() { return ${slugParams}; }\n` + c;
+            }
+            // force-dynamic 제거
+            c = c.replace(/^export const dynamic = "force-dynamic";\n/m, "");
+            fs.writeFileSync(f, c);
+          }
+
+          for (const f of vesselIdFiles) {
+            if (!fs.existsSync(f)) continue;
+            let c = fs.readFileSync(f, "utf8");
+            if (!c.includes("generateStaticParams")) {
+              c = `import _vd from "@/data/vessels.json";\nexport async function generateStaticParams() { return ${idParams}; }\n` + c;
+            }
+            c = c.replace(/^export const dynamic = "force-dynamic";\n/m, "");
+            // searchParams → 기본값
+            c = c.replace(/const \{ type \} = await searchParams;/g, 'const type: string = "rent";');
+            c = c.replace(/\s*searchParams,\n/g, "\n");
+            c = c.replace(/\s*searchParams: Promise<\{ type\?: string \}>;?\n/g, "\n");
+            fs.writeFileSync(f, c);
+          }
+
+          // vessels/page.tsx searchParams 제거
+          const vesselPages = [
+            "app/(test1)/vessels/page.tsx",
+            "app/test1/vessels/page.tsx",
+            "app/test2/vessels/page.tsx",
+            "app/test3/vessels/page.tsx",
+          ];
+          for (const f of vesselPages) {
+            if (!fs.existsSync(f)) continue;
+            let c = fs.readFileSync(f, "utf8");
+            c = c.replace(/^export const dynamic = "force-dynamic";\n/m, "");
+            c = c.replace(/const params = await searchParams;/g, "const params = {} as any;");
+            c = c.replace(/\s*searchParams,\n/g, "\n");
+            c = c.replace(/\s*searchParams: Promise<SearchParams>;?\n/g, "\n");
+            fs.writeFileSync(f, c);
+          }
+
+          // API routes에 force-static 추가
+          const apiRoutes = [
+            "app/api/bookings/route.ts",
+            "app/api/admin/vessels/route.ts",
+            "app/api/admin/vessels/[id]/route.ts",
+            "app/api/admin/upload/route.ts",
+          ];
+          for (const f of apiRoutes) {
+            if (!fs.existsSync(f)) continue;
+            let c = fs.readFileSync(f, "utf8");
+            if (!c.includes("force-static")) {
+              c = 'export const dynamic = "force-static";\n' + c;
+            }
+            if (f.includes("[id]") && !c.includes("generateStaticParams")) {
+              c = `import _vd from "@/data/vessels.json";\nexport function generateStaticParams() { return ${idParams.replace(/vesselId/g, "id")}; }\n` + c;
+            }
+            fs.writeFileSync(f, c);
+          }
+
+          // robots.ts, sitemap.ts에 force-static
+          for (const f of ["app/robots.ts", "app/sitemap.ts"]) {
+            if (!fs.existsSync(f)) continue;
+            let c = fs.readFileSync(f, "utf8");
+            if (!c.includes("force-static")) {
+              c = 'export const dynamic = "force-static";\n' + c;
+            }
+            fs.writeFileSync(f, c);
+          }
+
+          // admin edit page
+          const editPage = "app/test1/admin/vessels/[id]/edit/page.tsx";
+          if (fs.existsSync(editPage)) {
+            let c = fs.readFileSync(editPage, "utf8");
+            if (!c.includes("generateStaticParams")) {
+              c = `import _vd from "@/data/vessels.json";\nexport async function generateStaticParams() { return ${idParams.replace(/vesselId/g, "id")}; }\n` + c;
+            }
+            fs.writeFileSync(editPage, c);
+          }
+
+          console.log("Static export patches applied!");
+          SCRIPT
+
+      - run: npm run build
+
+      - run: touch out/.nojekyll
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: out
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
