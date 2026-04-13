@@ -144,14 +144,14 @@ export default function VesselGallery({
 
         {/* 인디케이터 닷 */}
         {images.length > 1 && (
-          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5 z-20">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-3 z-20">
             {images.map((_, i) => (
               <button
                 key={i}
                 onClick={(e) => { e.stopPropagation(); goTo(i); }}
                 aria-label={`사진 ${i + 1}`}
-                className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                  i === activeIndex ? "bg-white scale-110" : "bg-white/40 hover:bg-white/60"
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  i === activeIndex ? "bg-blue-400 scale-125" : "bg-white/30 hover:bg-white/50"
                 }`}
               />
             ))}
@@ -159,12 +159,17 @@ export default function VesselGallery({
         )}
       </div>
 
-      {/* 썸네일 스트립 */}
+      {/* 썸네일 스트립 — 호버로 이미지 변경 */}
       {images.length > 1 && (
-        <div className="flex gap-2 mt-2 overflow-x-auto pb-1">
+        <div
+          className="flex gap-2 mt-2 overflow-x-auto pb-1"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
           {images.map((img, i) => (
             <button
               key={img.id}
+              onMouseEnter={() => goTo(i)}
               onClick={() => goTo(i)}
               aria-label={getCategoryLabel(img.category ?? "") + " 보기"}
               className={`relative w-20 h-14 shrink-0 rounded-lg overflow-hidden border-2 transition-all duration-300 ${
