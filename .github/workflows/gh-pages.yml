@@ -87,6 +87,8 @@ jobs:
             c = c.replace(/const \{ type \} = await searchParams;/g, 'const type: string = "rent";');
             c = c.replace(/\s*searchParams,\n/g, "\n");
             c = c.replace(/\s*searchParams: Promise<\{ type\?: string \}>;?\n/g, "\n");
+            // 빈 함수 인자 정리
+            c = c.replace(/\(\{\s*\}\s*:\s*\{\s*\}\)/g, "()");
             fs.writeFileSync(f, c);
           }
 
@@ -101,9 +103,11 @@ jobs:
             if (!fs.existsSync(f)) continue;
             let c = fs.readFileSync(f, "utf8");
             c = c.replace(/^export const dynamic = "force-dynamic";\n/m, "");
-            c = c.replace(/const params = await searchParams;/g, "const params = {} as any;");
+            c = c.replace(/const params = await searchParams;/g, "const params: SearchParams = {};");
             c = c.replace(/\s*searchParams,\n/g, "\n");
             c = c.replace(/\s*searchParams: Promise<SearchParams>;?\n/g, "\n");
+            // 빈 함수 인자 정리: ({  }: {  }) → ()
+            c = c.replace(/\(\{\s*\}\s*:\s*\{\s*\}\)/g, "()");
             fs.writeFileSync(f, c);
           }
 
