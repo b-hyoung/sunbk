@@ -175,6 +175,35 @@ jobs:
           }
           walkDir("app");
 
+          // vessels.json 이미지 경로에 basePath 추가
+          const vFile = "data/vessels.json";
+          let vJson = fs.readFileSync(vFile, "utf8");
+          vJson = vJson.replace(/"url": "\//g, '"url": "/sunbk/');
+          fs.writeFileSync(vFile, vJson);
+          console.log("Patched image paths with /sunbk/ prefix");
+
+          // hero-bg.jpg 경로도 패치
+          walkDir("app");
+          walkDir("components");
+          function patchBasePath(dir) {
+            const entries = fs.readdirSync(dir, { withFileTypes: true });
+            for (const e of entries) {
+              const full = dir + "/" + e.name;
+              if (e.isDirectory() && !e.name.startsWith("node_modules") && !e.name.startsWith(".")) {
+                patchBasePath(full);
+              } else if (e.isFile() && (e.name.endsWith(".tsx") || e.name.endsWith(".ts"))) {
+                let c = fs.readFileSync(full, "utf8");
+                if (c.includes('/hero-bg.jpg') || c.includes('poster="/hero-bg')) {
+                  c = c.replace(/\/hero-bg\.jpg/g, "/sunbk/hero-bg.jpg");
+                  fs.writeFileSync(full, c);
+                  console.log("Patched hero-bg path: " + full);
+                }
+              }
+            }
+          }
+          patchBasePath("app");
+          patchBasePath("components");
+
           console.log("Static export patches applied!");
           SCRIPT
 
