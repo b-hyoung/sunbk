@@ -19,12 +19,12 @@ export default function Header({ basePath }: HeaderProps) {
   const navLinks = getNavLinks(basePath);
 
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
+  const [scrolled, setScrolled] = useState(true); // 기본값 true → 흰색 배경으로 시작
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-  const isHome = pathname === "/" || pathname === base || (base === "" && pathname === "/");
+  const isHome = base ? pathname === base : pathname === "/";
 
   useEffect(() => {
     const header = headerRef.current;
@@ -80,7 +80,7 @@ export default function Header({ basePath }: HeaderProps) {
   }, [menuOpen, scrolled]);
 
   return (
-    <header ref={headerRef} className="fixed top-8 left-0 right-0 z-50">
+    <header ref={headerRef} className="fixed top-8 left-0 right-0 z-50" style={{ backgroundColor: isHome ? undefined : "rgba(255,255,255,1)", boxShadow: isHome ? undefined : "0 1px 0 rgba(0,0,0,0.08)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* 로고 */}
