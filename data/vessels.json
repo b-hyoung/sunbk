@@ -301,14 +301,14 @@
     "title": "수연9호",
     "slug": "suyeon-9",
     "type": "rent",
-    "vessel_type": "레저선",
+    "vessel_type": "작업선",
     "year_built": null,
     "length_m": null,
     "tonnage": null,
     "engine_power": "야마하 250마력",
     "capacity": null,
     "location": "인천",
-    "description": "야마하 250마력 선외기 탑재.",
+    "description": "야마하 250마력 선외기 탑재 작업선.",
     "features": [
       "야마하 250마력 선외기"
     ],
