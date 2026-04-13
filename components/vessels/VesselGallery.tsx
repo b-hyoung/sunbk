@@ -15,11 +15,12 @@ interface VesselGalleryProps {
 export default function VesselGallery({
   images,
   vesselTitle,
-  autoplayInterval = 5000,
+  autoplayInterval = 3000,
 }: VesselGalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [displayIndex, setDisplayIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
+  const [direction, setDirection] = useState<"left" | "right">("right");
   const [lightboxOpen, setLightboxOpen] = useState(false);
   const [paused, setPaused] = useState(false);
 
@@ -30,6 +31,7 @@ export default function VesselGallery({
 
   const goTo = useCallback((i: number) => {
     if (i === indexRef.current) return;
+    setDirection(i > indexRef.current ? "right" : "left");
     setActiveIndex(i);
     setTransitioning(true);
   }, []);
@@ -40,17 +42,23 @@ export default function VesselGallery({
     const timer = setTimeout(() => {
       setDisplayIndex(activeIndex);
       setTransitioning(false);
-    }, 600);
+    }, 500);
     return () => clearTimeout(timer);
   }, [transitioning, activeIndex]);
 
   const prev = useCallback(() => {
-    goTo((indexRef.current - 1 + lengthRef.current) % lengthRef.current);
-  }, [goTo]);
+    const i = (indexRef.current - 1 + lengthRef.current) % lengthRef.current;
+    setDirection("left");
+    setActiveIndex(i);
+    setTransitioning(true);
+  }, []);
 
   const next = useCallback(() => {
-    goTo((indexRef.current + 1) % lengthRef.current);
-  }, [goTo]);
+    const i = (indexRef.current + 1) % lengthRef.current;
+    setDirection("right");
+    setActiveIndex(i);
+    setTransitioning(true);
+  }, []);
 
   // 자동 슬라이드 — activeIndex 변경 시 타이머 리셋
   useEffect(() => {
@@ -99,7 +107,7 @@ export default function VesselGallery({
           sizes="(max-width: 1024px) 100vw, 66vw"
         />
 
-        {/* 상단 레이어: 새 이미지 (페이드인 + 미세 줌) */}
+        {/* 상단 레이어: 새 이미지 (슬라이드 전환) */}
         {transitioning && (
           <Image
             src={images[activeIndex].url}
@@ -107,7 +115,7 @@ export default function VesselGallery({
             fill
             className="object-cover absolute inset-0"
             style={{
-              animation: "galleryReveal 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards",
+              animation: `gallerySlide${direction === "right" ? "Right" : "Left"} 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards`,
             }}
             sizes="(max-width: 1024px) 100vw, 66vw"
           />
@@ -223,7 +231,7 @@ export default function VesselGallery({
               fill
               className="object-contain"
             />
-            {/* 라이트박스 상단 레이어 (페이드인) */}
+            {/* 라이트박스 상단 레이어 (슬라이드) */}
             {transitioning && (
               <Image
                 src={images[activeIndex].url}
@@ -231,7 +239,7 @@ export default function VesselGallery({
                 fill
                 className="object-contain absolute inset-0"
                 style={{
-                  animation: "galleryReveal 600ms cubic-bezier(0.4, 0, 0.2, 1) forwards",
+                  animation: `gallerySlide${direction === "right" ? "Right" : "Left"} 500ms cubic-bezier(0.4, 0, 0.2, 1) forwards`,
                 }}
               />
             )}
@@ -257,14 +265,24 @@ export default function VesselGallery({
       )}
 
       <style>{`
-        @keyframes galleryReveal {
+        @keyframes gallerySlideRight {
           from {
             opacity: 0;
-            transform: scale(1.015);
+            transform: translateX(60px);
           }
           to {
             opacity: 1;
-            transform: scale(1);
+            transform: translateX(0);
+          }
+        }
+        @keyframes gallerySlideLeft {
+          from {
+            opacity: 0;
+            transform: translateX(-60px);
+          }
+          to {
+            opacity: 1;
+            transform: translateX(0);
           }
         }
       `}</style>
