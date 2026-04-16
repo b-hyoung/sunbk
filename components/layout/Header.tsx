@@ -135,8 +135,8 @@ export default function Header() {
                             const isDisabled = child.href === "#";
                             const content = (
                               <>
-                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shrink-0 group-hover:shadow-md group-hover:shadow-blue-500/30 transition-shadow">
-                                  <Building2 className="w-5 h-5 text-white" />
+                                <div className="w-7 h-7 rounded-md bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100 transition-colors">
+                                  <Building2 className="w-3.5 h-3.5 text-blue-600" />
                                 </div>
                                 <div className="flex-1 min-w-0">
                                   <p className="font-semibold text-gray-900 text-sm leading-tight truncate">
