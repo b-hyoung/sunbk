@@ -79,7 +79,11 @@ export default function Header() {
 
   return (
     <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: isHome ? undefined : "rgba(255,255,255,1)", boxShadow: isHome ? undefined : "0 1px 0 rgba(0,0,0,0.08)" }}>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+      {/* Hero 페이지 투명 상태에서 텍스트 가시성 보장용 그라디언트 */}
+      {isHome && !scrolled && (
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 to-transparent pointer-events-none" />
+      )}
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* 로고 */}
           <Link
@@ -107,7 +111,7 @@ export default function Header() {
                         : "text-white font-semibold"
                       : scrolled
                         ? "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
-                        : "text-white/80 hover:text-white hover:bg-white/10"
+                        : "text-white/95 hover:text-white hover:bg-white/10"
                   }`}
                 >
                   {link.label}
