@@ -116,7 +116,7 @@ function Slot({ label, src }: { label: string; src?: string }) {
           alt={`${label} — 선체 파손 복원 작업`}
           fill
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          className="object-cover"
+          className="object-contain"
         />
         <span className="absolute top-2 left-2 bg-gray-900/70 text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
           {label}
