@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Phone, Anchor, ChevronDown, Building2 } from "lucide-react";
+import { Menu, X, Phone, Anchor, ChevronDown } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -125,48 +125,30 @@ export default function Header() {
                     </button>
                     {openDropdown === link.label && (
                       <div
-                        className="absolute top-full right-0 pt-3 w-72"
+                        className="absolute top-full right-0 pt-3 w-56"
                         style={{ animation: "dropdownFade 180ms ease-out" }}
                       >
-                        {/* 상단 화살표 */}
-                        <div className="absolute top-1.5 right-6 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45 shadow-sm" />
-                        <div className="relative bg-white border-2 border-gray-200 rounded-xl shadow-2xl shadow-gray-900/20 overflow-hidden ring-1 ring-black/5 p-2">
+                        <div className="absolute top-1.5 right-6 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45" />
+                        <div className="relative bg-white border border-gray-200 rounded-lg shadow-xl shadow-gray-900/10 overflow-hidden py-1">
                           {link.children.map((child) => {
                             const isDisabled = child.href === "#";
-                            const content = (
-                              <>
-                                <div className="w-7 h-7 rounded-md bg-blue-50 flex items-center justify-center shrink-0 group-hover:bg-blue-100 transition-colors">
-                                  <Building2 className="w-3.5 h-3.5 text-blue-600" />
-                                </div>
-                                <div className="flex-1 min-w-0">
-                                  <p className="font-semibold text-gray-900 text-sm leading-tight truncate">
-                                    {child.label.split(" (")[0]}
-                                  </p>
-                                  <p className="text-xs text-gray-500 mt-0.5 truncate">
-                                    {child.label.includes("(") ? child.label.match(/\(([^)]+)\)/)?.[1] : "협력 업체"}
-                                  </p>
-                                </div>
-                              </>
-                            );
-
                             if (isDisabled) {
                               return (
                                 <div
                                   key={child.label}
-                                  className="group flex items-center gap-3 px-3 py-3 rounded-lg opacity-50 cursor-not-allowed"
+                                  className="px-4 py-2.5 text-sm text-gray-400 cursor-not-allowed"
                                 >
-                                  {content}
+                                  {child.label}
                                 </div>
                               );
                             }
-
                             return (
                               <Link
                                 key={child.href}
                                 href={child.href}
-                                className="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-blue-50 transition-colors"
+                                className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
                               >
-                                {content}
+                                {child.label}
                               </Link>
                             );
                           })}
