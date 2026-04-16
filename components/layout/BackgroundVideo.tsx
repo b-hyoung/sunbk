@@ -24,8 +24,8 @@ export default function HeroVideo() {
       muted
       loop
       playsInline
+      preload="auto"
       className="absolute inset-0 w-full h-full object-cover opacity-20"
-      poster="/hero-bg.jpg"
     >
       <source
         src="https://videos.pexels.com/video-files/5784933/5784933-hd_1920_1080_24fps.mp4"
