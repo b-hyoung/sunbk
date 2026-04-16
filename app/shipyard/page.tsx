@@ -3,6 +3,7 @@ import Link from "next/link";
 import { Phone, Anchor } from "lucide-react";
 import { COMPANY } from "@/constants/company";
 import ServiceCards from "./_components/ServiceCards";
+import RepairGallery from "./_components/RepairGallery";
 
 export const metadata: Metadata = {
   title: "선박 건조·수리",
@@ -42,6 +43,7 @@ export default function ShipyardPage() {
         </div>
       </section>
       <ServiceCards />
+      <RepairGallery />
     </div>
   );
 }
