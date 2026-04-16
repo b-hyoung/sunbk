@@ -6,8 +6,8 @@ import ServiceCards from "./_components/ServiceCards";
 import RepairGallery from "./_components/RepairGallery";
 
 export const metadata: Metadata = {
-  title: "선박 건조·수리",
-  description: "1985년 창업, 인천 연안부두에서 41년. 제일산업공사 — 소형 어선·작업선의 신조 건조와 목선·철선 수리를 전문으로 합니다.",
+  title: "협력사 · 제일산업공사 (조선소)",
+  description: "수연선박 협력 조선소 — 제일산업공사. 1985년 창업, 인천 연안부두에서 41년. 소형 어선·작업선의 신조 건조와 목선·철선 수리를 전문으로 합니다.",
 };
 
 export default function ShipyardPage() {
@@ -17,15 +17,19 @@ export default function ShipyardPage() {
       <section className="relative bg-gray-900 py-28 min-h-[360px] overflow-hidden">
         <HeroVideo />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
-            선박 건조·수리 · 제일산업공사
-          </p>
+          <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/40 text-blue-200 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
+            <span className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
+            수연선박 협력사 · 제일산업공사 (조선소)
+          </div>
           <h1 className="text-white font-bold mb-5 leading-tight">
             1985년부터, 인천 연안부두에서
           </h1>
           <p className="text-white/75 text-lg leading-relaxed">
             목선과 철선, 소형 선박의 신조·수리를 41년간 이어오고 있습니다.<br />
             인천 지역 유일의 소형 선박 건조·수리 업체.
+          </p>
+          <p className="text-white/50 text-sm mt-5 leading-relaxed max-w-xl">
+            ※ 수연선박의 주력 서비스는 선박 임대·판매이며, 수리·건조는 협력사 제일산업공사를 통해 제공됩니다.
           </p>
         </div>
       </section>

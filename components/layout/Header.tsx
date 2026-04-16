@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Phone, Anchor } from "lucide-react";
+import { Menu, X, Phone, Anchor, ChevronDown } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -14,6 +14,7 @@ export default function Header() {
   const navLinks = getNavLinks();
 
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
   const [scrolled, setScrolled] = useState(true); // 기본값 true → 흰색 배경으로 시작
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
@@ -94,7 +95,53 @@ export default function Header() {
           {/* 데스크탑 네비게이션 */}
           <nav className="hidden md:flex items-center gap-0.5">
             {navLinks.map((link) => {
-              const isActive = currentUrl === link.href || currentUrl.startsWith(link.href + "&");
+              const isActive =
+                currentUrl === link.href ||
+                currentUrl.startsWith(link.href + "&") ||
+                link.children?.some((c) => currentUrl === c.href || currentUrl.startsWith(c.href));
+
+              // 드롭다운 메뉴
+              if (link.children) {
+                return (
+                  <div
+                    key={link.label}
+                    className="relative"
+                    onMouseEnter={() => setOpenDropdown(link.label)}
+                    onMouseLeave={() => setOpenDropdown(null)}
+                  >
+                    <button
+                      className={`px-3.5 py-2 rounded-lg text-base transition-colors duration-300 flex items-center gap-1 ${
+                        isActive
+                          ? scrolled
+                            ? "text-blue-600 font-semibold"
+                            : "text-white font-semibold"
+                          : scrolled
+                            ? "text-gray-500 hover:text-gray-900 hover:bg-gray-50"
+                            : "text-white/80 hover:text-white hover:bg-white/10"
+                      }`}
+                    >
+                      {link.label}
+                      <ChevronDown className="w-3.5 h-3.5 opacity-60" />
+                    </button>
+                    {openDropdown === link.label && (
+                      <div className="absolute top-full right-0 pt-1 w-48">
+                        <div className="bg-white border border-gray-100 rounded-lg shadow-lg overflow-hidden">
+                          {link.children.map((child) => (
+                            <Link
+                              key={child.href}
+                              href={child.href}
+                              className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                            >
+                              {child.label}
+                            </Link>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              }
+
               return (
                 <Link
                   key={link.href}
@@ -145,18 +192,41 @@ export default function Header() {
       {menuOpen && (
         <div className={`md:hidden border-t ${scrolled ? "bg-white border-gray-100" : "bg-slate-900/95 border-white/10"}`}>
           <nav className="flex flex-col py-2">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-5 py-3 text-sm transition-colors ${
-                  scrolled ? "text-gray-600 hover:text-gray-900 hover:bg-gray-50" : "text-white/80 hover:text-white hover:bg-white/10"
-                }`}
-                onClick={() => setMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
+            {navLinks.map((link) => {
+              if (link.children) {
+                return (
+                  <div key={link.label}>
+                    <div className={`px-5 py-3 text-sm font-medium ${scrolled ? "text-gray-900" : "text-white"}`}>
+                      {link.label}
+                    </div>
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.href}
+                        href={child.href}
+                        className={`block pl-10 pr-5 py-2.5 text-sm transition-colors ${
+                          scrolled ? "text-gray-500 hover:text-gray-900 hover:bg-gray-50" : "text-white/60 hover:text-white hover:bg-white/10"
+                        }`}
+                        onClick={() => setMenuOpen(false)}
+                      >
+                        ↳ {child.label}
+                      </Link>
+                    ))}
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`px-5 py-3 text-sm transition-colors ${
+                    scrolled ? "text-gray-600 hover:text-gray-900 hover:bg-gray-50" : "text-white/80 hover:text-white hover:bg-white/10"
+                  }`}
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
             <div className={`px-5 py-3 border-t mt-1 ${scrolled ? "border-gray-100" : "border-white/10"}`}>
               <a href="tel:010-0000-0000" className={`flex items-center gap-2 text-sm font-semibold ${scrolled ? "text-blue-600" : "text-blue-300"}`}>
                 <Phone className="w-4 h-4" />

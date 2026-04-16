@@ -19,13 +19,25 @@ export enum Routes {
 }
 
 // 네비게이션 링크 정의
-export function getNavLinks() {
+export interface NavLink {
+  href: string;
+  label: string;
+  children?: { href: string; label: string }[];
+}
+
+export function getNavLinks(): NavLink[] {
   return [
     { href: `/${Routes.VESSELS}`,   label: "선박 임대·판매" },
-    { href: `/${Routes.SHIPYARD}`,  label: "선박 건조·수리" },
     { href: `/${Routes.WORK}`,      label: "작업현장" },
     { href: `/${Routes.ABOUT}`,     label: "회사소개" },
     { href: `/${Routes.CONTACT}`,   label: "오시는길" },
+    {
+      href: "#",
+      label: "협력사",
+      children: [
+        { href: `/${Routes.SHIPYARD}`, label: "조선소 (수리)" },
+      ],
+    },
   ];
 }
 
