@@ -34,40 +34,13 @@ const cases: RepairCase[] = [
   },
   { id: "case-build-1", category: "build", title: "소형 어선 신조 건조", desc: "어업용 소형 어선 신규 제작 — 설계부터 인도까지" },
   { id: "case-wood-1", category: "wood", title: "목선 선체 복원", desc: "노후 목선 전체 복원 — 손상 부재 교체 후 방부·마감" },
-  { id: "case-wood-2", category: "wood", title: "목선 부분 목재 교체", desc: "부식·파손된 늑골·외판 부분 교체, 기존 구조 유지" },
   { id: "case-steel-1", category: "steel", title: "철선 강판 교체", desc: "선체 외판 부식부 절삭 후 신강판 용접 접합" },
-  { id: "case-steel-2", category: "steel", title: "선저 용접 보수", desc: "선저 균열·파손부 용접 보수" },
 ];
 
 const categories: Category[] = ["all", "build", "hull", "wood", "steel"];
 
-// ── 테스트용 표시 모드 필터 ──
-type Ratio = "4/3" | "3/4" | "1/1" | "16/9";
-type Fit = "contain" | "cover";
-
-const ratioLabel: Record<Ratio, string> = {
-  "4/3": "가로형 4:3",
-  "3/4": "세로형 3:4",
-  "1/1": "정사각 1:1",
-  "16/9": "와이드 16:9",
-};
-
-const ratioClass: Record<Ratio, string> = {
-  "4/3": "aspect-[4/3]",
-  "3/4": "aspect-[3/4]",
-  "1/1": "aspect-square",
-  "16/9": "aspect-video",
-};
-
-const fitLabel: Record<Fit, string> = {
-  contain: "전체 보이기",
-  cover: "화면 채우기",
-};
-
 export default function RepairGallery() {
   const [active, setActive] = useState<Category>("all");
-  const [ratio, setRatio] = useState<Ratio>("4/3");
-  const [fit, setFit] = useState<Fit>("contain");
 
   const filtered = useMemo(
     () => (active === "all" ? cases : cases.filter((c) => c.category === active)),
@@ -75,42 +48,10 @@ export default function RepairGallery() {
   );
 
   return (
-    <section className="bg-gray-50/60 border-y border-gray-100">
+    <section className="bg-gray-50 border-y border-gray-100">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
-        <div className="flex items-start justify-between gap-4 mb-6">
-          <div>
-            <h2 className="text-gray-900 mb-2">작업 사례</h2>
-            <p className="text-sm text-gray-400">목선부터 철선까지 — 40년간 이어온 실제 작업 기록</p>
-          </div>
-
-          {/* 테스트용 표시 모드 컨트롤 */}
-          <div className="shrink-0 flex flex-col gap-2 text-xs">
-            <label className="flex items-center gap-2 justify-end">
-              <span className="text-gray-400">비율</span>
-              <select
-                value={ratio}
-                onChange={(e) => setRatio(e.target.value as Ratio)}
-                className="border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 text-xs focus:outline-none focus:border-gray-400"
-              >
-                {(Object.keys(ratioLabel) as Ratio[]).map((r) => (
-                  <option key={r} value={r}>{ratioLabel[r]}</option>
-                ))}
-              </select>
-            </label>
-            <label className="flex items-center gap-2 justify-end">
-              <span className="text-gray-400">채움</span>
-              <select
-                value={fit}
-                onChange={(e) => setFit(e.target.value as Fit)}
-                className="border border-gray-200 rounded-lg px-2 py-1 bg-white text-gray-700 text-xs focus:outline-none focus:border-gray-400"
-              >
-                {(Object.keys(fitLabel) as Fit[]).map((f) => (
-                  <option key={f} value={f}>{fitLabel[f]}</option>
-                ))}
-              </select>
-            </label>
-          </div>
-        </div>
+        <h2 className="text-gray-900 mb-2">작업 사례</h2>
+        <p className="text-sm text-gray-400 mb-6">실제 작업 기록을 Before · After로 확인하세요</p>
 
         {/* 카테고리 필터 */}
         <div className="flex gap-2 flex-wrap mb-8">
@@ -121,7 +62,7 @@ export default function RepairGallery() {
               aria-pressed={active === c}
               className={`px-4 py-2 rounded-full text-sm transition-colors ${
                 active === c
-                  ? "bg-blue-600 text-white font-medium"
+                  ? "bg-gray-900 text-white font-medium"
                   : "bg-white border border-gray-200 text-gray-600 hover:bg-gray-50"
               }`}
             >
@@ -137,9 +78,9 @@ export default function RepairGallery() {
               key={c.id}
               className="bg-white border border-gray-200 rounded-2xl overflow-hidden"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-200">
-                <Slot label="Before" src={c.beforeUrl} ratio={ratio} fit={fit} />
-                <Slot label="After" src={c.afterUrl} ratio={ratio} fit={fit} />
+              <div className="grid grid-cols-2 divide-x divide-gray-200">
+                <Slot label="Before" src={c.beforeUrl} />
+                <Slot label="After" src={c.afterUrl} />
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-1.5">
@@ -162,17 +103,16 @@ export default function RepairGallery() {
   );
 }
 
-function Slot({ label, src, ratio, fit }: { label: string; src?: string; ratio: Ratio; fit: Fit }) {
-  const aspect = ratioClass[ratio];
+function Slot({ label, src }: { label: string; src?: string }) {
   if (src) {
     return (
-      <div className={`relative ${aspect} bg-gray-100 overflow-hidden`}>
+      <div className="relative aspect-[3/4] bg-gray-100 overflow-hidden">
         <Image
           src={src}
-          alt={`${label} — 선체 파손 복원 작업`}
+          alt={`${label} — 작업 사진`}
           fill
-          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-          className={fit === "cover" ? "object-cover" : "object-contain"}
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 50vw"
+          className="object-cover"
         />
         <span className="absolute top-2 left-2 bg-gray-900/70 text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
           {label}
@@ -181,10 +121,10 @@ function Slot({ label, src, ratio, fit }: { label: string; src?: string; ratio: 
     );
   }
   return (
-    <div className={`${aspect} bg-gray-100 flex flex-col items-center justify-center gap-2 text-gray-300`}>
+    <div className="aspect-[3/4] bg-gray-100 flex flex-col items-center justify-center gap-2 text-gray-300">
       <ImageIcon className="w-8 h-8" />
       <span className="text-xs font-medium tracking-wide">{label}</span>
-      <span className="text-[10px] text-gray-300">사진 준비 중</span>
+      <span className="text-[10px]">사진 준비 중</span>
     </div>
   );
 }

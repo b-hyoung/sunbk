@@ -34,7 +34,7 @@ export default function ShipyardPage() {
       {/* ── 상담 CTA (다크) ── */}
       <section className="bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
-          <p className="text-gray-500 text-sm italic mb-6">
+          <p className="text-gray-400 text-base italic mb-8">
             "정직함을 철학으로 삼아, 이 일을 해왔습니다"
           </p>
           <h2 className="text-white mb-3">상담 문의</h2>
