@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { Phone, Anchor } from "lucide-react";
+import { Phone } from "lucide-react";
 import { COMPANY } from "@/constants/company";
 import ServiceCards from "./_components/ServiceCards";
 import RepairGallery from "./_components/RepairGallery";
@@ -14,32 +13,19 @@ export default function ShipyardPage() {
   return (
     <div className="bg-white min-h-screen">
       {/* ── Hero (다크) ── */}
-      <section className="bg-gray-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
-          <div className="inline-flex items-center gap-2 text-sm text-gray-500 mb-4">
-            <Anchor className="w-4 h-4" />
-            <span>선박 건조·수리 <span className="text-gray-600">·</span> 제일산업공사</span>
-          </div>
-          <h1 className="text-white mb-4">1985년부터, 인천 연안부두에서</h1>
-          <p className="text-gray-400 text-lg max-w-lg leading-relaxed">
+      <section className="relative bg-gray-900 py-28 overflow-hidden">
+        <div className="absolute inset-0 bg-gray-900/80" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
+          <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">
+            Shipbuilding & Repair · 제일산업공사
+          </p>
+          <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
+            1985년부터, 인천 연안부두에서
+          </h1>
+          <p className="text-white/75 text-lg max-w-lg leading-relaxed">
             목선과 철선, 소형 선박의 신조·수리를 41년간 이어오고 있습니다.
             인천 지역 유일의 소형 선박 건조·수리 업체.
           </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href={`tel:${COMPANY.phone}`}
-              className="inline-flex items-center gap-2 bg-white hover:bg-gray-100 text-gray-900 px-5 py-3 rounded-lg text-sm font-semibold transition-colors"
-            >
-              <Phone className="w-4 h-4" />
-              {COMPANY.phone}
-            </a>
-            <Link
-              href="/contact"
-              className="inline-flex items-center gap-2 border border-gray-700 hover:border-gray-500 text-gray-300 px-5 py-3 rounded-lg text-sm font-semibold transition-colors"
-            >
-              오시는길
-            </Link>
-          </div>
         </div>
       </section>
       <ServiceCards />
