@@ -125,33 +125,35 @@ export default function Header() {
                     </button>
                     {openDropdown === link.label && (
                       <div
-                        className="absolute top-full right-0 pt-3 w-56"
-                        style={{ animation: "dropdownFade 180ms ease-out" }}
+                        className="absolute top-full right-0 pt-4 w-64"
+                        style={{ animation: "dropdownFade 200ms ease-out" }}
                       >
-                        <div className="absolute top-1.5 right-6 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45" />
-                        <div className="relative bg-white border border-gray-200 rounded-lg shadow-xl shadow-gray-900/10 overflow-hidden py-1">
-                          {link.children.map((child) => {
-                            const isDisabled = child.href === "#";
-                            if (isDisabled) {
+                        <div className="bg-white/95 backdrop-blur-xl border border-gray-200/60 rounded-2xl shadow-2xl shadow-gray-900/10 overflow-hidden px-6 py-5">
+                          <p className="text-xs text-gray-400 mb-4 tracking-wide">{link.label}</p>
+                          <div className="space-y-3.5">
+                            {link.children.map((child) => {
+                              const isDisabled = child.href === "#";
+                              if (isDisabled) {
+                                return (
+                                  <div
+                                    key={child.label}
+                                    className="text-[17px] text-gray-300 cursor-not-allowed tracking-tight"
+                                  >
+                                    {child.label}
+                                  </div>
+                                );
+                              }
                               return (
-                                <div
-                                  key={child.label}
-                                  className="px-4 py-2.5 text-sm text-gray-400 cursor-not-allowed"
+                                <Link
+                                  key={child.href}
+                                  href={child.href}
+                                  className="block text-[17px] text-gray-900 hover:text-blue-600 transition-colors tracking-tight"
                                 >
                                   {child.label}
-                                </div>
+                                </Link>
                               );
-                            }
-                            return (
-                              <Link
-                                key={child.href}
-                                href={child.href}
-                                className="block px-4 py-2.5 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
-                              >
-                                {child.label}
-                              </Link>
-                            );
-                          })}
+                            })}
+                          </div>
                         </div>
                       </div>
                     )}
