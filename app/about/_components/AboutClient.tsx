@@ -9,10 +9,12 @@ export default function AboutClient() {
     <div className="bg-white">
       {/* 히어로 */}
       <section className="relative bg-gray-900 py-28 overflow-hidden">
-        <div className="absolute inset-0 bg-gray-900/80" />
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-20" poster="/hero-bg.jpg">
+          <source src="https://videos.pexels.com/video-files/5784933/5784933-hd_1920_1080_24fps.mp4" type="video/mp4" />
+        </video>
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">
-            About Us
+          <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
+            회사소개
           </p>
           <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
             {COMPANY.name}
