@@ -19,11 +19,11 @@ export default function ShipyardPage() {
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
             선박 건조·수리 · 제일산업공사
           </p>
-          <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
+          <h1 className="text-white font-bold mb-5 leading-tight">
             1985년부터, 인천 연안부두에서
           </h1>
-          <p className="text-white/75 text-lg max-w-lg leading-relaxed">
-            목선과 철선, 소형 선박의 신조·수리를 41년간 이어오고 있습니다.
+          <p className="text-white/75 text-lg leading-relaxed">
+            목선과 철선, 소형 선박의 신조·수리를 41년간 이어오고 있습니다.<br />
             인천 지역 유일의 소형 선박 건조·수리 업체.
           </p>
         </div>
