@@ -80,9 +80,9 @@ export default function RepairGallery() {
           {filtered.map((c) => (
             <article
               key={c.id}
-              className="bg-white border border-gray-100 rounded-2xl overflow-hidden"
+              className="bg-white border border-gray-300 rounded-2xl overflow-hidden"
             >
-              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-300">
                 <Slot label="Before" src={c.beforeUrl} />
                 <Slot label="After" src={c.afterUrl} />
               </div>
