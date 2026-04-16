@@ -44,6 +44,30 @@ export default function ShipyardPage() {
       </section>
       <ServiceCards />
       <RepairGallery />
+
+      {/* ── 상담 CTA ── */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+        <h2 className="text-gray-900 mb-3">상담 문의</h2>
+        <p className="text-sm text-gray-500 mb-8 max-w-xl mx-auto leading-relaxed">
+          선박 상태, 작업 범위, 일정은 전화로 상담하시는 것이 가장 빠릅니다.
+          현장 방문 실사도 가능합니다.
+        </p>
+        <div className="flex flex-wrap gap-3 justify-center">
+          <a
+            href={`tel:${COMPANY.phone}`}
+            className="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
+          >
+            <Phone className="w-4 h-4" />
+            {COMPANY.phone}
+          </a>
+          <Link
+            href="/contact"
+            className="inline-flex items-center gap-2 border border-gray-200 hover:border-gray-300 text-gray-700 px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
+          >
+            오시는길 보기
+          </Link>
+        </div>
+      </section>
     </div>
   );
 }
