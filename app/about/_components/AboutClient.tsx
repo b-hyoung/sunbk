@@ -19,7 +19,7 @@ export default function AboutClient() {
           <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
             {COMPANY.name}
           </h1>
-          <p className="text-white/75 text-lg max-w-lg leading-relaxed">
+          <p className="text-white/75 text-lg leading-relaxed">
             선박 임대·판매 전문기업. 신뢰와 전문성으로 바다 위의 파트너가 되겠습니다.
           </p>
         </div>
