@@ -17,7 +17,6 @@ export default function ShipyardPage() {
         <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-20" poster="/hero-bg.jpg">
           <source src="https://videos.pexels.com/video-files/5784933/5784933-hd_1920_1080_24fps.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-gray-900/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
             선박 건조·수리 · 제일산업공사
