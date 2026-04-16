@@ -1,13 +1,15 @@
 "use client";
 
 import { useState, useMemo } from "react";
+import Image from "next/image";
 import { Image as ImageIcon } from "lucide-react";
 
-type Category = "all" | "build" | "wood" | "steel" | "maintain";
+type Category = "all" | "build" | "hull" | "wood" | "steel" | "maintain";
 
 const categoryLabel: Record<Category, string> = {
   all: "전체",
   build: "신조",
+  hull: "선체 복원",
   wood: "목선 수리",
   steel: "철선 수리",
   maintain: "점검·정비",
@@ -18,18 +20,28 @@ interface RepairCase {
   category: Exclude<Category, "all">;
   title: string;
   desc: string;
+  beforeUrl?: string;
+  afterUrl?: string;
 }
 
 const cases: RepairCase[] = [
-  { id: "case-1", category: "build", title: "소형 어선 신조 건조", desc: "어업용 소형 어선 신규 제작 — 설계부터 인도까지" },
-  { id: "case-2", category: "wood", title: "목선 선체 복원", desc: "노후 목선 전체 복원 — 손상 부재 교체 후 방부·마감" },
-  { id: "case-3", category: "wood", title: "목선 부분 목재 교체", desc: "부식·파손된 늑골·외판 부분 교체, 기존 구조 유지" },
-  { id: "case-4", category: "steel", title: "철선 강판 교체", desc: "선체 외판 부식부 절삭 후 신강판 용접 접합" },
-  { id: "case-5", category: "steel", title: "선저 용접 보수", desc: "선저 균열·파손부 용접 보수, 재도장까지 일괄 진행" },
-  { id: "case-6", category: "maintain", title: "연례 정기 점검", desc: "장기 거래 선주 대상 입거 점검 — 필요한 작업만 정직하게" },
+  {
+    id: "case-hull-1",
+    category: "hull",
+    title: "선체 파손 복원·재도장",
+    desc: "외판 파손부 보수 후 전체 재도장 — 방오도료 포함",
+    beforeUrl: "/images/shipyard/a_before.jpg",
+    afterUrl: "/images/shipyard/a_after.jpg",
+  },
+  { id: "case-build-1", category: "build", title: "소형 어선 신조 건조", desc: "어업용 소형 어선 신규 제작 — 설계부터 인도까지" },
+  { id: "case-wood-1", category: "wood", title: "목선 선체 복원", desc: "노후 목선 전체 복원 — 손상 부재 교체 후 방부·마감" },
+  { id: "case-wood-2", category: "wood", title: "목선 부분 목재 교체", desc: "부식·파손된 늑골·외판 부분 교체, 기존 구조 유지" },
+  { id: "case-steel-1", category: "steel", title: "철선 강판 교체", desc: "선체 외판 부식부 절삭 후 신강판 용접 접합" },
+  { id: "case-steel-2", category: "steel", title: "선저 용접 보수", desc: "선저 균열·파손부 용접 보수, 재도장까지 일괄 진행" },
+  { id: "case-maintain-1", category: "maintain", title: "연례 정기 점검", desc: "장기 거래 선주 대상 입거 점검 — 필요한 작업만 정직하게" },
 ];
 
-const categories: Category[] = ["all", "build", "wood", "steel", "maintain"];
+const categories: Category[] = ["all", "build", "hull", "wood", "steel", "maintain"];
 
 export default function RepairGallery() {
   const [active, setActive] = useState<Category>("all");
@@ -71,8 +83,8 @@ export default function RepairGallery() {
               className="bg-white border border-gray-100 rounded-2xl overflow-hidden"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
-                <Placeholder label="Before" />
-                <Placeholder label="After" />
+                <Slot label="Before" src={c.beforeUrl} />
+                <Slot label="After" src={c.afterUrl} />
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-1.5">
@@ -95,7 +107,23 @@ export default function RepairGallery() {
   );
 }
 
-function Placeholder({ label }: { label: string }) {
+function Slot({ label, src }: { label: string; src?: string }) {
+  if (src) {
+    return (
+      <div className="relative aspect-[4/3] bg-gray-100 overflow-hidden">
+        <Image
+          src={src}
+          alt={`${label} — 선체 파손 복원 작업`}
+          fill
+          sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+          className="object-cover"
+        />
+        <span className="absolute top-2 left-2 bg-gray-900/70 text-white text-[10px] font-medium px-2 py-0.5 rounded-full">
+          {label}
+        </span>
+      </div>
+    );
+  }
   return (
     <div className="aspect-[4/3] bg-gray-100 flex flex-col items-center justify-center gap-2 text-gray-300">
       <ImageIcon className="w-8 h-8" />
