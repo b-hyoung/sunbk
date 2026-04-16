@@ -124,15 +124,27 @@ export default function Header() {
                       <ChevronDown className="w-3.5 h-3.5 opacity-60" />
                     </button>
                     {openDropdown === link.label && (
-                      <div className="absolute top-full right-0 pt-1 w-48">
-                        <div className="bg-white border border-gray-100 rounded-lg shadow-lg overflow-hidden">
-                          {link.children.map((child) => (
+                      <div
+                        className="absolute top-full right-0 pt-3 w-56"
+                        style={{ animation: "dropdownFade 180ms ease-out" }}
+                      >
+                        {/* 상단 화살표 */}
+                        <div className="absolute top-1.5 right-6 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45 shadow-sm" />
+                        <div className="relative bg-white border-2 border-gray-200 rounded-xl shadow-2xl shadow-gray-900/20 overflow-hidden ring-1 ring-black/5">
+                          {/* 상단 라벨 */}
+                          <div className="px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-50/50 border-b border-gray-100">
+                            <p className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">{link.label}</p>
+                          </div>
+                          {link.children.map((child, i) => (
                             <Link
                               key={child.href}
                               href={child.href}
-                              className="block px-4 py-3 text-sm text-gray-700 hover:bg-gray-50 hover:text-blue-600 transition-colors"
+                              className={`group flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors ${
+                                i !== link.children!.length - 1 ? "border-b border-gray-50" : ""
+                              }`}
                             >
-                              {child.label}
+                              <span className="w-1 h-1 rounded-full bg-gray-300 group-hover:bg-blue-500 transition-colors" />
+                              <span className="font-medium">{child.label}</span>
                             </Link>
                           ))}
                         </div>
@@ -236,6 +248,19 @@ export default function Header() {
           </nav>
         </div>
       )}
+
+      <style>{`
+        @keyframes dropdownFade {
+          from {
+            opacity: 0;
+            transform: translateY(-6px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </header>
   );
 }
