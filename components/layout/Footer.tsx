@@ -7,10 +7,6 @@ import {
 import { getNavLinks } from "@/constants/enums";
 import { COMPANY } from "@/constants/company";
 
-interface FooterProps {
-  basePath?: string;
-}
-
 const navIcons: Record<string, React.ElementType> = {
   "선박 임대": CalendarDays,
   "선박 판매": Tag,
@@ -19,9 +15,9 @@ const navIcons: Record<string, React.ElementType> = {
   "오시는길": MapPin,
 };
 
-export default function Footer({ basePath }: FooterProps) {
-  const base = basePath ? `/${basePath}` : "/";
-  const navLinks = getNavLinks(basePath);
+export default function Footer() {
+  const base = "/";
+  const navLinks = getNavLinks();
 
   return (
     <footer className="bg-gray-900 text-gray-400">
@@ -49,7 +45,7 @@ export default function Footer({ basePath }: FooterProps) {
                 const Icon = navIcons[link.label];
                 return (
                   <li key={link.href}>
-                    <Link href={link.href} className="flex items-center gap-1.5 text-sm hover:text-white transition-colors">
+                    <Link href={link.href} className="flex items-center gap-1.5 text-sm py-1.5 hover:text-white transition-colors">
                       {Icon && <Icon className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
                       {link.label}
                     </Link>

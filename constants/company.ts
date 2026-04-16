@@ -1,6 +1,6 @@
 /**
  * 회사 정보 중앙 관리
- * 실제 정보 확인 후 여기만 수정하면 test1/test2/footer/contact 모두 반영됩니다.
+ * 실제 정보 확인 후 여기만 수정하면 footer/contact 모두 반영됩니다.
  */
 
 export const COMPANY = {

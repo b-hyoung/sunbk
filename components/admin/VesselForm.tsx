@@ -97,7 +97,7 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
       const method = mode === "edit" ? "PUT" : "POST";
       const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) });
       if (!res.ok) throw new Error("저장 실패");
-      router.push("/test1/admin/vessels");
+      router.push("/admin");
       router.refresh();
     } catch {
       setError("저장 중 오류가 발생했습니다.");

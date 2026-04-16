@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import VersionSwitcher from "@/components/layout/VersionSwitcher";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import ScrollAnimations from "@/components/layout/ScrollAnimations";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -25,10 +27,12 @@ export default function RootLayout({
   return (
     <html lang="ko" className="h-full antialiased" style={{ fontFamily: "'Apple SD Gothic Neo', 'Malgun Gothic', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, system-ui, sans-serif" }}>
       <body className="min-h-full flex flex-col">
+        <ScrollAnimations />
         <Suspense>
-          <VersionSwitcher />
+          <Header />
         </Suspense>
-        {children}
+        <main className="flex-1 pt-20">{children}</main>
+        <Footer />
       </body>
     </html>
   );

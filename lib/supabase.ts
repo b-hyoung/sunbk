@@ -3,7 +3,7 @@ import { createClient } from '@supabase/supabase-js'
 // 타입 정의
 export type VesselType = 'rent' | 'sale' | 'both'
 export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed'
-export type VesselStatus = 'active' | 'inactive' | 'sold'
+export type VesselStatus = 'active' | 'inactive' | 'sold' | 'rented'
 
 export interface Vessel {
   id: string

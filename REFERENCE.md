@@ -2,7 +2,7 @@
 
 ## 프로젝트 개요
 
-선박 임대·판매 사이트. 동일한 데이터를 공유하면서 디자인이 다른 여러 버전(test1/test2/test3)을 병렬로 개발·비교하는 구조.
+선박 임대·판매 사이트. 로컬 JSON(`data/*.json`) 또는 Supabase에서 데이터를 읽어 동일한 UI로 렌더링.
 
 ---
 
@@ -11,38 +11,43 @@
 ```
 sunbk/
 ├── app/
-│   ├── test1/                  # 디자인 버전 1
-│   │   ├── layout.tsx          # 버전별 Header/Footer 레이아웃
-│   │   ├── page.tsx            # 홈
-│   │   ├── vessels/
-│   │   │   ├── page.tsx        # 선박 목록
-│   │   │   └── [slug]/page.tsx # 선박 상세
-│   │   ├── booking/
-│   │   │   ├── [vesselId]/page.tsx  # 예약/문의 폼
-│   │   │   └── confirm/page.tsx     # 접수 완료
-│   │   └── admin/page.tsx      # 관리자 대시보드
-│   │
-│   ├── test2/                  # 디자인 버전 2 (동일 구조 복사)
-│   ├── test3/                  # 디자인 버전 3 (동일 구조 복사)
-│   │
-│   └── api/
-│       └── bookings/route.ts   # POST /api/bookings
+│   ├── layout.tsx              # 루트 레이아웃 (Header/Footer 포함)
+│   ├── page.tsx                # 홈
+│   ├── _components/            # 페이지 전용 컴포넌트
+│   │   ├── VesselCard.tsx
+│   │   ├── VesselFilter.tsx
+│   │   ├── BookingButton.tsx
+│   │   └── BookingForm.tsx
+│   ├── vessels/
+│   │   ├── page.tsx            # 선박 목록
+│   │   └── [slug]/page.tsx     # 선박 상세
+│   ├── booking/
+│   │   ├── [vesselId]/page.tsx # 예약/문의 폼
+│   │   └── confirm/page.tsx    # 접수 완료
+│   ├── about/page.tsx          # 회사소개
+│   ├── contact/page.tsx        # 오시는길
+│   ├── work/page.tsx           # 작업현장
+│   ├── admin/                  # 관리자 대시보드
+│   │   ├── page.tsx
+│   │   └── vessels/            # 선박 CRUD
+│   └── api/                    # 서버 라우트 (admin, bookings)
 │
 ├── components/
-│   ├── vessels/                # 공유 선박 컴포넌트
-│   │   ├── VesselCard.tsx      # basePath prop 필수
-│   │   ├── VesselFilter.tsx    # basePath prop 필수
-│   │   ├── BookingButton.tsx   # basePath prop 필수
-│   │   └── BookingForm.tsx
-│   └── layout/                 # 레이아웃 공통 컴포넌트
+│   ├── layout/                 # Header, Footer, HeroVideo, ScrollAnimations
+│   ├── vessels/VesselGallery.tsx
+│   ├── admin/                  # AdminCharts, AdminVesselTable, VesselForm, VesselImageUpload
+│   ├── work/
+│   └── ui/
 │
+├── constants/                  # company, enums, photo-config, vessels-data
 ├── lib/
 │   ├── data.ts                 # 데이터 접근 레이어 (핵심)
 │   └── supabase.ts             # Supabase 클라이언트 & 타입 정의
 │
 └── data/
-    ├── vessels.json            # 목 선박 데이터 (6척)
-    └── bookings.json           # 목 예약 데이터 (5건)
+    ├── vessels.json
+    ├── bookings.json
+    └── work-photos.json
 ```
 
 ---
@@ -52,17 +57,13 @@ sunbk/
 `.env.local`의 `DATA_SOURCE` 값으로 제어.
 
 ```env
-# 개발 — JSON 파일 사용
-DATA_SOURCE=local
-
-# 운영 — Supabase 사용
-DATA_SOURCE=supabase
+DATA_SOURCE=local       # JSON 파일
+DATA_SOURCE=supabase    # Supabase
 ```
 
-`lib/data.ts`가 이 값을 읽어 자동으로 분기.  
-페이지나 컴포넌트는 데이터 소스를 신경 쓸 필요 없음.
+`lib/data.ts`가 이 값을 읽어 분기. 페이지/컴포넌트는 데이터 소스를 신경 쓸 필요 없음.
 
-### data.ts 제공 함수
+### data.ts 주요 함수
 
 | 함수 | 설명 |
 |------|------|
@@ -70,65 +71,24 @@ DATA_SOURCE=supabase
 | `getVessels(searchParams)` | 필터링된 선박 목록 |
 | `getVesselBySlug(slug)` | slug로 선박 단건 조회 |
 | `getVesselById(id)` | id로 선박 단건 조회 |
+| `getVesselPhotos(vesselId)` | 선박 사진 목록 |
 | `getAdminStats()` | 관리자 통계 (선박수, 예약수, 대기수) |
 | `getRecentBookings()` | 최근 예약 10건 |
 | `createBooking(input)` | 예약 생성 (local 모드에선 저장 없이 성공 반환) |
 
 ---
 
-## 새 디자인 버전 추가 방법 (예: test2)
-
-### 1. 폴더 복사
-
-`app/test1/` 전체를 `app/test2/`로 복사.
-
-### 2. basePath 변경
-
-test2 내 모든 파일에서 `basePath="test1"` → `basePath="test2"` 로 변경.
-
-**변경 대상 파일:**
-- `app/test2/page.tsx` — VesselCard의 basePath, vesselCategories href
-- `app/test2/vessels/page.tsx` — VesselCard, VesselFilter의 basePath
-- `app/test2/vessels/[slug]/page.tsx` — BookingButton의 basePath, 브레드크럼 href
-- `app/test2/booking/[vesselId]/page.tsx` — 브레드크럼 href
-
-### 3. 디자인 변경
-
-`app/test2/layout.tsx`에서 다른 Header/Footer 적용.  
-각 page.tsx의 JSX와 Tailwind 클래스만 수정하면 됨.  
-데이터 호출(`lib/data.ts`)은 그대로 재사용.
-
----
-
-## 공유 컴포넌트 사용 규칙
-
-`components/vessels/` 하위 컴포넌트는 **반드시 `basePath` prop을 받아야** 올바른 라우팅이 동작함.
-
-```tsx
-// vessels/page.tsx
-<VesselCard vessel={vessel} basePath="test1" />
-<VesselFilter basePath="test1" currentType={params.type} />
-
-// vessels/[slug]/page.tsx
-<BookingButton vessel={vessel} basePath="test1" />
-```
-
-basePath를 빠뜨리면 TypeScript 오류 발생.
-
----
-
-## 환경변수 목록
+## 환경변수
 
 | 변수 | 용도 | 필수 |
 |------|------|------|
 | `DATA_SOURCE` | `local` 또는 `supabase` | 개발 필수 |
 | `NEXT_PUBLIC_SUPABASE_URL` | Supabase 프로젝트 URL | 운영 필수 |
 | `NEXT_PUBLIC_SUPABASE_ANON_KEY` | Supabase public key | 운영 필수 |
-| `SUPABASE_SERVICE_ROLE_KEY` | Supabase 서버 전용 key (노출 금지) | 운영 필수 |
+| `SUPABASE_SERVICE_ROLE_KEY` | 서버 전용 key (노출 금지) | 운영 필수 |
 | `NEXTAUTH_URL` | NextAuth 콜백 URL | 인증 사용 시 |
 | `NEXTAUTH_SECRET` | 세션 서명 키 (`openssl rand -base64 32`) | 인증 사용 시 |
 | `NEXT_PUBLIC_SITE_URL` | sitemap/robots 기준 URL | 선택 |
-| `NEXT_PUBLIC_API_BASE_URL` | 외부 API 서버 주소 | 선택 |
 | `RESEND_API_KEY` | 이메일 알림 (TODO) | 선택 |
 
 ---
@@ -142,7 +102,7 @@ basePath를 빠뜨리면 TypeScript 오류 발생.
 | title | text | 선박명 |
 | slug | text | URL용 고유 식별자 |
 | type | enum | `rent` / `sale` / `both` |
-| vessel_type | text | 레저선, 어선, 화물선, 여객선 등 |
+| vessel_type | text | 어선, 화물선 등 |
 | year_built | int | 건조 연도 |
 | length_m | float | 전장(m) |
 | tonnage | float | 톤수 |
@@ -179,5 +139,5 @@ basePath를 빠뜨리면 TypeScript 오류 발생.
 
 ```bash
 npm run dev
-# http://localhost:3000/test1 접속
+# http://localhost:3000
 ```

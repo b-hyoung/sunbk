@@ -9,11 +9,12 @@ import { Pencil, Trash2 } from "lucide-react";
 import type { Vessel } from "@/lib/supabase";
 
 const typeLabel: Record<string, string> = { rent: "임대", sale: "판매", both: "임대·판매" };
-const statusLabel: Record<string, string> = { active: "운영중", inactive: "비활성", sold: "판매완료" };
+const statusLabel: Record<string, string> = { active: "운영중", inactive: "비활성", sold: "판매됨", rented: "대여중" };
 const statusColor: Record<string, string> = {
   active: "bg-emerald-50 text-emerald-700",
   inactive: "bg-gray-100 text-gray-500",
   sold: "bg-red-50 text-red-600",
+  rented: "bg-blue-50 text-blue-700",
 };
 
 interface AdminVesselTableProps {
@@ -39,10 +40,90 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
     }
   };
 
+  const formatPrice = (v: Vessel) => {
+    const rent = v.rent_price_per_day ? `${v.rent_price_per_day.toLocaleString()}원/일` : "";
+    const sale = v.sale_price
+      ? v.sale_price >= 100000000
+        ? `${(v.sale_price / 100000000).toFixed(1)}억`
+        : `${Math.floor(v.sale_price / 10000).toLocaleString()}만`
+      : "";
+    if (rent && sale) return `${rent} / ${sale}`;
+    return rent || sale || "-";
+  };
+
   return (
     <div className="border border-gray-100 rounded-2xl overflow-hidden">
-      <div className="overflow-x-auto">
-        <p className="text-xs text-gray-400 px-4 py-2 md:hidden">← 좌우로 스크롤하세요</p>
+      {/* 모바일: 카드 레이아웃 */}
+      <ul className="md:hidden divide-y divide-gray-50">
+        {vessels.map((v) => {
+          const primary = v.vessel_images?.find((img) => img.is_primary) ?? v.vessel_images?.[0];
+          return (
+            <li key={v.id} className="relative px-5 py-4 flex gap-3">
+              <div className="relative w-16 h-16 shrink-0 rounded-lg overflow-hidden bg-gray-100">
+                {primary ? (
+                  <Image src={primary.url} alt="" fill className="object-cover" sizes="64px" unoptimized />
+                ) : (
+                  <span className="flex items-center justify-center h-full text-gray-300 text-lg">🚢</span>
+                )}
+              </div>
+              <div className="flex-1 min-w-0 space-y-1">
+                <div className="flex items-center justify-between gap-2">
+                  <span className="font-medium text-gray-900 truncate">{v.title}</span>
+                  <span className={`shrink-0 px-2 py-0.5 rounded-full text-[11px] font-medium ${statusColor[v.status]}`}>
+                    {statusLabel[v.status]}
+                  </span>
+                </div>
+                <div className="text-xs text-gray-500 flex items-center gap-2">
+                  <span>{v.vessel_type}</span>
+                  <span className="text-gray-300">·</span>
+                  <span>{typeLabel[v.type]}</span>
+                </div>
+                <div className="text-xs text-gray-600">{formatPrice(v)}</div>
+                <div className="flex items-center gap-1 pt-1">
+                  <Link
+                    href={`/admin/vessels/${v.id}/edit`}
+                    className="flex items-center gap-1 px-3 py-1.5 text-xs text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                    aria-label="수정"
+                  >
+                    <Pencil className="w-3.5 h-3.5" /> 수정
+                  </Link>
+                  <button
+                    onClick={() => setConfirmId(v.id)}
+                    disabled={deleting === v.id}
+                    className="flex items-center gap-1 px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg transition-colors disabled:opacity-50"
+                    aria-label="삭제"
+                  >
+                    <Trash2 className="w-3.5 h-3.5" /> 삭제
+                  </button>
+                </div>
+              </div>
+              {confirmId === v.id && (
+                <div className="absolute inset-0 bg-white/95 flex items-center justify-center gap-3 z-10 px-4">
+                  <span className="text-sm text-gray-600">삭제하시겠습니까?</span>
+                  <button
+                    onClick={() => { handleDelete(v.id); setConfirmId(null); }}
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-lg text-xs font-semibold"
+                  >
+                    삭제
+                  </button>
+                  <button
+                    onClick={() => setConfirmId(null)}
+                    className="border border-gray-200 hover:bg-gray-50 text-gray-600 px-3 py-1.5 rounded-lg text-xs font-medium"
+                  >
+                    취소
+                  </button>
+                </div>
+              )}
+            </li>
+          );
+        })}
+        {vessels.length === 0 && (
+          <li className="px-6 py-16 text-center text-gray-400 text-sm">등록된 선박이 없습니다.</li>
+        )}
+      </ul>
+
+      {/* 데스크탑: 테이블 */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm">
           <caption className="sr-only">선박 관리 목록</caption>
           <thead>
@@ -87,7 +168,7 @@ export default function AdminVesselTable({ vessels: initial }: AdminVesselTableP
                   <td className="px-6 py-3 text-right">
                     <div className="flex items-center justify-end gap-1">
                       <Link
-                        href={`/test1/admin/vessels/${v.id}/edit`}
+                        href={`/admin/vessels/${v.id}/edit`}
                         className="p-2.5 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
                         aria-label="수정"
                       >

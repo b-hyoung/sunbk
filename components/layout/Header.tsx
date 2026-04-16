@@ -10,13 +10,8 @@ import { getNavLinks } from "@/constants/enums";
 
 gsap.registerPlugin(ScrollTrigger);
 
-interface HeaderProps {
-  basePath?: string;
-}
-
-export default function Header({ basePath }: HeaderProps) {
-  const base = basePath ? `/${basePath}` : "";
-  const navLinks = getNavLinks(basePath);
+export default function Header() {
+  const navLinks = getNavLinks();
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(true); // 기본값 true → 흰색 배경으로 시작
@@ -24,7 +19,7 @@ export default function Header({ basePath }: HeaderProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-  const isHome = base ? pathname === base : pathname === "/";
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const header = headerRef.current;
@@ -36,13 +31,15 @@ export default function Header({ basePath }: HeaderProps) {
         backgroundColor: "rgba(255,255,255,1)",
         boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
       });
-      setScrolled(true); // eslint-disable-line
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setScrolled(true);
       return;
     }
 
     // 홈: 투명으로 시작
     gsap.set(header, { backgroundColor: "rgba(0,0,0,0)", boxShadow: "none" });
-    setScrolled(false); // eslint-disable-line
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setScrolled(false);
 
     const trigger = ScrollTrigger.create({
       start: "top+=80 top",
@@ -80,12 +77,12 @@ export default function Header({ basePath }: HeaderProps) {
   }, [menuOpen, scrolled]);
 
   return (
-    <header ref={headerRef} className="fixed top-8 left-0 right-0 z-50" style={{ backgroundColor: isHome ? undefined : "rgba(255,255,255,1)", boxShadow: isHome ? undefined : "0 1px 0 rgba(0,0,0,0.08)" }}>
+    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: isHome ? undefined : "rgba(255,255,255,1)", boxShadow: isHome ? undefined : "0 1px 0 rgba(0,0,0,0.08)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* 로고 */}
           <Link
-            href={base || "/"}
+            href="/"
             className={`flex items-center gap-2 font-bold text-xl tracking-tight transition-colors duration-300 ${
               scrolled ? "text-gray-900" : "text-white"
             }`}

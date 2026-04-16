@@ -55,16 +55,10 @@ jobs:
 
           // generateStaticParams를 추가할 파일들
           const slugFiles = [
-            "app/(test1)/vessels/[slug]/page.tsx",
-            "app/test1/vessels/[slug]/page.tsx",
-            "app/test2/vessels/[slug]/page.tsx",
-            "app/test3/vessels/[slug]/page.tsx",
+            "app/vessels/[slug]/page.tsx",
           ];
           const vesselIdFiles = [
-            "app/(test1)/booking/[vesselId]/page.tsx",
-            "app/test1/booking/[vesselId]/page.tsx",
-            "app/test2/booking/[vesselId]/page.tsx",
-            "app/test3/booking/[vesselId]/page.tsx",
+            "app/booking/[vesselId]/page.tsx",
           ];
 
           const slugParams = JSON.stringify(vessels.map(v => ({ slug: v.slug })));
@@ -99,10 +93,7 @@ jobs:
 
           // vessels/page.tsx searchParams 제거
           const vesselPages = [
-            "app/(test1)/vessels/page.tsx",
-            "app/test1/vessels/page.tsx",
-            "app/test2/vessels/page.tsx",
-            "app/test3/vessels/page.tsx",
+            "app/vessels/page.tsx",
           ];
           for (const f of vesselPages) {
             if (!fs.existsSync(f)) continue;
@@ -146,7 +137,7 @@ jobs:
           }
 
           // admin edit page
-          const editPage = "app/test1/admin/vessels/[id]/edit/page.tsx";
+          const editPage = "app/admin/vessels/[id]/edit/page.tsx";
           if (fs.existsSync(editPage)) {
             let c = fs.readFileSync(editPage, "utf8");
             if (!c.includes("generateStaticParams")) {
