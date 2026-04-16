@@ -9,7 +9,7 @@ export default function AboutClient() {
   return (
     <div className="bg-white">
       {/* 히어로 */}
-      <section className="relative bg-gray-900 py-28 overflow-hidden">
+      <section className="relative bg-gray-900 py-28 min-h-[480px] overflow-hidden">
         <HeroVideo />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
