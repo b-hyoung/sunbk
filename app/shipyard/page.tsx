@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Phone, Anchor } from "lucide-react";
 import { COMPANY } from "@/constants/company";
+import ServiceCards from "./_components/ServiceCards";
 
 export const metadata: Metadata = {
   title: "선박 건조·수리",
@@ -40,6 +41,7 @@ export default function ShipyardPage() {
           </div>
         </div>
       </section>
+      <ServiceCards />
     </div>
   );
 }
