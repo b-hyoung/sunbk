@@ -7,7 +7,7 @@ import RepairGallery from "./_components/RepairGallery";
 
 export const metadata: Metadata = {
   title: "선박 건조·수리",
-  description: "선체·FRP 수리, 도장, 기관 정비, 신조 건조. 제일산업공사에서 제공하는 선박 건조·수리 전문 서비스.",
+  description: "1985년 창업, 인천 연안부두에서 41년. 제일산업공사 — 소형 어선·작업선의 신조 건조와 목선·철선 수리를 전문으로 합니다.",
 };
 
 export default function ShipyardPage() {
@@ -20,10 +20,10 @@ export default function ShipyardPage() {
             <Anchor className="w-4 h-4" />
             <span>선박 건조·수리 <span className="text-gray-300">·</span> 제일산업공사</span>
           </div>
-          <h1 className="text-gray-900 mb-4">선박을 짓고, 고치고, 지킵니다</h1>
+          <h1 className="text-gray-900 mb-4">1985년부터, 인천 연안부두에서</h1>
           <p className="text-gray-500 text-base max-w-2xl leading-relaxed">
-            신조 건조부터 선체·FRP 수리, 도장, 기관 정비까지.
-            현장에서 축적한 기술로 귀하의 선박을 책임집니다.
+            목선과 철선, 소형 어선과 작업선의 신조·수리를 41년간 이어오고 있습니다.
+            인천 지역 유일의 소형 선박 건조·수리 업체로, 정직한 작업으로 선주와 함께합니다.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a

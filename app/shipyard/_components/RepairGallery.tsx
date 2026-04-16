@@ -3,14 +3,14 @@
 import { useState, useMemo } from "react";
 import { Image as ImageIcon } from "lucide-react";
 
-type Category = "all" | "build" | "hull" | "paint" | "engine";
+type Category = "all" | "build" | "wood" | "steel" | "maintain";
 
 const categoryLabel: Record<Category, string> = {
   all: "전체",
   build: "신조",
-  hull: "수리",
-  paint: "도장",
-  engine: "기관",
+  wood: "목선 수리",
+  steel: "철선 수리",
+  maintain: "점검·정비",
 };
 
 interface RepairCase {
@@ -21,15 +21,15 @@ interface RepairCase {
 }
 
 const cases: RepairCase[] = [
-  { id: "case-1", category: "hull", title: "FRP 선체 파손 복원", desc: "측면 충돌로 뚫린 선체 FRP 보강 후 도장 마감" },
-  { id: "case-2", category: "paint", title: "선체 도장 재시공", desc: "방오도료 재도포 + 상부 색상 정비" },
-  { id: "case-3", category: "engine", title: "메인 엔진 정비", desc: "실린더 헤드 오버홀, 냉각 계통 점검" },
-  { id: "case-4", category: "build", title: "신조 작업선 건조", desc: "15m급 작업선 신규 제작 (설계~인도)" },
-  { id: "case-5", category: "hull", title: "강판 용접 보수", desc: "선저 강판 부식부 절삭 후 신강판 용접" },
-  { id: "case-6", category: "paint", title: "데크 논슬립 코팅", desc: "갑판 미끄럼 방지 에폭시 코팅 시공" },
+  { id: "case-1", category: "build", title: "소형 어선 신조 건조", desc: "어업용 소형 어선 신규 제작 — 설계부터 인도까지" },
+  { id: "case-2", category: "wood", title: "목선 선체 복원", desc: "노후 목선 전체 복원 — 손상 부재 교체 후 방부·마감" },
+  { id: "case-3", category: "wood", title: "목선 부분 목재 교체", desc: "부식·파손된 늑골·외판 부분 교체, 기존 구조 유지" },
+  { id: "case-4", category: "steel", title: "철선 강판 교체", desc: "선체 외판 부식부 절삭 후 신강판 용접 접합" },
+  { id: "case-5", category: "steel", title: "선저 용접 보수", desc: "선저 균열·파손부 용접 보수, 재도장까지 일괄 진행" },
+  { id: "case-6", category: "maintain", title: "연례 정기 점검", desc: "장기 거래 선주 대상 입거 점검 — 필요한 작업만 정직하게" },
 ];
 
-const categories: Category[] = ["all", "build", "hull", "paint", "engine"];
+const categories: Category[] = ["all", "build", "wood", "steel", "maintain"];
 
 export default function RepairGallery() {
   const [active, setActive] = useState<Category>("all");
@@ -43,7 +43,7 @@ export default function RepairGallery() {
     <section className="bg-gray-50/60 border-y border-gray-100">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <h2 className="text-gray-900 mb-2">작업 사례</h2>
-        <p className="text-sm text-gray-400 mb-6">Before · After 비교로 보는 실제 작업</p>
+        <p className="text-sm text-gray-400 mb-6">목선부터 철선까지 — 40년간 이어온 실제 작업 기록</p>
 
         {/* 카테고리 필터 */}
         <div className="flex gap-2 flex-wrap mb-8">
