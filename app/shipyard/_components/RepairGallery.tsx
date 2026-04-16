@@ -4,7 +4,7 @@ import { useState, useMemo } from "react";
 import Image from "next/image";
 import { Image as ImageIcon } from "lucide-react";
 
-type Category = "all" | "build" | "hull" | "wood" | "steel" | "maintain";
+type Category = "all" | "build" | "hull" | "wood" | "steel";
 
 const categoryLabel: Record<Category, string> = {
   all: "전체",
@@ -12,7 +12,6 @@ const categoryLabel: Record<Category, string> = {
   hull: "선체 복원",
   wood: "목선 수리",
   steel: "철선 수리",
-  maintain: "점검·정비",
 };
 
 interface RepairCase {
@@ -37,11 +36,10 @@ const cases: RepairCase[] = [
   { id: "case-wood-1", category: "wood", title: "목선 선체 복원", desc: "노후 목선 전체 복원 — 손상 부재 교체 후 방부·마감" },
   { id: "case-wood-2", category: "wood", title: "목선 부분 목재 교체", desc: "부식·파손된 늑골·외판 부분 교체, 기존 구조 유지" },
   { id: "case-steel-1", category: "steel", title: "철선 강판 교체", desc: "선체 외판 부식부 절삭 후 신강판 용접 접합" },
-  { id: "case-steel-2", category: "steel", title: "선저 용접 보수", desc: "선저 균열·파손부 용접 보수, 재도장까지 일괄 진행" },
-  { id: "case-maintain-1", category: "maintain", title: "연례 정기 점검", desc: "장기 거래 선주 대상 입거 점검 — 필요한 작업만 정직하게" },
+  { id: "case-steel-2", category: "steel", title: "선저 용접 보수", desc: "선저 균열·파손부 용접 보수" },
 ];
 
-const categories: Category[] = ["all", "build", "hull", "wood", "steel", "maintain"];
+const categories: Category[] = ["all", "build", "hull", "wood", "steel"];
 
 // ── 테스트용 표시 모드 필터 ──
 type Ratio = "4/3" | "3/4" | "1/1" | "16/9";
