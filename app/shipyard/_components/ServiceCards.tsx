@@ -20,7 +20,7 @@ const services = [
 
 export default function ServiceCards() {
   return (
-    <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
       <h2 className="text-gray-900 mb-2">서비스</h2>
       <p className="text-sm text-gray-400 mb-10">목선에서 철선까지, 현장에서 쌓아온 기술</p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">

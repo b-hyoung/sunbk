@@ -15,13 +15,13 @@ export default function ShipyardPage() {
     <div className="bg-white min-h-screen">
       {/* ── Hero (다크) ── */}
       <section className="bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-24">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
           <div className="inline-flex items-center gap-2 text-sm text-gray-500 mb-4">
             <Anchor className="w-4 h-4" />
             <span>선박 건조·수리 <span className="text-gray-600">·</span> 제일산업공사</span>
           </div>
           <h1 className="text-white mb-4">1985년부터, 인천 연안부두에서</h1>
-          <p className="text-gray-400 text-base max-w-2xl leading-relaxed">
+          <p className="text-gray-400 text-lg max-w-lg leading-relaxed">
             목선과 철선, 소형 선박의 신조·수리를 41년간 이어오고 있습니다.
             인천 지역 유일의 소형 선박 건조·수리 업체.
           </p>
@@ -47,7 +47,7 @@ export default function ShipyardPage() {
 
       {/* ── 상담 CTA (다크) ── */}
       <section className="bg-gray-900">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20 text-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
           <p className="text-gray-500 text-sm italic mb-6">
             "정직함을 철학으로 삼아, 이 일을 해왔습니다"
           </p>

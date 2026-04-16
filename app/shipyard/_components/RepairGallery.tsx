@@ -76,7 +76,7 @@ export default function RepairGallery() {
 
   return (
     <section className="bg-gray-50/60 border-y border-gray-100">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="flex items-start justify-between gap-4 mb-6">
           <div>
             <h2 className="text-gray-900 mb-2">작업 사례</h2>
