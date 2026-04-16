@@ -33,7 +33,7 @@ export function getNavLinks(): NavLink[] {
     { href: `/${Routes.CONTACT}`,   label: "오시는길" },
     {
       href: "#",
-      label: "협력사",
+      label: "제일산업공사(조선소)",
       children: [
         { href: `/${Routes.SHIPYARD}`, label: "조선소 (수리)" },
       ],

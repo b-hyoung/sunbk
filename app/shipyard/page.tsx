@@ -19,7 +19,7 @@ export default function ShipyardPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <div className="inline-flex items-center gap-2 bg-blue-500/20 border border-blue-400/40 text-blue-200 text-xs font-semibold px-3 py-1.5 rounded-full mb-4">
             <span className="w-1.5 h-1.5 bg-blue-400 rounded-full" />
-            수연선박 협력사 · 제일산업공사 (조선소)
+            제일산업공사 (조선소)
           </div>
           <h1 className="text-white font-bold mb-5 leading-tight">
             1985년부터, 인천 연안부두에서
