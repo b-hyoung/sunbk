@@ -33,8 +33,10 @@ export default function RootLayout({
           <BackgroundVideo />
           <Header />
         </Suspense>
-        <main className="flex-1 pt-20">{children}</main>
-        <Footer />
+        <main className="flex-1 pt-20 relative z-10">{children}</main>
+        <div className="relative z-10">
+          <Footer />
+        </div>
       </body>
     </html>
   );
