@@ -16,8 +16,8 @@ export default function ShipyardPage() {
       <section className="relative bg-gray-900 py-28 overflow-hidden">
         <div className="absolute inset-0 bg-gray-900/80" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">
-            Shipbuilding & Repair · 제일산업공사
+          <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
+            선박 건조·수리 · 제일산업공사
           </p>
           <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
             1985년부터, 인천 연안부두에서
