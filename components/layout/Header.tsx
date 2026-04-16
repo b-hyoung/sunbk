@@ -19,8 +19,7 @@ export default function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-  const heroPaths = ["/", "/about", "/work", "/contact", "/shipyard"];
-  const isHome = heroPaths.some((p) => pathname === p || (p !== "/" && pathname.startsWith(p + "/")));
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const header = headerRef.current;

@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 
 export default function ShipyardPage() {
   return (
-    <div className="bg-white min-h-screen -mt-20">
+    <div className="bg-white min-h-screen">
       {/* ── Hero ── */}
-      <section className="relative bg-gray-900 pt-48 pb-28 min-h-[360px] overflow-hidden">
+      <section className="relative bg-gray-900 py-28 min-h-[360px] overflow-hidden">
         <HeroVideo />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
