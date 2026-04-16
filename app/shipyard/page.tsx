@@ -28,9 +28,6 @@ export default function ShipyardPage() {
             목선과 철선, 소형 선박의 신조·수리를 41년간 이어오고 있습니다.<br />
             인천 지역 유일의 소형 선박 건조·수리 업체.
           </p>
-          <p className="text-white/50 text-sm mt-5 leading-relaxed max-w-xl">
-            ※ 수연선박의 주력 서비스는 선박 임대·판매이며, 수리·건조는 협력사 제일산업공사를 통해 제공됩니다.
-          </p>
         </div>
       </section>
       <ServiceCards />

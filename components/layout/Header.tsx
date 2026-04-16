@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState, useEffect, useRef } from "react";
-import { Menu, X, Phone, Anchor, ChevronDown } from "lucide-react";
+import { Menu, X, Phone, Anchor, ChevronDown, Building2 } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -125,28 +125,51 @@ export default function Header() {
                     </button>
                     {openDropdown === link.label && (
                       <div
-                        className="absolute top-full right-0 pt-3 w-56"
+                        className="absolute top-full right-0 pt-3 w-72"
                         style={{ animation: "dropdownFade 180ms ease-out" }}
                       >
                         {/* 상단 화살표 */}
                         <div className="absolute top-1.5 right-6 w-3 h-3 bg-white border-l border-t border-gray-200 rotate-45 shadow-sm" />
-                        <div className="relative bg-white border-2 border-gray-200 rounded-xl shadow-2xl shadow-gray-900/20 overflow-hidden ring-1 ring-black/5">
-                          {/* 상단 라벨 */}
-                          <div className="px-4 py-2 bg-gradient-to-r from-blue-50 to-blue-50/50 border-b border-gray-100">
-                            <p className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">{link.label}</p>
-                          </div>
-                          {link.children.map((child, i) => (
-                            <Link
-                              key={child.href}
-                              href={child.href}
-                              className={`group flex items-center gap-3 px-4 py-3 text-sm text-gray-700 hover:bg-blue-50 hover:text-blue-700 transition-colors ${
-                                i !== link.children!.length - 1 ? "border-b border-gray-50" : ""
-                              }`}
-                            >
-                              <span className="w-1 h-1 rounded-full bg-gray-300 group-hover:bg-blue-500 transition-colors" />
-                              <span className="font-medium">{child.label}</span>
-                            </Link>
-                          ))}
+                        <div className="relative bg-white border-2 border-gray-200 rounded-xl shadow-2xl shadow-gray-900/20 overflow-hidden ring-1 ring-black/5 p-2">
+                          {link.children.map((child) => {
+                            const isDisabled = child.href === "#";
+                            const content = (
+                              <>
+                                <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-blue-500 to-blue-700 flex items-center justify-center shrink-0 group-hover:shadow-md group-hover:shadow-blue-500/30 transition-shadow">
+                                  <Building2 className="w-5 h-5 text-white" />
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                  <p className="font-semibold text-gray-900 text-sm leading-tight truncate">
+                                    {child.label.split(" (")[0]}
+                                  </p>
+                                  <p className="text-xs text-gray-500 mt-0.5 truncate">
+                                    {child.label.includes("(") ? child.label.match(/\(([^)]+)\)/)?.[1] : "협력 업체"}
+                                  </p>
+                                </div>
+                              </>
+                            );
+
+                            if (isDisabled) {
+                              return (
+                                <div
+                                  key={child.label}
+                                  className="group flex items-center gap-3 px-3 py-3 rounded-lg opacity-50 cursor-not-allowed"
+                                >
+                                  {content}
+                                </div>
+                              );
+                            }
+
+                            return (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                className="group flex items-center gap-3 px-3 py-3 rounded-lg hover:bg-blue-50 transition-colors"
+                              >
+                                {content}
+                              </Link>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
