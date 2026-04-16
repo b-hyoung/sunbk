@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import ScrollAnimations from "@/components/layout/ScrollAnimations";
+import BackgroundVideo from "@/components/layout/BackgroundVideo";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col">
         <ScrollAnimations />
         <Suspense>
+          <BackgroundVideo />
           <Header />
         </Suspense>
         <main className="flex-1 pt-20">{children}</main>

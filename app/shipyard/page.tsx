@@ -12,11 +12,8 @@ export const metadata: Metadata = {
 export default function ShipyardPage() {
   return (
     <div className="bg-white min-h-screen">
-      {/* ── Hero (다크 + 배경 영상) ── */}
-      <section className="relative bg-gray-900 py-28 overflow-hidden">
-        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover opacity-20" poster="/hero-bg.jpg">
-          <source src="https://videos.pexels.com/video-files/5784933/5784933-hd_1920_1080_24fps.mp4" type="video/mp4" />
-        </video>
+      {/* ── Hero ── */}
+      <section className="relative bg-gray-900/80 py-28 overflow-hidden">
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
             선박 건조·수리 · 제일산업공사
