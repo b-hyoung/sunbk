@@ -125,35 +125,33 @@ export default function Header() {
                     </button>
                     {openDropdown === link.label && (
                       <div
-                        className="absolute top-full right-0 pt-4 w-64"
+                        className="absolute top-full right-0 pt-3 w-56"
                         style={{ animation: "dropdownFade 200ms ease-out" }}
                       >
-                        <div className="bg-white/95 backdrop-blur-xl border border-gray-200/60 rounded-2xl shadow-2xl shadow-gray-900/10 overflow-hidden px-6 py-5">
-                          <p className="text-xs text-gray-400 mb-4 tracking-wide">{link.label}</p>
-                          <div className="space-y-3.5">
-                            {link.children.map((child) => {
-                              const isDisabled = child.href === "#";
-                              if (isDisabled) {
-                                return (
-                                  <div
-                                    key={child.label}
-                                    className="text-[17px] text-gray-300 cursor-not-allowed tracking-tight"
-                                  >
-                                    {child.label}
-                                  </div>
-                                );
-                              }
+                        <div className="bg-gray-100 rounded-lg overflow-hidden py-3">
+                          {link.children.map((child) => {
+                            const isDisabled = child.href === "#";
+                            if (isDisabled) {
                               return (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  className="block text-[17px] text-gray-900 hover:text-blue-600 transition-colors tracking-tight"
+                                <button
+                                  key={child.label}
+                                  type="button"
+                                  className="w-full text-left px-6 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors"
                                 >
                                   {child.label}
-                                </Link>
+                                </button>
                               );
-                            })}
-                          </div>
+                            }
+                            return (
+                              <Link
+                                key={child.href}
+                                href={child.href}
+                                className="block px-6 py-3 text-sm text-gray-700 hover:text-gray-900 transition-colors"
+                              >
+                                {child.label}
+                              </Link>
+                            );
+                          })}
                         </div>
                       </div>
                     )}
