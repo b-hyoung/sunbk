@@ -22,7 +22,7 @@ export default function ServiceCards() {
   return (
     <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
       <h2 className="text-gray-900 mb-2">서비스</h2>
-      <p className="text-sm text-gray-400 mb-10">1985년부터 인천 연안부두에서, 소형 선박의 건조와 수리를 이어오고 있습니다</p>
+      <p className="text-sm text-gray-400 mb-10">목선에서 철선까지, 현장에서 쌓아온 기술</p>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         {services.map((s) => {
           const Icon = s.icon;
