@@ -31,7 +31,7 @@ export default function ShipyardPage() {
       <RepairGallery />
 
       {/* ── 상담 CTA (다크) ── */}
-      <section className="bg-gray-900">
+      <section className="bg-gray-900/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 sm:py-16 text-center">
           <p className="text-gray-400 text-base italic mb-8">
             "정직함을 철학으로 삼아, 이 일을 해왔습니다"
