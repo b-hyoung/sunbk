@@ -36,7 +36,7 @@ export default function ServiceCards() {
               key={s.title}
               className="border border-gray-100 rounded-2xl p-6 hover:border-gray-200 transition-colors"
             >
-              <div className="w-10 h-10 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center mb-4">
+              <div className="w-10 h-10 rounded-lg bg-gray-50 text-gray-500 flex items-center justify-center mb-4">
                 <Icon className="w-5 h-5" />
               </div>
               <h3 className="text-base font-semibold text-gray-900 mb-2">{s.title}</h3>

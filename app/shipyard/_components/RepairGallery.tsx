@@ -70,13 +70,13 @@ export default function RepairGallery() {
               key={c.id}
               className="bg-white border border-gray-100 rounded-2xl overflow-hidden"
             >
-              <div className="grid grid-cols-2 divide-x divide-gray-100">
+              <div className="grid grid-cols-1 sm:grid-cols-2 divide-y sm:divide-y-0 sm:divide-x divide-gray-100">
                 <Placeholder label="Before" />
                 <Placeholder label="After" />
               </div>
               <div className="p-5">
                 <div className="flex items-center gap-2 mb-1.5">
-                  <span className="text-[11px] font-medium text-blue-600 bg-blue-50 px-2 py-0.5 rounded-full">
+                  <span className="text-[11px] font-medium text-gray-500 bg-gray-100 px-2 py-0.5 rounded-full">
                     {categoryLabel[c.category]}
                   </span>
                 </div>
