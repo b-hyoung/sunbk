@@ -3,12 +3,14 @@
 import Link from "next/link";
 import { Phone, Anchor, MapPin, Clock } from "lucide-react";
 import { COMPANY } from "@/constants/company";
+import HeroVideo from "@/components/layout/BackgroundVideo";
 
 export default function AboutClient() {
   return (
     <div className="bg-white">
       {/* 히어로 */}
-      <section className="relative bg-gray-900/80 py-28 overflow-hidden">
+      <section className="relative bg-gray-900 py-28 overflow-hidden">
+        <HeroVideo />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
             회사소개

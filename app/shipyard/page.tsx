@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Phone } from "lucide-react";
 import { COMPANY } from "@/constants/company";
+import HeroVideo from "@/components/layout/BackgroundVideo";
 import ServiceCards from "./_components/ServiceCards";
 import RepairGallery from "./_components/RepairGallery";
 
@@ -13,7 +14,8 @@ export default function ShipyardPage() {
   return (
     <div className="bg-white min-h-screen">
       {/* ── Hero ── */}
-      <section className="relative bg-gray-900/80 py-28 overflow-hidden">
+      <section className="relative bg-gray-900 py-28 overflow-hidden">
+        <HeroVideo />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
             선박 건조·수리 · 제일산업공사

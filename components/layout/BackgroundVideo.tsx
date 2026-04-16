@@ -1,22 +1,30 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
 
-const HERO_PAGES = ["/about", "/work", "/contact", "/shipyard"];
+let sharedTime = 0;
 
-export default function BackgroundVideo() {
-  const pathname = usePathname();
-  const show = HERO_PAGES.some((p) => pathname === p || pathname.startsWith(p + "/"));
+export default function HeroVideo() {
+  const ref = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    v.currentTime = sharedTime;
+    const sync = setInterval(() => {
+      sharedTime = v.currentTime;
+    }, 200);
+    return () => clearInterval(sync);
+  }, []);
 
   return (
     <video
+      ref={ref}
       autoPlay
       muted
       loop
       playsInline
-      className={`fixed inset-0 w-full h-full object-cover z-0 transition-opacity duration-700 ${
-        show ? "opacity-100" : "opacity-0 pointer-events-none"
-      }`}
+      className="absolute inset-0 w-full h-full object-cover opacity-20"
       poster="/hero-bg.jpg"
     >
       <source

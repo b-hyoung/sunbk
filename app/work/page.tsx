@@ -1,5 +1,6 @@
 import { getAllWorkPhotos } from "@/lib/data";
 import WorkGallery from "@/components/work/WorkGallery";
+import HeroVideo from "@/components/layout/BackgroundVideo";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -13,7 +14,8 @@ export default async function WorkPage() {
   return (
     <div className="bg-white min-h-screen">
       {/* 히어로 */}
-      <section className="relative bg-gray-900/80 py-28 overflow-hidden">
+      <section className="relative bg-gray-900 py-28 overflow-hidden">
+        <HeroVideo />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
           <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
             작업현장
