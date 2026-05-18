@@ -13,8 +13,10 @@ function readVessels(): Vessel[] {
   const vessels = JSON.parse(raw) as Vessel[];
   return vessels.map((v) => {
     const override = VESSEL_OVERRIDES[v.id];
-    if (!override) return v;
-    return { ...v, ...override, vessel_images: v.vessel_images };
+    const merged = override
+      ? { ...v, ...override, vessel_images: v.vessel_images }
+      : v;
+    return { ...merged, use_cases: merged.use_cases ?? [] };
   });
 }
 

@@ -4,6 +4,7 @@ import { createClient } from '@supabase/supabase-js'
 export type VesselType = 'rent' | 'sale' | 'both'
 export type BookingStatus = 'pending' | 'confirmed' | 'cancelled' | 'completed'
 export type VesselStatus = 'active' | 'inactive' | 'sold' | 'rented'
+export type UseCase = 'survey' | 'construction' | 'cargo'
 
 export interface Vessel {
   id: string
@@ -11,6 +12,7 @@ export interface Vessel {
   slug: string
   type: VesselType
   vessel_type: string
+  use_cases: UseCase[]
   year_built: number | null
   length_m: number | null
   tonnage: number | null

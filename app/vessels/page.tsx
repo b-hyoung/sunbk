@@ -4,15 +4,22 @@ import VesselCard from "@/app/_components/VesselCard";
 import VesselFilter from "@/app/_components/VesselFilter";
 import { Ship } from "lucide-react";
 import type { Metadata } from "next";
+import { USE_CASES } from "@/lib/vessel-types";
+import type { UseCase } from "@/lib/supabase";
 
 export const metadata: Metadata = {
   title: "선박 목록",
-  description: "임대 및 판매 가능한 선박 목록을 확인하세요. 어선, 화물선 등 다양한 선박을 보유하고 있습니다.",
+  description: "임대 및 판매 가능한 선박 목록. 통선·예항선·작업선·도선·화물선.",
 };
 
 interface SearchParams {
   type?: string;
   vessel_type?: string;
+  use?: string;
+}
+
+function isUseCase(v: string | undefined): v is UseCase {
+  return v === "survey" || v === "construction" || v === "cargo";
 }
 
 export default async function VesselsPage({
@@ -27,7 +34,17 @@ export default async function VesselsPage({
     rent: "임대 선박",
     sale: "판매 선박",
   };
-  const pageTitle = params.type ? (typeLabel[params.type] ?? "선박 목록") : "전체 선박";
+
+  let pageTitle = "전체 선박";
+  let pageSubtitle: string | null = null;
+
+  if (isUseCase(params.use)) {
+    const info = USE_CASES[params.use];
+    pageTitle = `${info.icon} ${info.label}`;
+    pageSubtitle = info.description;
+  } else if (params.type && typeLabel[params.type]) {
+    pageTitle = typeLabel[params.type];
+  }
 
   return (
     <div className="bg-white min-h-screen">
@@ -35,18 +52,29 @@ export default async function VesselsPage({
       <div className="border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
           <h1 data-fade-up className="text-gray-900 mb-1">{pageTitle}</h1>
-          <p data-fade-up className="text-gray-400 text-sm">총 {vessels.length}척</p>
+          {pageSubtitle ? (
+            <p data-fade-up className="text-gray-500 text-sm max-w-2xl leading-relaxed">
+              {pageSubtitle}
+            </p>
+          ) : (
+            <p data-fade-up className="text-gray-400 text-sm">총 {vessels.length}척</p>
+          )}
+          {pageSubtitle && (
+            <p data-fade-up className="text-gray-400 text-xs mt-2">총 {vessels.length}척</p>
+          )}
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:py-10">
         <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
-          {/* 필터: 모바일=상단 pill, 데스크탑=사이드바 */}
           <aside data-fade-in className="w-full lg:w-48 shrink-0">
-            <VesselFilter currentType={params.type} currentVesselType={params.vessel_type} />
+            <VesselFilter
+              currentType={params.type}
+              currentVesselType={params.vessel_type}
+              currentUse={params.use}
+            />
           </aside>
 
-          {/* 선박 목록 */}
           <div className="flex-1">
             {vessels.length > 0 ? (
               <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">

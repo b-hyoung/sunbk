@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { MapPin, Ruler, Users } from "lucide-react";
 import { Vessel } from "@/lib/supabase";
+import { getVesselCategory } from "@/lib/vessel-types";
 
 interface VesselCardProps {
   vessel: Vessel;
@@ -13,9 +14,26 @@ const typeLabel: Record<string, string> = {
   both: "임대·판매",
 };
 
+const typeBadgeClass: Record<string, string> = {
+  rent: "bg-blue-600 text-white",
+  both: "bg-blue-600 text-white",
+  sale: "bg-gray-700/80 text-white",
+};
+
+function formatSalePrice(price: number) {
+  return price >= 100000000
+    ? `${(price / 100000000).toFixed(1)}억`
+    : `${Math.floor(price / 10000).toLocaleString()}만`;
+}
+
 export default function VesselCard({ vessel }: VesselCardProps) {
   const primaryImage = vessel.vessel_images?.find((img) => img.is_primary) ?? vessel.vessel_images?.[0];
   const label = typeLabel[vessel.type] ?? typeLabel.both;
+  const badgeClass = typeBadgeClass[vessel.type] ?? typeBadgeClass.both;
+  const category = getVesselCategory(vessel);
+
+  const showRent = vessel.type === "rent" || vessel.type === "both";
+  const showSale = vessel.type === "sale" || vessel.type === "both";
 
   return (
     <Link
@@ -35,14 +53,16 @@ export default function VesselCard({ vessel }: VesselCardProps) {
         ) : (
           <div className="flex items-center justify-center h-full text-4xl opacity-20">🚢</div>
         )}
-        <span className="absolute top-3 left-3 text-xs font-medium px-2.5 py-1 rounded-full bg-black/50 text-white backdrop-blur-sm">
+        <span
+          className={`absolute top-3 left-3 text-xs font-semibold px-2.5 py-1 rounded-full backdrop-blur-sm ${badgeClass}`}
+        >
           {label}
         </span>
       </div>
 
       {/* 내용 */}
       <div className="flex flex-col flex-1 p-4">
-        <div className="text-xs font-medium text-blue-600 mb-1">{vessel.vessel_type}</div>
+        <div className="text-xs font-medium text-blue-600 mb-1">{category}</div>
         <h3 className="font-semibold text-gray-900 mb-3 line-clamp-1">{vessel.title}</h3>
 
         {/* 스펙 */}
@@ -50,6 +70,11 @@ export default function VesselCard({ vessel }: VesselCardProps) {
           {vessel.length_m && (
             <span className="inline-flex items-center gap-1 text-xs text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
               <Ruler className="w-3 h-3" />{vessel.length_m}m
+            </span>
+          )}
+          {vessel.tonnage && (
+            <span className="text-xs text-gray-500 bg-gray-50 px-2 py-0.5 rounded">
+              {vessel.tonnage}톤
             </span>
           )}
           {vessel.capacity && (
@@ -71,24 +96,30 @@ export default function VesselCard({ vessel }: VesselCardProps) {
 
         {/* 가격 */}
         <div className="mt-auto pt-3 border-t border-gray-100 space-y-1">
-          {vessel.rent_price_per_day && (
+          {showRent && (
             <div className="flex justify-between items-baseline">
               <span className="text-xs text-gray-400">임대</span>
-              <span className="text-sm font-bold text-blue-600">
-                {vessel.rent_price_per_day.toLocaleString()}
-                <span className="text-xs font-normal text-gray-400">원/일</span>
-              </span>
+              {vessel.rent_price_per_day ? (
+                <span className="text-sm font-bold text-blue-600">
+                  {vessel.rent_price_per_day.toLocaleString()}
+                  <span className="text-xs font-normal text-gray-400">원/일</span>
+                </span>
+              ) : (
+                <span className="text-sm font-semibold text-blue-600">전화 협의</span>
+              )}
             </div>
           )}
-          {vessel.sale_price && (
+          {showSale && (
             <div className="flex justify-between items-baseline">
               <span className="text-xs text-gray-400">판매</span>
-              <span className="text-sm font-bold text-gray-900">
-                {vessel.sale_price >= 100000000
-                  ? `${(vessel.sale_price / 100000000).toFixed(1)}억`
-                  : `${Math.floor(vessel.sale_price / 10000).toLocaleString()}만`}
-                <span className="text-xs font-normal text-gray-400">원</span>
-              </span>
+              {vessel.sale_price ? (
+                <span className="text-sm font-bold text-gray-900">
+                  {formatSalePrice(vessel.sale_price)}
+                  <span className="text-xs font-normal text-gray-400">원</span>
+                </span>
+              ) : (
+                <span className="text-sm font-medium text-gray-500">전화 협의</span>
+              )}
             </div>
           )}
         </div>

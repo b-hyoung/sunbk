@@ -5,6 +5,7 @@ import VesselGallery from "@/components/vessels/VesselGallery";
 import { Phone, MapPin, Ruler, Users, Calendar, ChevronRight } from "lucide-react";
 import type { Metadata } from "next";
 import BookingButton from "@/app/_components/BookingButton";
+import { getVesselCategory } from "@/lib/vessel-types";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -28,10 +29,16 @@ const typeLabel: Record<string, string> = {
 };
 
 const typeBadge: Record<string, string> = {
-  rent: "bg-emerald-50 text-emerald-700",
-  sale: "bg-blue-50 text-blue-700",
-  both: "bg-violet-50 text-violet-700",
+  rent: "bg-blue-50 text-blue-700",
+  both: "bg-blue-50 text-blue-700",
+  sale: "bg-gray-100 text-gray-700",
 };
+
+function formatSalePrice(price: number) {
+  return price >= 100000000
+    ? `${(price / 100000000).toFixed(1)}억`
+    : `${Math.floor(price / 10000).toLocaleString()}만`;
+}
 
 export default async function VesselDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -39,6 +46,9 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
   if (!vessel) notFound();
 
   const images = await getVesselPhotos(vessel.id, "vessel");
+  const category = getVesselCategory(vessel);
+  const showRent = vessel.type === "rent" || vessel.type === "both";
+  const showSale = vessel.type === "sale" || vessel.type === "both";
 
   const specs = [
     { label: "선박 종류", value: vessel.vessel_type },
@@ -124,29 +134,35 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
                   {typeLabel[vessel.type]}
                 </span>
                 <h1 className="text-xl font-bold text-gray-900 leading-snug">{vessel.title}</h1>
-                <p className="text-sm text-gray-400 mt-0.5">{vessel.vessel_type}</p>
+                <p className="text-sm text-gray-400 mt-0.5">{category} · {vessel.vessel_type}</p>
               </div>
 
               {/* 가격 */}
               <div className="space-y-2 py-5 border-y border-gray-100">
-                {vessel.rent_price_per_day && (
+                {showRent && (
                   <div className="flex justify-between items-baseline">
                     <span className="text-sm text-gray-400">임대가</span>
-                    <span className="text-xl font-bold text-blue-600">
-                      {vessel.rent_price_per_day.toLocaleString()}
-                      <span className="text-sm font-normal text-gray-400">원/일</span>
-                    </span>
+                    {vessel.rent_price_per_day ? (
+                      <span className="text-xl font-bold text-blue-600">
+                        {vessel.rent_price_per_day.toLocaleString()}
+                        <span className="text-sm font-normal text-gray-400">원/일</span>
+                      </span>
+                    ) : (
+                      <span className="text-base font-semibold text-blue-600">전화 협의</span>
+                    )}
                   </div>
                 )}
-                {vessel.sale_price && (
+                {showSale && (
                   <div className="flex justify-between items-baseline">
                     <span className="text-sm text-gray-400">판매가</span>
-                    <span className="text-xl font-bold text-gray-900">
-                      {vessel.sale_price >= 100000000
-                        ? `${(vessel.sale_price / 100000000).toFixed(1)}억`
-                        : `${Math.floor(vessel.sale_price / 10000).toLocaleString()}만`}
-                      <span className="text-sm font-normal text-gray-400">원</span>
-                    </span>
+                    {vessel.sale_price ? (
+                      <span className="text-xl font-bold text-gray-900">
+                        {formatSalePrice(vessel.sale_price)}
+                        <span className="text-sm font-normal text-gray-400">원</span>
+                      </span>
+                    ) : (
+                      <span className="text-base font-medium text-gray-500">전화 협의</span>
+                    )}
                   </div>
                 )}
               </div>

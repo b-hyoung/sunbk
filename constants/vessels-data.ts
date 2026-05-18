@@ -14,6 +14,7 @@ export const VESSEL_OVERRIDES: Record<
   "suyeon-1": {
     title: "수연1호",
     vessel_type: "기선(강선)",
+    use_cases: ["construction"],
     year_built: 1983,
     length_m: 20.09,
     tonnage: 33,
@@ -40,6 +41,7 @@ export const VESSEL_OVERRIDES: Record<
   "suyeon-3": {
     title: "수연3호",
     vessel_type: "화물선",
+    use_cases: ["cargo"],
     year_built: null,
     length_m: null,
     tonnage: null,
@@ -56,6 +58,7 @@ export const VESSEL_OVERRIDES: Record<
   "suyeon-5": {
     title: "수연5호",
     vessel_type: "기선(FRP)",
+    use_cases: ["construction"],
     year_built: 1995,
     length_m: 18,
     tonnage: 24,
@@ -79,6 +82,7 @@ export const VESSEL_OVERRIDES: Record<
   "suyeon-6": {
     title: "수연6호",
     vessel_type: "기선(FRP)",
+    use_cases: ["survey", "construction"],
     year_built: 2010,
     length_m: 14.4,
     tonnage: 14,
@@ -103,6 +107,7 @@ export const VESSEL_OVERRIDES: Record<
   "suyeon-9": {
     title: "수연9호",
     vessel_type: "작업선",
+    use_cases: ["construction"],
     year_built: null,
     length_m: null,
     tonnage: null,
@@ -119,6 +124,7 @@ export const VESSEL_OVERRIDES: Record<
   sinseong: {
     title: "신성호",
     vessel_type: "기타선(FRP)",
+    use_cases: ["survey", "construction"],
     year_built: 1989,
     length_m: 13.84,
     tonnage: 10,
@@ -142,6 +148,7 @@ export const VESSEL_OVERRIDES: Record<
   youngjin: {
     title: "영진호",
     vessel_type: "기타선(통선)(FRP)",
+    use_cases: ["survey", "construction"],
     year_built: 1997,
     length_m: 14.8,
     tonnage: 12,
@@ -161,6 +168,7 @@ export const VESSEL_OVERRIDES: Record<
   "jinyang-2": {
     title: "진양2호",
     vessel_type: "기타선(통선)(강선)",
+    use_cases: ["survey", "construction"],
     year_built: 1984,
     length_m: 12.1,
     tonnage: 7.98,

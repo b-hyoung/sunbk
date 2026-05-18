@@ -4,12 +4,13 @@
  * DATA_SOURCE=supabase (또는 미설정) → Supabase
  */
 
-import type { Vessel, Booking } from "./supabase";
+import type { Vessel, Booking, UseCase } from "./supabase";
 import { createClient } from "@supabase/supabase-js";
 import { PHOTO_DATA_MODE, getCategoryLabel, getPhotoGroup } from "@/constants/photo-config";
 import type { VesselImage } from "./supabase";
 import workPhotosJson from "@/data/work-photos.json";
 import { getAllVesselsFromStore } from "./admin-store";
+import { matchesCategory, type VesselCategory, VESSEL_CATEGORIES } from "./vessel-types";
 
 // 항상 로컬 JSON 사용 (Supabase 연동 시 false로 변경)
 const USE_LOCAL = true;
@@ -69,10 +70,38 @@ export async function getFeaturedVessels(): Promise<Vessel[]> {
   return data ?? [];
 }
 
+/** 용도별 추천 선박: featured 우선, 그다음 일반. */
+export async function getVesselsByUseCase(use: UseCase, limit = 3): Promise<Vessel[]> {
+  const all = await getVessels({ use });
+  const featured = all.filter((v) => v.is_featured);
+  const rest = all.filter((v) => !v.is_featured);
+  return [...featured, ...rest].slice(0, limit);
+}
+
 export async function getVessels(searchParams: {
   type?: string;
   vessel_type?: string;
+  use?: string;
 }): Promise<Vessel[]> {
+  const useFilter: UseCase | undefined =
+    searchParams.use === "survey" || searchParams.use === "construction" || searchParams.use === "cargo"
+      ? searchParams.use
+      : undefined;
+
+  const categoryFilter: VesselCategory | undefined = (VESSEL_CATEGORIES as readonly string[]).includes(
+    searchParams.vessel_type ?? "",
+  )
+    ? (searchParams.vessel_type as VesselCategory)
+    : undefined;
+
+  // 임대 우선 정렬: rent/both > sale, 그 안에서는 is_featured 우선
+  const sortByRentFirst = (a: Vessel, b: Vessel) => {
+    const aRent = a.type === "rent" || a.type === "both" ? 1 : 0;
+    const bRent = b.type === "rent" || b.type === "both" ? 1 : 0;
+    if (aRent !== bRent) return bRent - aRent;
+    return Number(b.is_featured) - Number(a.is_featured);
+  };
+
   if (USE_LOCAL) {
     const vessels = localVessels();
     let result = vessels.filter((v) => v.status === "active");
@@ -83,11 +112,15 @@ export async function getVessels(searchParams: {
       result = result.filter((v) => v.type === "sale" || v.type === "both");
     }
 
-    if (searchParams.vessel_type) {
-      result = result.filter((v) => v.vessel_type === searchParams.vessel_type);
+    if (useFilter) {
+      result = result.filter((v) => v.use_cases?.includes(useFilter));
     }
 
-    return result.sort((a, b) => Number(b.is_featured) - Number(a.is_featured));
+    if (categoryFilter) {
+      result = result.filter((v) => matchesCategory(v, categoryFilter));
+    }
+
+    return result.sort(sortByRentFirst);
   }
 
   const supabase = createClient(
@@ -97,21 +130,23 @@ export async function getVessels(searchParams: {
   let query = supabase
     .from("vessels")
     .select("*, vessel_images(*)")
-    .eq("status", "active")
-    .order("is_featured", { ascending: false })
-    .order("created_at", { ascending: false });
+    .eq("status", "active");
 
   if (searchParams.type === "rent") {
     query = query.in("type", ["rent", "both"]);
   } else if (searchParams.type === "sale") {
     query = query.in("type", ["sale", "both"]);
   }
-  if (searchParams.vessel_type) {
-    query = query.eq("vessel_type", searchParams.vessel_type);
+  if (useFilter) {
+    query = query.contains("use_cases", [useFilter]);
   }
 
   const { data } = await query;
-  return data ?? [];
+  let result = data ?? [];
+  if (categoryFilter) {
+    result = result.filter((v) => matchesCategory(v, categoryFilter));
+  }
+  return result.sort(sortByRentFirst);
 }
 
 export async function getVesselBySlug(slug: string): Promise<Vessel | null> {

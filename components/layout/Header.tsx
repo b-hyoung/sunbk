@@ -20,52 +20,17 @@ export default function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const currentUrl = searchParams.toString() ? `${pathname}?${searchParams.toString()}` : pathname;
-  const isHome = pathname === "/";
 
   useEffect(() => {
     const header = headerRef.current;
     if (!header) return;
-
-    if (!isHome) {
-      // 홈 아닌 페이지: 항상 흰색 배경
-      gsap.set(header, {
-        backgroundColor: "rgba(255,255,255,1)",
-        boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
-      });
-      // eslint-disable-next-line react-hooks/set-state-in-effect
-      setScrolled(true);
-      return;
-    }
-
-    // 홈: 투명으로 시작
-    gsap.set(header, { backgroundColor: "rgba(0,0,0,0)", boxShadow: "none" });
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setScrolled(false);
-
-    const trigger = ScrollTrigger.create({
-      start: "top+=80 top",
-      onEnter: () => {
-        setScrolled(true);
-        gsap.to(header, {
-          backgroundColor: "rgba(255,255,255,1)",
-          duration: 0.35,
-          ease: "power2.out",
-          boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
-        });
-      },
-      onLeaveBack: () => {
-        setScrolled(false);
-        gsap.to(header, {
-          backgroundColor: "rgba(0,0,0,0)",
-          duration: 0.35,
-          ease: "power2.out",
-          boxShadow: "none",
-        });
-      },
+    gsap.set(header, {
+      backgroundColor: "rgba(255,255,255,1)",
+      boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
     });
-
-    return () => trigger.kill();
-  }, [isHome]);
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setScrolled(true);
+  }, []);
 
   useEffect(() => {
     const header = headerRef.current;
@@ -78,7 +43,7 @@ export default function Header() {
   }, [menuOpen, scrolled]);
 
   return (
-    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: isHome ? undefined : "rgba(255,255,255,1)", boxShadow: isHome ? undefined : "0 1px 0 rgba(0,0,0,0.08)" }}>
+    <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: "rgba(255,255,255,1)", boxShadow: "0 1px 0 rgba(0,0,0,0.08)" }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-20">
           {/* 로고 */}

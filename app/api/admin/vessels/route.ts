@@ -23,6 +23,7 @@ export async function POST(req: NextRequest) {
     slug: body.slug,
     type: body.type || "both",
     vessel_type: body.vessel_type || "화물선",
+    use_cases: body.use_cases ?? [],
     year_built: body.year_built ?? null,
     length_m: body.length_m ?? null,
     tonnage: body.tonnage ?? null,
