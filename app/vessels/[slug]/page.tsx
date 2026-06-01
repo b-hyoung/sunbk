@@ -113,6 +113,7 @@ export default async function VesselDetailPage({ params }: { params: Promise<{ s
                 </div>
               </div>
             )}
+
           </div>
 
           {/* 우측 사이드바 */}

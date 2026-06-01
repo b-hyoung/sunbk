@@ -1,22 +1,23 @@
 import Link from "next/link";
 import {
-  Anchor, MapPin,
-  CalendarDays, Tag, Camera, Wrench,
+  Anchor,
+  MapPin,
+  Ship,
+  Wrench,
+  Briefcase,
   ExternalLink,
 } from "lucide-react";
 import { getNavLinks } from "@/constants/enums";
 import { COMPANY } from "@/constants/company";
 
 const navIcons: Record<string, React.ElementType> = {
-  "선박 임대": CalendarDays,
-  "선박 판매": Tag,
+  "선박 임대·판매": Ship,
   "작업현장": Wrench,
-  "회사소개": Camera,
-  "오시는길": MapPin,
+  "회사소개": MapPin,
+  "협력사": Briefcase,
 };
 
 export default function Footer() {
-  const base = "/";
   const navLinks = getNavLinks();
 
   return (
@@ -25,12 +26,16 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* 브랜드 */}
           <div>
-            <Link href={base} className="inline-flex items-center gap-2 font-bold text-white text-base mb-4">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-2 font-bold text-white text-base mb-4"
+            >
               <Anchor className="w-4 h-4 text-blue-400" />
               {COMPANY.name}
             </Link>
             <p className="text-sm leading-relaxed max-w-xs text-gray-500">
-              국내 최고 수준의 선박 임대·판매 전문 업체. 고객의 목적에 맞는 최적의 선박을 제안해드립니다.
+              인천 연안부두 선박 임대·판매 전문. 해상측량·해상공사 현장에
+              맞는 통선·작업선을 제안해드립니다.
             </p>
           </div>
 
@@ -40,13 +45,47 @@ export default function Footer() {
               <ExternalLink className="w-4 h-4 text-blue-400" />
               바로가기
             </h3>
-            <ul className="grid grid-cols-2 gap-x-4 gap-y-2">
+            <ul className="space-y-2">
               {navLinks.map((link) => {
                 const Icon = navIcons[link.label];
+                const hasChildren = !!link.children?.length;
+
+                if (hasChildren) {
+                  return (
+                    <li key={link.label}>
+                      <span className="flex items-center gap-1.5 text-sm py-1 text-gray-300 font-medium">
+                        {Icon && (
+                          <Icon className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                        )}
+                        {link.label}
+                      </span>
+                      <ul className="ml-5 mt-1 space-y-1">
+                        {link.children!
+                          .filter((c) => c.href !== "#")
+                          .map((child) => (
+                            <li key={child.href}>
+                              <Link
+                                href={child.href}
+                                className="text-xs text-gray-500 hover:text-white transition-colors"
+                              >
+                                {child.label}
+                              </Link>
+                            </li>
+                          ))}
+                      </ul>
+                    </li>
+                  );
+                }
+
                 return (
                   <li key={link.href}>
-                    <Link href={link.href} className="flex items-center gap-1.5 text-sm py-1.5 hover:text-white transition-colors">
-                      {Icon && <Icon className="w-3.5 h-3.5 text-blue-400 shrink-0" />}
+                    <Link
+                      href={link.href}
+                      className="flex items-center gap-1.5 text-sm py-1 hover:text-white transition-colors"
+                    >
+                      {Icon && (
+                        <Icon className="w-3.5 h-3.5 text-blue-400 shrink-0" />
+                      )}
                       {link.label}
                     </Link>
                   </li>
@@ -59,20 +98,36 @@ export default function Footer() {
           <div>
             <h3 className="text-white text-base font-bold mb-4">사업자정보</h3>
             <div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-sm">
-              <span className="text-gray-500">이메일</span>
-              <a href={`mailto:${COMPANY.email}`} className="hover:text-white transition-colors">{COMPANY.email}</a>
               <span className="text-gray-500">상호명</span>
               <span>{COMPANY.name}</span>
-              <span className="text-gray-500">사업자번호</span>
-              <span>{COMPANY.businessNumber}</span>
               <span className="text-gray-500">대표자</span>
               <span>{COMPANY.representative}</span>
+              <span className="text-gray-500">사업자번호</span>
+              <span>{COMPANY.businessNumber}</span>
+              <span className="text-gray-500">주소</span>
+              <span>{COMPANY.address}</span>
+              <span className="text-gray-500">전화</span>
+              <a
+                href={`tel:${COMPANY.phone}`}
+                className="hover:text-white transition-colors"
+              >
+                {COMPANY.phone}
+              </a>
+              <span className="text-gray-500">이메일</span>
+              <a
+                href={`mailto:${COMPANY.email}`}
+                className="hover:text-white transition-colors"
+              >
+                {COMPANY.email}
+              </a>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-800 mt-10 pt-6 text-xs text-gray-700">
-          <p>© {COMPANY.copyrightYear} {COMPANY.name}. All rights reserved.</p>
+          <p>
+            © {COMPANY.copyrightYear} {COMPANY.name}. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

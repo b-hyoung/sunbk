@@ -10,6 +10,11 @@ import { PHOTO_DATA_MODE, getCategoryLabel, getPhotoGroup } from "@/constants/ph
 import type { VesselImage } from "./supabase";
 import workPhotosJson from "@/data/work-photos.json";
 import { getAllVesselsFromStore } from "./admin-store";
+import {
+  matchesCategory,
+  VESSEL_CATEGORIES,
+  type VesselCategory,
+} from "./vessel-types";
 
 // 항상 로컬 JSON 사용 (Supabase 연동 시 false로 변경)
 const USE_LOCAL = true;
@@ -113,10 +118,29 @@ export async function getFeaturedVessels(): Promise<Vessel[]> {
 export async function getVessels(searchParams: {
   type?: string;
   vessel_type?: string;
+  use?: string;
 }): Promise<Vessel[]> {
+  const useFilter: UseCase | undefined =
+    searchParams.use === "survey" || searchParams.use === "construction"
+      ? searchParams.use
+      : undefined;
+
+  const categoryFilter: VesselCategory | undefined = (
+    VESSEL_CATEGORIES as readonly string[]
+  ).includes(searchParams.vessel_type ?? "")
+    ? (searchParams.vessel_type as VesselCategory)
+    : undefined;
+
+  const sortByRentFirst = (a: Vessel, b: Vessel) => {
+    if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
+    const aRent = a.type === "rent" || a.type === "both" ? 1 : 0;
+    const bRent = b.type === "rent" || b.type === "both" ? 1 : 0;
+    return bRent - aRent;
+  };
+
   if (USE_LOCAL) {
     const vessels = localVessels();
-    let result = vessels.filter((v) => v.status === "active");
+    let result = vessels.filter((v) => VISIBLE_STATUSES.includes(v.status));
 
     if (searchParams.type === "rent") {
       result = result.filter((v) => v.type === "rent" || v.type === "both");
@@ -124,11 +148,15 @@ export async function getVessels(searchParams: {
       result = result.filter((v) => v.type === "sale" || v.type === "both");
     }
 
-    if (searchParams.vessel_type) {
-      result = result.filter((v) => v.vessel_type === searchParams.vessel_type);
+    if (useFilter) {
+      result = result.filter((v) => v.use_cases?.includes(useFilter));
     }
 
-    return result.sort((a, b) => Number(b.is_featured) - Number(a.is_featured));
+    if (categoryFilter) {
+      result = result.filter((v) => matchesCategory(v, categoryFilter));
+    }
+
+    return result.sort(sortByRentFirst);
   }
 
   const supabase = createClient(
@@ -138,27 +166,33 @@ export async function getVessels(searchParams: {
   let query = supabase
     .from("vessels")
     .select("*, vessel_images(*)")
-    .eq("status", "active")
-    .order("is_featured", { ascending: false })
-    .order("created_at", { ascending: false });
+    .in("status", VISIBLE_STATUSES);
 
   if (searchParams.type === "rent") {
     query = query.in("type", ["rent", "both"]);
   } else if (searchParams.type === "sale") {
     query = query.in("type", ["sale", "both"]);
   }
-  if (searchParams.vessel_type) {
-    query = query.eq("vessel_type", searchParams.vessel_type);
+  if (useFilter) {
+    query = query.contains("use_cases", [useFilter]);
   }
 
   const { data } = await query;
-  return data ?? [];
+  let result = data ?? [];
+  if (categoryFilter) {
+    result = result.filter((v) => matchesCategory(v, categoryFilter));
+  }
+  return result.sort(sortByRentFirst);
 }
 
 export async function getVesselBySlug(slug: string): Promise<Vessel | null> {
   if (USE_LOCAL) {
     const vessels = localVessels();
-    return vessels.find((v) => v.slug === slug && v.status === "active") ?? null;
+    return (
+      vessels.find(
+        (v) => v.slug === slug && VISIBLE_STATUSES.includes(v.status),
+      ) ?? null
+    );
   }
 
   const supabase = createClient(
@@ -169,7 +203,7 @@ export async function getVesselBySlug(slug: string): Promise<Vessel | null> {
     .from("vessels")
     .select("*, vessel_images(*)")
     .eq("slug", slug)
-    .eq("status", "active")
+    .in("status", VISIBLE_STATUSES)
     .single();
   return data;
 }
@@ -177,7 +211,11 @@ export async function getVesselBySlug(slug: string): Promise<Vessel | null> {
 export async function getVesselById(id: string): Promise<Vessel | null> {
   if (USE_LOCAL) {
     const vessels = localVessels();
-    return vessels.find((v) => v.id === id && v.status === "active") ?? null;
+    return (
+      vessels.find(
+        (v) => v.id === id && VISIBLE_STATUSES.includes(v.status),
+      ) ?? null
+    );
   }
 
   const supabase = createClient(
@@ -188,7 +226,7 @@ export async function getVesselById(id: string): Promise<Vessel | null> {
     .from("vessels")
     .select("*, vessel_images(*)")
     .eq("id", id)
-    .eq("status", "active")
+    .in("status", VISIBLE_STATUSES)
     .single();
   return data;
 }

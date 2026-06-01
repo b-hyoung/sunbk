@@ -24,6 +24,14 @@ export function getVesselCategory(vessel: {
   return "작업선";
 }
 
+/** UI 카테고리가 주어졌을 때, 그 카테고리에 속하는지 판별 */
+export function matchesCategory(
+  vessel: { vessel_type: string; features?: string[] | null },
+  category: VesselCategory,
+): boolean {
+  return getVesselCategory(vessel) === category;
+}
+
 /** 용도 라벨/아이콘/정의/컨텍스트 */
 export const USE_CASES: Record<
   UseCase,

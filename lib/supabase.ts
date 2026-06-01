@@ -14,6 +14,7 @@ export interface Vessel {
   vessel_type: string
   use_cases: UseCase[]
   tagline?: string | null
+  note?: string | null
   year_built: number | null
   length_m: number | null
   tonnage: number | null

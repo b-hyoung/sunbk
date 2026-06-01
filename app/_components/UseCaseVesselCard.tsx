@@ -14,6 +14,18 @@ const AVAILABILITY_LABEL: Record<VesselType, string> = {
   sale: "판매 가능",
 };
 
+/** description에서 "주요 작업 이력:" 블록을 추출. 없으면 null. */
+function extractWorkHistory(description: string | null | undefined): string[] | null {
+  if (!description) return null;
+  const match = description.match(/주요 작업 이력:\s*\n([\s\S]+?)(?:\n\n|$)/);
+  if (!match) return null;
+  const items = match[1]
+    .split("\n")
+    .map((line) => line.replace(/^[·•\-]\s*/, "").trim())
+    .filter(Boolean);
+  return items.length > 0 ? items : null;
+}
+
 export default function UseCaseVesselCard({ vessel }: Props) {
   const primary =
     vessel.vessel_images?.find((i) => i.is_primary) ?? vessel.vessel_images?.[0];
@@ -24,6 +36,7 @@ export default function UseCaseVesselCard({ vessel }: Props) {
       ? "강선"
       : null;
   const badgeLabel = AVAILABILITY_LABEL[vessel.type];
+  const history = extractWorkHistory(vessel.description);
 
   return (
     <Link
@@ -63,6 +76,23 @@ export default function UseCaseVesselCard({ vessel }: Props) {
           <p className="text-xs text-gray-500 leading-snug mt-1.5 line-clamp-2">
             {vessel.tagline}
           </p>
+        )}
+        {(history || (vessel.features && vessel.features.length > 0)) && (
+          <div className="mt-3 pt-3 border-t border-gray-100">
+            <p className="text-[10px] text-blue-600 font-semibold uppercase tracking-wider mb-1.5">
+              {history ? "주요 작업 이력" : "특징"}
+            </p>
+            <ul className="space-y-1 text-xs text-gray-600 pl-1 min-h-[3.75rem]">
+              {(history ?? vessel.features ?? [])
+                .slice(0, 3)
+                .map((item, i) => (
+                  <li key={i} className="flex items-start gap-1.5">
+                    <span className="text-gray-400 mt-px">-</span>
+                    <span className="truncate flex-1">{item}</span>
+                  </li>
+                ))}
+            </ul>
+          </div>
         )}
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1 mt-auto pt-3 border-t border-gray-100 text-xs text-gray-600">
           {vessel.tonnage && (
