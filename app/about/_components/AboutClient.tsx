@@ -1,32 +1,51 @@
-"use client";
-
 import Link from "next/link";
-import { Phone, Anchor, MapPin, Clock } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  Anchor,
+  MapPin,
+  Clock,
+  Car,
+  Ship as ShipIcon,
+} from "lucide-react";
 import { COMPANY } from "@/constants/company";
+import NavButtons from "@/components/NavButtons";
 import HeroVideo from "@/components/layout/BackgroundVideo";
+
+const contactInfo = [
+  { icon: Phone, label: "전화", value: COMPANY.phone, href: `tel:${COMPANY.phone}` },
+  { icon: Phone, label: "FAX", value: COMPANY.fax, href: null },
+  { icon: Mail, label: "이메일", value: COMPANY.email, href: `mailto:${COMPANY.email}` },
+  { icon: Clock, label: "운영시간", value: COMPANY.hours, href: null },
+];
+
+const directions = [
+  { icon: Car, title: "자가용", steps: COMPANY.directions.car },
+  { icon: ShipIcon, title: "대중교통", steps: COMPANY.directions.publicTransport },
+];
 
 export default function AboutClient() {
   return (
     <div className="bg-white">
       {/* 히어로 */}
-      <section className="relative bg-gray-900 py-28 min-h-[360px] overflow-hidden">
+      <section className="relative bg-gray-900 py-20 min-h-[320px] overflow-hidden">
         <HeroVideo />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6">
-          <p className="text-blue-400 text-sm font-semibold tracking-widest mb-4">
+          <p className="text-blue-400 text-sm font-semibold tracking-widest mb-3">
             회사소개
           </p>
-          <h1 className="text-white font-bold mb-5 max-w-xl leading-tight">
+          <h1 className="text-white font-bold mb-4 max-w-xl leading-tight">
             {COMPANY.name}
           </h1>
-          <p className="text-white/75 text-lg leading-relaxed">
+          <p className="text-white/75 text-base lg:text-lg leading-relaxed max-w-xl">
             선박 임대·판매 전문기업. 신뢰와 전문성으로 바다 위의 파트너가 되겠습니다.
           </p>
         </div>
       </section>
 
       {/* 회사 소개 */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 py-16 lg:py-20">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-12">
           <div>
             <h2 className="text-gray-900 mb-4">회사 소개</h2>
             <p className="text-gray-500 leading-relaxed mb-6">
@@ -76,10 +95,106 @@ export default function AboutClient() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="border-t border-gray-100 py-20">
+      {/* 오시는길 — 지도 + 연락처 */}
+      <section id="location" className="bg-gray-50 border-t border-gray-100 py-16 lg:py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="bg-blue-600 rounded-2xl px-8 py-14 md:py-16 text-center">
+          <h2 className="text-gray-900 mb-2">오시는길</h2>
+          <p className="text-gray-500 text-sm mb-10">
+            {COMPANY.addressShort}에 위치한 {COMPANY.name}을 방문해주세요.
+          </p>
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-10">
+            {/* 지도 */}
+            <div className="lg:col-span-2">
+              <div className="rounded-xl overflow-hidden border border-gray-200 bg-white">
+                <iframe
+                  src={COMPANY.mapEmbedUrl}
+                  width="100%"
+                  height="420"
+                  style={{ border: 0 }}
+                  allowFullScreen
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title={`${COMPANY.name} 위치`}
+                />
+              </div>
+              <div className="flex items-start gap-2 mt-4 text-sm text-gray-500">
+                <MapPin className="w-4 h-4 text-blue-600 shrink-0 mt-0.5" />
+                <p>{COMPANY.address} {COMPANY.name}</p>
+              </div>
+            </div>
+
+            {/* 연락처 */}
+            <div className="space-y-6 bg-white border border-gray-100 rounded-xl p-6 lg:p-7">
+              <h3 className="text-gray-900 text-lg font-bold">연락처</h3>
+              <div className="space-y-4">
+                {contactInfo.map((info) => (
+                  <div key={info.label} className="flex items-start gap-3">
+                    <info.icon className="w-4 h-4 text-blue-600 shrink-0 mt-1" />
+                    <div>
+                      <p className="text-xs text-gray-400 mb-0.5">{info.label}</p>
+                      {info.href ? (
+                        <a
+                          href={info.href}
+                          className="text-sm font-medium text-gray-800 hover:text-blue-600 transition-colors"
+                        >
+                          {info.value}
+                        </a>
+                      ) : (
+                        <p className="text-sm font-medium text-gray-800">{info.value}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              <a
+                href={`tel:${COMPANY.phone}`}
+                className="flex items-center justify-center gap-2 w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg text-sm font-semibold transition-colors"
+              >
+                <Phone className="w-4 h-4" />
+                전화 문의하기
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 찾아오시는 방법 */}
+      <section className="py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <h2 className="text-gray-900 mb-10">찾아오시는 방법</h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {directions.map((d) => (
+              <div key={d.title} className="bg-white border border-gray-100 rounded-xl p-6">
+                <div className="flex items-center gap-2 mb-4">
+                  <d.icon className="w-5 h-5 text-blue-600" />
+                  <h3 className="font-bold text-gray-900">{d.title}</h3>
+                </div>
+                <ol className="space-y-2.5">
+                  {d.steps.map((step, i) => (
+                    <li
+                      key={i}
+                      className="flex items-start gap-3 text-sm text-gray-600"
+                    >
+                      <span className="shrink-0 w-5 h-5 rounded-full bg-blue-50 text-blue-600 text-xs font-bold flex items-center justify-center mt-0.5">
+                        {i + 1}
+                      </span>
+                      {step}
+                    </li>
+                  ))}
+                </ol>
+                {d.title === "자가용" && <NavButtons variant="blue" />}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA */}
+      <section className="border-t border-gray-100 py-16 lg:py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6">
+          <div className="bg-blue-600 rounded-2xl px-8 py-12 lg:py-14 text-center">
             <h2 className="text-white mb-3">궁금한 점이 있으신가요?</h2>
             <p className="text-blue-100 text-base mb-8 max-w-md mx-auto">
               선박 전문 상담사가 친절하게 안내해드립니다.
@@ -92,12 +207,13 @@ export default function AboutClient() {
                 <Phone className="w-4 h-4" />
                 {COMPANY.phone}
               </a>
-              <Link
-                href="/contact"
+              <a
+                href={`mailto:${COMPANY.email}`}
                 className="inline-flex items-center justify-center gap-2 border border-blue-400 hover:bg-blue-500 text-white px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
               >
-                온라인 문의
-              </Link>
+                <Mail className="w-4 h-4" />
+                이메일 문의
+              </a>
             </div>
           </div>
         </div>

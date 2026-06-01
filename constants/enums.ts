@@ -6,7 +6,6 @@ export enum Routes {
     MENU = "menu",
     ABOUT = "about",
     WORK = "work",
-    CONTACT = "contact",
     AUTH = "auth",
 
     PROFILE = "profile",
@@ -30,7 +29,6 @@ export function getNavLinks(): NavLink[] {
     { href: `/${Routes.VESSELS}`,   label: "선박 임대·판매" },
     { href: `/${Routes.WORK}`,      label: "작업현장" },
     { href: `/${Routes.ABOUT}`,     label: "회사소개" },
-    { href: `/${Routes.CONTACT}`,   label: "오시는길" },
     {
       href: "#",
       label: "협력사",
