@@ -24,19 +24,23 @@ export function getVesselCategory(vessel: {
   return "작업선";
 }
 
-/** 용도 라벨/아이콘/컨텍스트 */
+/** 용도 라벨/아이콘/정의/컨텍스트 */
 export const USE_CASES: Record<
   UseCase,
-  { label: string; icon: string; context: string }
+  { label: string; icon: string; definition: string; context: string }
 > = {
   survey: {
     label: "해상측량",
     icon: "🛰️",
+    definition:
+      "해상의 지형·수심·해저 구조물을 측정하는 작업을 말합니다.",
     context: "지오스토리·올포랜드·UST 21 등 측량업체 다수 임대",
   },
   construction: {
     label: "해상공사",
     icon: "🚧",
+    definition:
+      "항만·해상 구조물 건설, 예항·예인, 자재·인원 운반 등을 말합니다.",
     context: "현대스틸·유호건설·대양건설 등 건설사 임대 실적",
   },
 };
