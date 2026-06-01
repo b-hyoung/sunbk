@@ -4,7 +4,7 @@
  * DATA_SOURCE=supabase (또는 미설정) → Supabase
  */
 
-import type { Vessel, Booking } from "./supabase";
+import type { Vessel, Booking, UseCase } from "./supabase";
 import { createClient } from "@supabase/supabase-js";
 import { PHOTO_DATA_MODE, getCategoryLabel, getPhotoGroup } from "@/constants/photo-config";
 import type { VesselImage } from "./supabase";
@@ -47,6 +47,47 @@ async function getVesselsFromSupabase(): Promise<Vessel[]> {
 }
 
 // ── 퍼블릭 함수 ──────────────────────────────────────────────────────────
+
+/**
+ * 특정 용도(use case)로 사용 가능한 선박을 조회.
+ * 임대 중(rented)인 배도 포함 — 보유 선박은 다 노출.
+ * 정렬: is_featured 우선 → type rent/both 우선 → 나머지.
+ */
+const VISIBLE_STATUSES = ["active", "rented"];
+
+export async function getVesselsByUseCase(
+  useCase: UseCase,
+  limit?: number,
+): Promise<Vessel[]> {
+  const sortFn = (a: Vessel, b: Vessel) => {
+    if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
+    const aRent = a.type === "rent" || a.type === "both" ? 1 : 0;
+    const bRent = b.type === "rent" || b.type === "both" ? 1 : 0;
+    return bRent - aRent;
+  };
+
+  if (USE_LOCAL) {
+    const result = localVessels()
+      .filter(
+        (v) =>
+          VISIBLE_STATUSES.includes(v.status) && v.use_cases?.includes(useCase),
+      )
+      .sort(sortFn);
+    return limit ? result.slice(0, limit) : result;
+  }
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+  const { data } = await supabase
+    .from("vessels")
+    .select("*, vessel_images(*)")
+    .in("status", VISIBLE_STATUSES)
+    .contains("use_cases", [useCase]);
+  const sorted = (data ?? []).sort(sortFn);
+  return limit ? sorted.slice(0, limit) : sorted;
+}
 
 export async function getFeaturedVessels(): Promise<Vessel[]> {
   if (USE_LOCAL) {

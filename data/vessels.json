@@ -111,6 +111,9 @@
         "category": "dry-dock",
         "taken_date": "2024-11-21"
       }
+    ],
+    "use_cases": [
+      "construction"
     ]
   },
   {
@@ -118,22 +121,27 @@
     "title": "수연3호",
     "slug": "suyeon-3",
     "type": "both",
-    "vessel_type": "화물선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": null,
-    "capacity": null,
-    "location": "인천",
-    "description": "수연선박 소속 화물선.",
-    "features": [],
+    "vessel_type": "기타선(통선)(FRP)",
+    "year_built": 2020,
+    "length_m": 8.54,
+    "tonnage": 3.01,
+    "engine_power": "대우 132kW/180hp 디젤",
+    "capacity": 8,
+    "location": "인천 연안부두",
+    "description": "2020년 인천 제일산업공사 건조, FRP선.\n선박번호 ICC-251825. 디젤 1기, 내장 스크류(나선) 추진.\n임시승선 7명 + 선원 1명. 해상공사 통선·측량용 임대 가능 및 선외기 어선 용도 매도 가능.",
+    "features": [
+      "대우 디젤 1기 (132kW/180hp)",
+      "내장 스크류 추진(나선)",
+      "임시승선 7명 + 선원 1명",
+      "해운업 등록 ICB2088"
+    ],
     "rent_price_per_day": null,
     "sale_price": null,
     "is_available": true,
     "is_featured": false,
     "status": "active",
     "created_at": "2024-06-06T09:00:00Z",
-    "updated_at": "2025-06-18T12:00:00Z",
+    "updated_at": "2026-05-30T12:00:00Z",
     "vessel_images": [
       {
         "id": "suyeon3-exterior",
@@ -143,7 +151,35 @@
         "sort_order": 1,
         "category": "exterior",
         "taken_date": "2025-06-18"
+      },
+      {
+        "id": "suyeon3-card-1",
+        "vessel_id": "suyeon-3",
+        "url": "/images/vessels/suyeon3/card-1.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "exterior"
+      },
+      {
+        "id": "suyeon3-card-2",
+        "vessel_id": "suyeon-3",
+        "url": "/images/vessels/suyeon3/card-2.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "exterior"
+      },
+      {
+        "id": "suyeon3-card-3",
+        "vessel_id": "suyeon-3",
+        "url": "/images/vessels/suyeon3/card-3.jpg",
+        "is_primary": false,
+        "sort_order": 4,
+        "category": "exterior"
       }
+    ],
+    "use_cases": [
+      "survey",
+      "construction"
     ]
   },
   {
@@ -219,6 +255,9 @@
         "category": "dry-dock",
         "taken_date": "2024-11-21"
       }
+    ],
+    "use_cases": [
+      "construction"
     ]
   },
   {
@@ -304,31 +343,95 @@
         "category": "cleanup",
         "taken_date": "2026-03-20"
       }
+    ],
+    "use_cases": [
+      "survey",
+      "construction"
+    ]
+  },
+  {
+    "id": "suyeon-8",
+    "title": "수연8호",
+    "slug": "suyeon-8",
+    "type": "both",
+    "vessel_type": "기타선(통선)(FRP)",
+    "year_built": 2020,
+    "length_m": 8.63,
+    "tonnage": 2.09,
+    "engine_power": "HONDA 150 선외기",
+    "capacity": 4,
+    "location": "인천 연안부두",
+    "description": "2020년 인천 제일산업공사 건조, FRP선.\n선박번호 ICC-251826. HONDA 150 선외기 1기, 휘발유.\n임시승선 3명 + 선원 1명. 해상공사 통선·측량용 임대 가능 및 선외기 어선 용도 매도 가능.",
+    "features": [
+      "HONDA 150 선외기 1기",
+      "휘발유",
+      "임시승선 3명 + 선원 1명",
+      "해운업 등록 ICB2088"
+    ],
+    "rent_price_per_day": null,
+    "sale_price": null,
+    "is_available": true,
+    "is_featured": false,
+    "status": "active",
+    "created_at": "2026-05-30T09:00:00Z",
+    "updated_at": "2026-05-30T09:00:00Z",
+    "vessel_images": [
+      {
+        "id": "suyeon8-card-1",
+        "vessel_id": "suyeon-8",
+        "url": "/images/vessels/suyeon8/card-1.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior"
+      },
+      {
+        "id": "suyeon8-card-2",
+        "vessel_id": "suyeon-8",
+        "url": "/images/vessels/suyeon8/card-2.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "exterior"
+      },
+      {
+        "id": "suyeon8-card-3",
+        "vessel_id": "suyeon-8",
+        "url": "/images/vessels/suyeon8/card-3.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "exterior"
+      }
+    ],
+    "use_cases": [
+      "survey",
+      "construction"
     ]
   },
   {
     "id": "suyeon-9",
     "title": "수연9호",
     "slug": "suyeon-9",
-    "type": "rent",
-    "vessel_type": "작업선",
-    "year_built": null,
-    "length_m": null,
-    "tonnage": null,
-    "engine_power": "야마하 250마력",
-    "capacity": null,
-    "location": "인천",
-    "description": "야마하 250마력 선외기 탑재 작업선.",
+    "type": "both",
+    "vessel_type": "기타선(통선)(FRP)",
+    "year_built": 2020,
+    "length_m": 8.63,
+    "tonnage": 2.37,
+    "engine_power": "YAMAHA 250 선외기",
+    "capacity": 4,
+    "location": "인천 연안부두",
+    "description": "2020년 인천 제일산업공사 건조, FRP선.\n선박번호 ICC-251827. YAMAHA 250 선외기 1기, 휘발유.\n임시승선 3명 + 선원 1명. 해상공사 통선·측량용 임대 가능 및 선외기 어선 용도 매도 가능.",
     "features": [
-      "야마하 250마력 선외기"
+      "YAMAHA 250 선외기 1기",
+      "휘발유",
+      "임시승선 3명 + 선원 1명",
+      "해운업 등록 ICB2088"
     ],
     "rent_price_per_day": null,
     "sale_price": null,
     "is_available": true,
     "is_featured": false,
-    "status": "rented",
+    "status": "active",
     "created_at": "2025-08-19T09:00:00Z",
-    "updated_at": "2025-08-19T12:00:00Z",
+    "updated_at": "2026-05-30T12:00:00Z",
     "vessel_images": [
       {
         "id": "suyeon9-exterior",
@@ -347,7 +450,35 @@
         "sort_order": 2,
         "category": "engine",
         "taken_date": "2025-08-19"
+      },
+      {
+        "id": "suyeon9-card-1",
+        "vessel_id": "suyeon-9",
+        "url": "/images/vessels/suyeon9/card-1.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "exterior"
+      },
+      {
+        "id": "suyeon9-card-2",
+        "vessel_id": "suyeon-9",
+        "url": "/images/vessels/suyeon9/card-2.jpg",
+        "is_primary": false,
+        "sort_order": 4,
+        "category": "exterior"
+      },
+      {
+        "id": "suyeon9-card-3",
+        "vessel_id": "suyeon-9",
+        "url": "/images/vessels/suyeon9/card-3.jpg",
+        "is_primary": false,
+        "sort_order": 5,
+        "category": "exterior"
       }
+    ],
+    "use_cases": [
+      "survey",
+      "construction"
     ]
   },
   {
@@ -423,13 +554,17 @@
         "category": "main-engine",
         "taken_date": "2026-04-10"
       }
+    ],
+    "use_cases": [
+      "survey",
+      "construction"
     ]
   },
   {
     "id": "youngjin",
     "title": "영진호",
     "slug": "youngjin",
-    "type": "sale",
+    "type": "both",
     "vessel_type": "기타선(통선)(FRP)",
     "year_built": 1997,
     "length_m": 14.8,
@@ -445,9 +580,9 @@
     "sale_price": null,
     "is_available": true,
     "is_featured": false,
-    "status": "sold",
+    "status": "active",
     "created_at": "2024-06-12T09:00:00Z",
-    "updated_at": "2024-06-13T12:00:00Z",
+    "updated_at": "2026-06-01T02:33:45.647Z",
     "vessel_images": [
       {
         "id": "youngjin-exterior",
@@ -467,6 +602,9 @@
         "category": "exterior-rear",
         "taken_date": "2024-06-12"
       }
+    ],
+    "use_cases": [
+      "survey"
     ]
   },
   {
@@ -539,7 +677,92 @@
         "sort_order": 5,
         "category": "sailing",
         "taken_date": "2025-10-10"
+      },
+      {
+        "id": "jinyang2-card-1",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/card-1.jpg",
+        "is_primary": false,
+        "sort_order": 6,
+        "category": "sailing"
+      },
+      {
+        "id": "jinyang2-card-2",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/card-2.jpg",
+        "is_primary": false,
+        "sort_order": 7,
+        "category": "exterior"
+      },
+      {
+        "id": "jinyang2-card-3",
+        "vessel_id": "jinyang-2",
+        "url": "/images/vessels/jinyang2/card-3.jpg",
+        "is_primary": false,
+        "sort_order": 8,
+        "category": "exterior"
       }
+    ],
+    "use_cases": [
+      "survey",
+      "construction"
+    ]
+  },
+  {
+    "id": "incheon-9",
+    "title": "인천 9호",
+    "slug": "incheon-9",
+    "type": "both",
+    "vessel_type": "기타선(통선)(FRP)",
+    "year_built": 2020,
+    "length_m": 7.01,
+    "tonnage": 0.83,
+    "engine_power": "HONDA 200 선외기",
+    "capacity": 4,
+    "location": "인천 연안부두",
+    "description": "2020년 인천 제일산업공사 건조, FRP선.\n선박번호 ICC-141823. HONDA 200 선외기 1기, 휘발유.\n임시승선 3명 + 선원 1명. 해상공사 통선·측량용 임대 가능 및 선외기 어선 용도 매도 가능.",
+    "features": [
+      "HONDA 200 선외기 1기",
+      "휘발유",
+      "임시승선 3명 + 선원 1명",
+      "해운업 등록 ICB2088"
+    ],
+    "rent_price_per_day": null,
+    "sale_price": null,
+    "is_available": true,
+    "is_featured": false,
+    "status": "active",
+    "created_at": "2026-05-30T09:00:00Z",
+    "updated_at": "2026-05-30T09:00:00Z",
+    "vessel_images": [
+      {
+        "id": "incheon9-card-1",
+        "vessel_id": "incheon-9",
+        "url": "/images/vessels/incheon9/card-1.jpg",
+        "is_primary": true,
+        "sort_order": 1,
+        "category": "exterior"
+      },
+      {
+        "id": "incheon9-card-2",
+        "vessel_id": "incheon-9",
+        "url": "/images/vessels/incheon9/card-2.jpg",
+        "is_primary": false,
+        "sort_order": 2,
+        "category": "exterior"
+      },
+      {
+        "id": "incheon9-card-3",
+        "vessel_id": "incheon-9",
+        "url": "/images/vessels/incheon9/card-3.jpg",
+        "is_primary": false,
+        "sort_order": 3,
+        "category": "exterior"
+      }
+    ],
+    "use_cases": [
+      "survey",
+      "construction"
     ]
   }
 ]
