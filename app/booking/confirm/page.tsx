@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { CheckCircle, Phone, ArrowLeft } from "lucide-react";
+import { COMPANY } from "@/constants/company";
 
 export default function BookingConfirmPage() {
   return (
@@ -15,11 +16,11 @@ export default function BookingConfirmPage() {
         </p>
         <div className="flex flex-col gap-2">
           <a
-            href="tel:010-0000-0000"
+            href={`tel:${COMPANY.phone}`}
             className="flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg text-sm font-semibold transition-colors"
           >
             <Phone className="w-4 h-4" />
-            010-0000-0000 바로 전화
+            {COMPANY.phone} 바로 전화
           </a>
           <Link
             href="/"

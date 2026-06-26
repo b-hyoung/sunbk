@@ -18,12 +18,13 @@ export default function HeroVideo() {
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
         poster="/hero-bg.jpg"
+        style={{ filter: "saturate(0.75) brightness(0.9)" }}
       >
         <source src={videoSrc} type="video/mp4" />
       </video>
 
-      {/* 다크 오버레이 */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/65 via-black/40 to-black/20" />
+      {/* 차분한 단일 톤 오버레이 (slate 살짝 띤 깊은 바다 느낌) */}
+      <div className="absolute inset-0 bg-slate-950/55" />
     </div>
   );
 }

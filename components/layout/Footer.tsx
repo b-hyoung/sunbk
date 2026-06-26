@@ -22,7 +22,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-gray-900 text-gray-400">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* 브랜드 */}
           <div>
@@ -97,30 +97,25 @@ export default function Footer() {
           {/* 사업자정보 */}
           <div>
             <h3 className="text-white text-base font-bold mb-4">사업자정보</h3>
-            <div className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-sm">
-              <span className="text-gray-500">상호명</span>
-              <span>{COMPANY.name}</span>
-              <span className="text-gray-500">대표자</span>
-              <span>{COMPANY.representative}</span>
-              <span className="text-gray-500">사업자번호</span>
-              <span>{COMPANY.businessNumber}</span>
-              <span className="text-gray-500">주소</span>
-              <span>{COMPANY.address}</span>
-              <span className="text-gray-500">전화</span>
-              <a
-                href={`tel:${COMPANY.phone}`}
-                className="hover:text-white transition-colors"
-              >
-                {COMPANY.phone}
-              </a>
-              <span className="text-gray-500">이메일</span>
-              <a
-                href={`mailto:${COMPANY.email}`}
-                className="hover:text-white transition-colors"
-              >
-                {COMPANY.email}
-              </a>
-            </div>
+            <dl className="grid grid-cols-[auto_1fr] gap-x-6 gap-y-2.5 text-sm items-baseline">
+              <dt className="text-gray-500">상호명</dt>
+              <dd>{COMPANY.name}</dd>
+              <dt className="text-gray-500">대표자</dt>
+              <dd>{COMPANY.representative}</dd>
+              <dt className="text-gray-500">사무실</dt>
+              <dd>{COMPANY.address}</dd>
+              <dt className="text-gray-500">정박지</dt>
+              <dd>{COMPANY.berth}</dd>
+              <dt className="text-gray-500">전화</dt>
+              <dd>
+                <a
+                  href={`tel:${COMPANY.phone}`}
+                  className="hover:text-white transition-colors"
+                >
+                  {COMPANY.phone}
+                </a>
+              </dd>
+            </dl>
           </div>
         </div>
 

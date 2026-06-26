@@ -1,7 +1,6 @@
 import Link from "next/link";
 import {
   Phone,
-  Mail,
   Anchor,
   MapPin,
   Clock,
@@ -13,9 +12,12 @@ import NavButtons from "@/components/NavButtons";
 import HeroVideo from "@/components/layout/BackgroundVideo";
 
 const contactInfo = [
-  { icon: Phone, label: "전화", value: COMPANY.phone, href: `tel:${COMPANY.phone}` },
-  { icon: Phone, label: "FAX", value: COMPANY.fax, href: null },
-  { icon: Mail, label: "이메일", value: COMPANY.email, href: `mailto:${COMPANY.email}` },
+  ...COMPANY.contacts.map((c) => ({
+    icon: Phone,
+    label: c.role,
+    value: `${c.name} ${c.phone}`,
+    href: `tel:${c.phone}`,
+  })),
   { icon: Clock, label: "운영시간", value: COMPANY.hours, href: null },
 ];
 
@@ -63,8 +65,15 @@ export default function AboutClient() {
               <div className="flex items-start gap-3">
                 <MapPin className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
                 <div>
-                  <p className="font-medium text-gray-800">주소</p>
+                  <p className="font-medium text-gray-800">사무실 주소</p>
                   <p className="text-gray-500">{COMPANY.address}</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-3">
+                <Anchor className="w-4 h-4 text-blue-600 mt-0.5 shrink-0" />
+                <div>
+                  <p className="font-medium text-gray-800">정박지</p>
+                  <p className="text-gray-500">{COMPANY.berth}</p>
                 </div>
               </div>
               <div className="flex items-start gap-3">
@@ -191,33 +200,6 @@ export default function AboutClient() {
         </div>
       </section>
 
-      {/* CTA */}
-      <section className="border-t border-gray-100 py-16 lg:py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6">
-          <div className="bg-blue-600 rounded-2xl px-8 py-12 lg:py-14 text-center">
-            <h2 className="text-white mb-3">궁금한 점이 있으신가요?</h2>
-            <p className="text-blue-100 text-base mb-8 max-w-md mx-auto">
-              선박 전문 상담사가 친절하게 안내해드립니다.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <a
-                href={`tel:${COMPANY.phone}`}
-                className="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-blue-50 px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
-              >
-                <Phone className="w-4 h-4" />
-                {COMPANY.phone}
-              </a>
-              <a
-                href={`mailto:${COMPANY.email}`}
-                className="inline-flex items-center justify-center gap-2 border border-blue-400 hover:bg-blue-500 text-white px-7 py-3 rounded-lg text-sm font-semibold transition-colors"
-              >
-                <Mail className="w-4 h-4" />
-                이메일 문의
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

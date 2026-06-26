@@ -9,22 +9,32 @@ export const COMPANY = {
   nameEn: "Sooyeon Ship Trading Co.",
 
   /** 대표자 */
-  representative: "홍길동",
+  representative: "신수연",
 
-  /** 사업자등록번호 */
+  /** 사업자등록번호 (미확정) */
   businessNumber: "000-00-00000",
 
-  /** 연락처 */
-  phone: "010-0000-0000",
+  /** 연락처 (대표) */
+  phone: "010-5360-5871",
   fax: "032-000-0000",
   email: "info@sooyeonship.com",
 
-  /** 주소 */
-  address: "인천광역시 중구 항동7가 1-1",
-  addressShort: "인천 중구 항동",
+  /** 추가 연락처 */
+  contacts: [
+    { role: "대표", name: "신수연", phone: "010-5360-5871" },
+    { role: "전무", name: "김대한", phone: "010-4359-6773" },
+    { role: "제일산업공사(조선소) 대표", name: "고광권", phone: "010-5280-5389" },
+  ],
+
+  /** 사무실 주소 */
+  address: "인천 중구 연안부두로 33번길 16. 2층 109호",
+  addressShort: "인천 중구 연안부두",
+
+  /** 정박지 */
+  berth: "인천 중구 축항대로 22번길 18, 제일산업공사 조선소 앞 해상",
 
   /** 운영시간 */
-  hours: "평일 09:00 ~ 18:00 (주말·공휴일 휴무)",
+  hours: "09:00-18:00 (주말 공휴일도 전화 통화 가능함)",
 
   /** 좌표 (네비 딥링크용) */
   lat: 37.4563,

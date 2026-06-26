@@ -64,12 +64,12 @@ export default function UseCaseVesselCard({ vessel }: Props) {
         )}
       </div>
       <div className="flex flex-col flex-1 p-3.5">
-        <div className="text-[10px] text-blue-600 font-semibold uppercase tracking-wider mb-1">
+        <div className="text-xs text-blue-600 font-medium mb-1.5">
           {category}
           {material && <span className="text-gray-300 mx-1">·</span>}
-          {material && <span className="text-gray-500 normal-case">{material}</span>}
+          {material && <span className="text-gray-500">{material}</span>}
         </div>
-        <div className="font-bold text-gray-900 text-base leading-tight">
+        <div className="font-semibold text-gray-900 text-base leading-tight tracking-tight">
           {vessel.title}
         </div>
         {vessel.tagline && (
@@ -79,7 +79,7 @@ export default function UseCaseVesselCard({ vessel }: Props) {
         )}
         {(history || (vessel.features && vessel.features.length > 0)) && (
           <div className="mt-3 pt-3 border-t border-gray-100">
-            <p className="text-[10px] text-blue-600 font-semibold uppercase tracking-wider mb-1.5">
+            <p className="text-xs text-blue-600 font-medium mb-1.5">
               {history ? "주요 작업 이력" : "특징"}
             </p>
             <ul className="space-y-1 text-xs text-gray-600 pl-1 min-h-[3.75rem]">

@@ -5,23 +5,21 @@ import VesselFilter from "@/app/_components/VesselFilter";
 import TradeTypeBar from "@/app/_components/TradeTypeBar";
 import { Ship } from "lucide-react";
 import type { Metadata } from "next";
-import { USE_CASES } from "@/lib/vessel-types";
-import type { UseCase } from "@/lib/supabase";
+import { VESSEL_CLASS_INFO, type VesselClass } from "@/lib/vessel-types";
 
 export const metadata: Metadata = {
   title: "선박 목록",
   description:
-    "임대 및 판매 가능한 선박 목록. 통선·예항선·작업선·도선·화물선.",
+    "임대 및 판매 가능한 선박 목록. 예인선·기타선(통선)·기타선(해양조사).",
 };
 
 interface SearchParams {
   type?: string;
-  vessel_type?: string;
-  use?: string;
+  cls?: string;
 }
 
-function isUseCase(v: string | undefined): v is UseCase {
-  return v === "survey" || v === "construction";
+function isVesselClass(v: string | undefined): v is VesselClass {
+  return v === "tug" || v === "passenger" || v === "survey";
 }
 
 export default async function VesselsPage({
@@ -40,10 +38,10 @@ export default async function VesselsPage({
   let pageTitle = "전체 선박";
   let pageSubtitle: string | null = null;
 
-  if (isUseCase(params.use)) {
-    const info = USE_CASES[params.use];
+  if (isVesselClass(params.cls)) {
+    const info = VESSEL_CLASS_INFO[params.cls];
     pageTitle = `${info.icon} ${info.label}`;
-    pageSubtitle = info.definition;
+    pageSubtitle = info.description;
   } else if (params.type && typeLabel[params.type]) {
     pageTitle = typeLabel[params.type];
   }
@@ -77,8 +75,7 @@ export default async function VesselsPage({
             <div data-fade-in className="shrink-0">
               <TradeTypeBar
                 currentType={params.type}
-                currentVesselType={params.vessel_type}
-                currentUse={params.use}
+                currentCls={params.cls}
               />
             </div>
           </div>
@@ -90,8 +87,7 @@ export default async function VesselsPage({
           <aside data-fade-in className="w-full lg:w-48 shrink-0">
             <VesselFilter
               currentType={params.type}
-              currentVesselType={params.vessel_type}
-              currentUse={params.use}
+              currentCls={params.cls}
             />
           </aside>
 

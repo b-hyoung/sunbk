@@ -4,8 +4,7 @@ import Link from "next/link";
 
 interface Props {
   currentType?: string;
-  currentVesselType?: string;
-  currentUse?: string;
+  currentCls?: string;
 }
 
 const items = [
@@ -14,18 +13,13 @@ const items = [
   { label: "판매", value: "sale" },
 ];
 
-export default function TradeTypeBar({
-  currentType,
-  currentVesselType,
-  currentUse,
-}: Props) {
+export default function TradeTypeBar({ currentType, currentCls }: Props) {
   const base = "/vessels";
 
   function hrefFor(typeValue: string) {
     const params = new URLSearchParams();
     if (typeValue) params.set("type", typeValue);
-    if (currentVesselType) params.set("vessel_type", currentVesselType);
-    if (currentUse) params.set("use", currentUse);
+    if (currentCls) params.set("cls", currentCls);
     const qs = params.toString();
     return qs ? `${base}?${qs}` : base;
   }

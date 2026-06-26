@@ -12,8 +12,10 @@ import workPhotosJson from "@/data/work-photos.json";
 import { getAllVesselsFromStore } from "./admin-store";
 import {
   matchesCategory,
+  matchesVesselClass,
   VESSEL_CATEGORIES,
   type VesselCategory,
+  type VesselClass,
 } from "./vessel-types";
 
 // 항상 로컬 JSON 사용 (Supabase 연동 시 false로 변경)
@@ -59,6 +61,43 @@ async function getVesselsFromSupabase(): Promise<Vessel[]> {
  * 정렬: is_featured 우선 → type rent/both 우선 → 나머지.
  */
 const VISIBLE_STATUSES = ["active", "rented"];
+
+/**
+ * 선박 유형(예인선/통선/해양조사)별 조회. 정렬: featured 우선 → rent/both 우선.
+ */
+export async function getVesselsByClass(
+  cls: VesselClass,
+  limit?: number,
+): Promise<Vessel[]> {
+  const sortFn = (a: Vessel, b: Vessel) => {
+    if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
+    const aRent = a.type === "rent" || a.type === "both" ? 1 : 0;
+    const bRent = b.type === "rent" || b.type === "both" ? 1 : 0;
+    return bRent - aRent;
+  };
+
+  if (USE_LOCAL) {
+    const result = localVessels()
+      .filter(
+        (v) =>
+          VISIBLE_STATUSES.includes(v.status) && matchesVesselClass(v, cls),
+      )
+      .sort(sortFn);
+    return limit ? result.slice(0, limit) : result;
+  }
+
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+  );
+  const { data } = await supabase
+    .from("vessels")
+    .select("*, vessel_images(*)")
+    .in("status", VISIBLE_STATUSES);
+  const filtered = (data ?? []).filter((v) => matchesVesselClass(v, cls));
+  const sorted = filtered.sort(sortFn);
+  return limit ? sorted.slice(0, limit) : sorted;
+}
 
 export async function getVesselsByUseCase(
   useCase: UseCase,
@@ -117,19 +156,14 @@ export async function getFeaturedVessels(): Promise<Vessel[]> {
 
 export async function getVessels(searchParams: {
   type?: string;
-  vessel_type?: string;
-  use?: string;
+  cls?: string;
 }): Promise<Vessel[]> {
-  const useFilter: UseCase | undefined =
-    searchParams.use === "survey" || searchParams.use === "construction"
-      ? searchParams.use
+  const classFilter: VesselClass | undefined =
+    searchParams.cls === "tug" ||
+    searchParams.cls === "passenger" ||
+    searchParams.cls === "survey"
+      ? (searchParams.cls as VesselClass)
       : undefined;
-
-  const categoryFilter: VesselCategory | undefined = (
-    VESSEL_CATEGORIES as readonly string[]
-  ).includes(searchParams.vessel_type ?? "")
-    ? (searchParams.vessel_type as VesselCategory)
-    : undefined;
 
   const sortByRentFirst = (a: Vessel, b: Vessel) => {
     if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
@@ -148,12 +182,8 @@ export async function getVessels(searchParams: {
       result = result.filter((v) => v.type === "sale" || v.type === "both");
     }
 
-    if (useFilter) {
-      result = result.filter((v) => v.use_cases?.includes(useFilter));
-    }
-
-    if (categoryFilter) {
-      result = result.filter((v) => matchesCategory(v, categoryFilter));
+    if (classFilter) {
+      result = result.filter((v) => matchesVesselClass(v, classFilter));
     }
 
     return result.sort(sortByRentFirst);
@@ -173,14 +203,11 @@ export async function getVessels(searchParams: {
   } else if (searchParams.type === "sale") {
     query = query.in("type", ["sale", "both"]);
   }
-  if (useFilter) {
-    query = query.contains("use_cases", [useFilter]);
-  }
 
   const { data } = await query;
   let result = data ?? [];
-  if (categoryFilter) {
-    result = result.filter((v) => matchesCategory(v, categoryFilter));
+  if (classFilter) {
+    result = result.filter((v) => matchesVesselClass(v, classFilter));
   }
   return result.sort(sortByRentFirst);
 }

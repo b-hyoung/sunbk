@@ -7,6 +7,7 @@ import { usePathname, useSearchParams } from "next/navigation";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { getNavLinks } from "@/constants/enums";
+import { COMPANY } from "@/constants/company";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -15,7 +16,21 @@ export default function Header() {
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState<string | null>(null);
+  const [phoneOpen, setPhoneOpen] = useState(false);
+  const phoneRef = useRef<HTMLDivElement>(null);
   const [scrolled, setScrolled] = useState(true); // 기본값 true → 흰색 배경으로 시작
+
+  // 외부 클릭 시 전화 popover 닫기
+  useEffect(() => {
+    if (!phoneOpen) return;
+    function handleClickOutside(e: MouseEvent) {
+      if (phoneRef.current && !phoneRef.current.contains(e.target as Node)) {
+        setPhoneOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, [phoneOpen]);
   const headerRef = useRef<HTMLElement>(null);
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -27,7 +42,8 @@ export default function Header() {
     if (!header) return;
 
     if (!isHome) {
-      // 홈 아닌 페이지: 항상 흰색 배경
+      // 홈 아닌 페이지: 진행 중인 애니메이션 강제 종료 후 흰색 고정
+      gsap.killTweensOf(header);
       gsap.set(header, {
         backgroundColor: "rgba(255,255,255,1)",
         boxShadow: "0 1px 0 rgba(0,0,0,0.08)",
@@ -70,12 +86,14 @@ export default function Header() {
   useEffect(() => {
     const header = headerRef.current;
     if (!header) return;
+    // 비홈 페이지에서는 모바일 메뉴 배경 토글 로직을 적용하지 않음 (흰색 유지)
+    if (!isHome) return;
     if (menuOpen && !scrolled) {
       gsap.to(header, { backgroundColor: "rgba(15,23,42,0.98)", duration: 0.2 });
     } else if (!scrolled) {
       gsap.to(header, { backgroundColor: "rgba(0,0,0,0)", duration: 0.2 });
     }
-  }, [menuOpen, scrolled]);
+  }, [menuOpen, scrolled, isHome]);
 
   return (
     <header ref={headerRef} className="fixed top-0 left-0 right-0 z-50" style={{ backgroundColor: isHome ? undefined : "rgba(255,255,255,1)", boxShadow: isHome ? undefined : "0 1px 0 rgba(0,0,0,0.08)" }}>
@@ -128,7 +146,7 @@ export default function Header() {
                         className="absolute top-full right-0 pt-3 w-56"
                         style={{ animation: "dropdownFade 200ms ease-out" }}
                       >
-                        <div className="bg-gray-100 rounded-lg overflow-hidden py-3">
+                        <div className="bg-gray-100 rounded-lg py-3 max-h-[60vh] overflow-y-auto">
                           {link.children.map((child) => {
                             const isDisabled = child.href === "#";
                             if (isDisabled) {
@@ -179,18 +197,38 @@ export default function Header() {
             })}
           </nav>
 
-          {/* 전화 CTA */}
-          <a
-            href="tel:010-0000-0000"
-            className={`hidden md:flex items-center gap-1.5 px-4 py-2 rounded-lg text-base font-semibold transition-colors duration-300 ${
-              scrolled
-                ? "bg-blue-600 hover:bg-blue-700 text-white"
-                : "bg-white/15 hover:bg-white/25 text-white border border-white/30"
-            }`}
-          >
-            <Phone className="w-3.5 h-3.5" />
-            010-0000-0000
-          </a>
+          {/* 전화 CTA (클릭 → 번호 popover → 클릭 시 전화 연결) */}
+          <div ref={phoneRef} className="hidden md:block relative">
+            <button
+              type="button"
+              onClick={() => setPhoneOpen((v) => !v)}
+              aria-expanded={phoneOpen}
+              aria-haspopup="true"
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-base font-semibold transition-colors duration-300 ${
+                scrolled
+                  ? "bg-blue-600 hover:bg-blue-700 text-white"
+                  : "bg-white/15 hover:bg-white/25 text-white border border-white/30"
+              }`}
+            >
+              <Phone className="w-3.5 h-3.5" />
+              전화 문의
+            </button>
+            {phoneOpen && (
+              <div
+                className="absolute top-full right-0 mt-2 bg-white rounded-lg shadow-lg border border-gray-100 py-2 min-w-[180px] z-50"
+                style={{ animation: "dropdownFade 200ms ease-out" }}
+              >
+                <a
+                  href={`tel:${COMPANY.phone}`}
+                  onClick={() => setPhoneOpen(false)}
+                  className="flex items-center gap-2 px-4 py-2.5 text-sm font-semibold text-gray-900 hover:bg-blue-50 hover:text-blue-600 transition-colors"
+                >
+                  <Phone className="w-4 h-4 text-blue-600" />
+                  {COMPANY.phone}
+                </a>
+              </div>
+            )}
+          </div>
 
           <button
             className={`md:hidden p-2.5 w-11 h-11 flex items-center justify-center rounded-lg transition-colors duration-300 ${
@@ -245,10 +283,27 @@ export default function Header() {
               );
             })}
             <div className={`px-5 py-3 border-t mt-1 ${scrolled ? "border-gray-100" : "border-white/10"}`}>
-              <a href="tel:010-0000-0000" className={`flex items-center gap-2 text-sm font-semibold ${scrolled ? "text-blue-600" : "text-blue-300"}`}>
+              <button
+                type="button"
+                onClick={() => setPhoneOpen((v) => !v)}
+                className={`flex items-center gap-2 text-sm font-semibold ${scrolled ? "text-blue-600" : "text-blue-300"}`}
+              >
                 <Phone className="w-4 h-4" />
-                010-0000-0000
-              </a>
+                전화 문의
+              </button>
+              {phoneOpen && (
+                <a
+                  href={`tel:${COMPANY.phone}`}
+                  onClick={() => {
+                    setPhoneOpen(false);
+                    setMenuOpen(false);
+                  }}
+                  className={`flex items-center gap-2 mt-2 text-sm ${scrolled ? "text-gray-700 hover:text-blue-600" : "text-white/80 hover:text-white"}`}
+                >
+                  <Phone className="w-4 h-4" />
+                  {COMPANY.phone}
+                </a>
+              )}
             </div>
           </nav>
         </div>
