@@ -1,11 +1,9 @@
 export const dynamic = "force-dynamic";
+import { Suspense } from "react";
 import { getVessels } from "@/lib/data";
-import VesselCard from "@/app/_components/VesselCard";
-import VesselFilter from "@/app/_components/VesselFilter";
-import TradeTypeBar from "@/app/_components/TradeTypeBar";
-import { Ship } from "lucide-react";
+import VesselsBrowser from "@/app/_components/VesselsBrowser";
+import VesselsView from "@/app/_components/VesselsView";
 import type { Metadata } from "next";
-import { VESSEL_CLASS_INFO, type VesselClass } from "@/lib/vessel-types";
 
 export const metadata: Metadata = {
   title: "선박 목록",
@@ -13,107 +11,16 @@ export const metadata: Metadata = {
     "임대 및 판매 가능한 선박 목록. 예인선·기타선(통선)·기타선(해양조사).",
 };
 
-interface SearchParams {
-  type?: string;
-  cls?: string;
-}
+export default async function VesselsPage() {
+  // 전체 목록(상태 필터 + 정렬)만 서버에서 준비하고, type·cls 필터는 클라이언트에서 수행.
+  // 정적 익스포트(GitHub Pages)에서도 쿼리스트링 필터가 동작하도록 하기 위함.
+  const allVessels = await getVessels({});
 
-function isVesselClass(v: string | undefined): v is VesselClass {
-  return v === "tug" || v === "passenger" || v === "survey";
-}
-
-export default async function VesselsPage({
-  searchParams,
-}: {
-  searchParams: Promise<SearchParams>;
-}) {
-  const params = await searchParams;
-  const vessels = await getVessels(params);
-
-  const typeLabel: Record<string, string> = {
-    rent: "임대 선박",
-    sale: "판매 선박",
-  };
-
-  let pageTitle = "전체 선박";
-  let pageSubtitle: string | null = null;
-
-  if (isVesselClass(params.cls)) {
-    const info = VESSEL_CLASS_INFO[params.cls];
-    pageTitle = `${info.icon} ${info.label}`;
-    pageSubtitle = info.description;
-  } else if (params.type && typeLabel[params.type]) {
-    pageTitle = typeLabel[params.type];
-  }
-
+  // useSearchParams는 Suspense가 필요하다. fallback으로 "필터 없는 전체 목록"을 렌더하면
+  // 정적 HTML에 콘텐츠가 박혀 SEO·초기 표시가 유지되고, 하이드레이션 후 필터본으로 교체된다.
   return (
-    <div className="bg-white min-h-screen">
-      {/* 페이지 헤더 */}
-      <div className="border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-10">
-          <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-5">
-            <div>
-              <h1 data-fade-up className="text-gray-900 mb-1">{pageTitle}</h1>
-              {pageSubtitle ? (
-                <p
-                  data-fade-up
-                  className="text-gray-500 text-sm max-w-2xl leading-relaxed"
-                >
-                  {pageSubtitle}
-                </p>
-              ) : (
-                <p data-fade-up className="text-gray-400 text-sm">
-                  총 {vessels.length}척
-                </p>
-              )}
-              {pageSubtitle && (
-                <p data-fade-up className="text-gray-400 text-xs mt-2">
-                  총 {vessels.length}척
-                </p>
-              )}
-            </div>
-            <div data-fade-in className="shrink-0">
-              <TradeTypeBar
-                currentType={params.type}
-                currentCls={params.cls}
-              />
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 lg:py-10">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-10">
-          <aside data-fade-in className="w-full lg:w-48 shrink-0">
-            <VesselFilter
-              currentType={params.type}
-              currentCls={params.cls}
-            />
-          </aside>
-
-          <div className="flex-1">
-            {vessels.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-                {vessels.map((vessel) => (
-                  <div key={vessel.id} data-stagger>
-                    <VesselCard vessel={vessel} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div
-                data-fade-in
-                className="flex flex-col items-center justify-center py-32 text-gray-300"
-              >
-                <Ship className="w-12 h-12 mb-4" />
-                <p className="text-base text-gray-400">
-                  해당 조건의 선박이 없습니다.
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
+    <Suspense fallback={<VesselsView vessels={allVessels} />}>
+      <VesselsBrowser allVessels={allVessels} />
+    </Suspense>
   );
 }
