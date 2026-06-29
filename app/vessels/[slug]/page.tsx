@@ -11,13 +11,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params;
   const vessel = await getVesselBySlug(slug);
   if (!vessel) return {};
+  const ogImage =
+    (vessel.vessel_images?.find((img) => img.is_primary) ?? vessel.vessel_images?.[0])?.url;
   return {
     title: vessel.title,
     description: vessel.description?.slice(0, 160) ?? `${vessel.title} - 선박 임대·판매`,
     openGraph: {
       title: vessel.title,
       description: vessel.description?.slice(0, 160) ?? "",
-      images: vessel.vessel_images?.[0]?.url ? [vessel.vessel_images[0].url] : [],
+      images: ogImage ? [ogImage] : [],
     },
   };
 }

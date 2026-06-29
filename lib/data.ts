@@ -405,9 +405,20 @@ export async function getVesselPhotos(
 ): Promise<VesselImage[]> {
   const vessel = await getVesselById(vesselId);
   if (!vessel) return [];
-  let images = vessel.vessel_images ?? [];
-  if (groupFilter) {
-    images = images.filter((img) => getPhotoGroup(img.category ?? "exterior") === groupFilter);
+  const all = vessel.vessel_images ?? [];
+  if (!groupFilter) return all;
+
+  let images = all.filter(
+    (img) => getPhotoGroup(img.category ?? "exterior") === groupFilter,
+  );
+
+  // 상세 갤러리(vessel)에서는 대표 사진을 그룹과 무관하게 항상 맨 앞에 노출한다.
+  // (예: 항해 사진을 대표로 지정하면 work 그룹이라도 상세 첫 사진으로 보이게)
+  if (groupFilter === "vessel") {
+    const primary = all.find((img) => img.is_primary);
+    if (primary) {
+      images = [primary, ...images.filter((img) => img.id !== primary.id)];
+    }
   }
   return images;
 }

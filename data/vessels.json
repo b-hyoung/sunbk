@@ -639,8 +639,8 @@
         "id": "jinyang2-exterior",
         "vessel_id": "jinyang-2",
         "url": "/images/vessels/jinyang2/exterior.jpg",
-        "is_primary": true,
-        "sort_order": 1,
+        "is_primary": false,
+        "sort_order": 2,
         "category": "exterior",
         "taken_date": "2024-06-13"
       },
@@ -675,8 +675,8 @@
         "id": "jinyang2-sailing",
         "vessel_id": "jinyang-2",
         "url": "/images/vessels/jinyang2/sailing.jpg",
-        "is_primary": false,
-        "sort_order": 5,
+        "is_primary": true,
+        "sort_order": 1,
         "category": "sailing",
         "taken_date": "2025-10-10"
       },
