@@ -56,9 +56,9 @@ export const USE_CASES: Record<
 export const USE_CASE_ORDER: UseCase[] = ["survey", "construction"];
 
 /** 선박 유형 (홈에서 분류 기준) */
-export type VesselClass = "tug" | "passenger" | "survey";
+export type VesselClass = "tug" | "utility" | "coastal";
 
-export const VESSEL_CLASS_ORDER: VesselClass[] = ["tug", "passenger", "survey"];
+export const VESSEL_CLASS_ORDER: VesselClass[] = ["tug", "utility", "coastal"];
 
 export const VESSEL_CLASS_INFO: Record<
   VesselClass,
@@ -70,37 +70,46 @@ export const VESSEL_CLASS_INFO: Record<
     description:
       "해상의 각종 공사 등에 동원되는 부선의 예인, 공사바지 셋팅, 닻 투·양묘 등에 사용되며\n대한민국 연안 일원의 모든 해상에서 작업 가능합니다.",
   },
-  passenger: {
-    label: "기타선 (통선)",
+  utility: {
+    label: "기타선 (통선·해양조사선)",
     icon: "🛟",
     description:
-      "국제항구에 출·입항하는 상선 등 본선과 육지 간 통선으로 사용하며, 해상 공사 현장에 동원되어 작업 인부 운송 및 자재 이송에 활용됩니다.\n대한민국 연안 일원 모든 해상에서 작업 가능합니다.",
+      "국제항구에 출·입항하는 상선과 육지 간 통선, 해상 공사 현장의 작업 인부·자재 운송에 사용하며,\n국립해양조사원의 지형·해저 측량 등 해양공간 정보 수집, 항로 준설유지작업의 조사선으로도 활용됩니다.",
   },
-  survey: {
-    label: "기타선 (해양조사)",
-    icon: "🛰️",
+  coastal: {
+    label: "기타선 (연안·내수면·호수 등)",
+    icon: "🚤",
     description:
-      "국립해양조사원에서 등대표·수로지·해도 작성을 위해 연안 일원의 지형·해저 측량 등 해양공간 정보를 수집하며\n항로의 준설유지작업, 해양 교량 공사, 돌핀 등 각종 시설물 설치 전 조사선으로 사용됩니다.",
+      "연안·내수면·호수 등에서 근거리 통선, 소규모 측량·연락·점검 작업에 투입되는 소형 선박입니다.\n좁은 수역과 접안 작업에 유리합니다.",
   },
 };
 
 /**
- * 선박을 유형별로 매칭. 한 선박이 여러 유형에 속할 수 있음.
- * - 예인선: features에 "예항력" 보유
- * - 통선: 예인선이 아닌 모든 배 (사람·자재 운반 가능)
- * - 해양조사: use_cases에 survey 포함
+ * 각 유형에 속한 선박을 표시 순서대로 명시. (중복 없이 한 선박은 한 유형에만 속함)
  */
-export function matchesVesselClass(vessel: Vessel, cls: VesselClass): boolean {
-  const hasTowingPower =
-    vessel.features?.some((f) => f.includes("예항력")) ?? false;
-  switch (cls) {
-    case "tug":
-      return hasTowingPower;
-    case "passenger":
-      return !hasTowingPower;
-    case "survey":
-      return vessel.use_cases?.includes("survey") ?? false;
-  }
+export const VESSEL_CLASS_MEMBERS: Record<VesselClass, string[]> = {
+  tug: ["suyeon-1"],
+  utility: ["suyeon-5", "suyeon-6", "youngjin", "sinseong", "jinyang-2"],
+  coastal: ["suyeon-3", "suyeon-8", "suyeon-9", "incheon-9"],
+};
+
+/** 선박이 해당 유형에 속하는지 (명시적 멤버십 기준) */
+export function matchesVesselClass(
+  vessel: Pick<Vessel, "id">,
+  cls: VesselClass,
+): boolean {
+  return VESSEL_CLASS_MEMBERS[cls].includes(vessel.id);
+}
+
+/** 유형 내 표시 순서 index (미지정이면 큰 값 → 뒤로) */
+export function vesselClassOrderIndex(vesselId: string, cls: VesselClass): number {
+  const i = VESSEL_CLASS_MEMBERS[cls].indexOf(vesselId);
+  return i === -1 ? Number.MAX_SAFE_INTEGER : i;
+}
+
+/** 문자열이 유효한 VesselClass인지 판별 */
+export function isVesselClass(v: string | undefined | null): v is VesselClass {
+  return v === "tug" || v === "utility" || v === "coastal";
 }
 
 export function getUseCaseLabel(useCase: UseCase): string {

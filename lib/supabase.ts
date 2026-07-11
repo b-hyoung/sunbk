@@ -10,6 +10,7 @@ export interface Vessel {
   id: string
   title: string
   slug: string
+  ship_number?: string | null
   type: VesselType
   vessel_type: string
   use_cases: UseCase[]
@@ -19,6 +20,7 @@ export interface Vessel {
   length_m: number | null
   tonnage: number | null
   engine_power: string | null
+  horsepower?: number | null
   capacity: number | null
   location: string | null
   description: string | null

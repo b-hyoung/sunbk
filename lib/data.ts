@@ -13,6 +13,8 @@ import { getAllVesselsFromStore } from "./admin-store";
 import {
   matchesCategory,
   matchesVesselClass,
+  vesselClassOrderIndex,
+  isVesselClass,
   VESSEL_CATEGORIES,
   type VesselCategory,
   type VesselClass,
@@ -69,12 +71,9 @@ export async function getVesselsByClass(
   cls: VesselClass,
   limit?: number,
 ): Promise<Vessel[]> {
-  const sortFn = (a: Vessel, b: Vessel) => {
-    if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
-    const aRent = a.type === "rent" || a.type === "both" ? 1 : 0;
-    const bRent = b.type === "rent" || b.type === "both" ? 1 : 0;
-    return bRent - aRent;
-  };
+  // 유형 내 명시적 지정 순서(VESSEL_CLASS_MEMBERS)대로 정렬
+  const sortFn = (a: Vessel, b: Vessel) =>
+    vesselClassOrderIndex(a.id, cls) - vesselClassOrderIndex(b.id, cls);
 
   if (USE_LOCAL) {
     const result = localVessels()
@@ -158,14 +157,18 @@ export async function getVessels(searchParams: {
   type?: string;
   cls?: string;
 }): Promise<Vessel[]> {
-  const classFilter: VesselClass | undefined =
-    searchParams.cls === "tug" ||
-    searchParams.cls === "passenger" ||
-    searchParams.cls === "survey"
-      ? (searchParams.cls as VesselClass)
-      : undefined;
+  const classFilter: VesselClass | undefined = isVesselClass(searchParams.cls)
+    ? searchParams.cls
+    : undefined;
 
-  const sortByRentFirst = (a: Vessel, b: Vessel) => {
+  // 유형 필터가 있으면 그 유형의 지정 순서대로, 없으면 featured·임대 우선
+  const finalSort = (a: Vessel, b: Vessel) => {
+    if (classFilter) {
+      return (
+        vesselClassOrderIndex(a.id, classFilter) -
+        vesselClassOrderIndex(b.id, classFilter)
+      );
+    }
     if (a.is_featured !== b.is_featured) return a.is_featured ? -1 : 1;
     const aRent = a.type === "rent" || a.type === "both" ? 1 : 0;
     const bRent = b.type === "rent" || b.type === "both" ? 1 : 0;
@@ -186,7 +189,7 @@ export async function getVessels(searchParams: {
       result = result.filter((v) => matchesVesselClass(v, classFilter));
     }
 
-    return result.sort(sortByRentFirst);
+    return result.sort(finalSort);
   }
 
   const supabase = createClient(
@@ -209,7 +212,7 @@ export async function getVessels(searchParams: {
   if (classFilter) {
     result = result.filter((v) => matchesVesselClass(v, classFilter));
   }
-  return result.sort(sortByRentFirst);
+  return result.sort(finalSort);
 }
 
 export async function getVesselBySlug(slug: string): Promise<Vessel | null> {

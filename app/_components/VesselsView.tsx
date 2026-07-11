@@ -11,7 +11,7 @@ const typeLabel: Record<string, string> = {
 };
 
 function isVesselClass(v: string | undefined): v is VesselClass {
-  return v === "tug" || v === "passenger" || v === "survey";
+  return v === "tug" || v === "utility" || v === "coastal";
 }
 
 interface Props {

@@ -174,7 +174,7 @@ export default function VesselForm({ vessel, mode }: VesselFormProps) {
           </div>
           <div>
             <label htmlFor="engine-power" className={labelClass}>엔진 출력</label>
-            <input id="engine-power" type="text" value={enginePower} onChange={(e) => setEnginePower(e.target.value)} className={inputClass} placeholder="예: 미쯔비시 750HP" />
+            <input id="engine-power" type="text" value={enginePower} onChange={(e) => setEnginePower(e.target.value)} className={inputClass} placeholder="예: 디젤 410PS(301kW)" />
           </div>
           <div>
             <label htmlFor="capacity" className={labelClass}>승선 정원</label>

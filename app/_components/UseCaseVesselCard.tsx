@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Ship, Anchor, Ruler, Users } from "lucide-react";
+import { Ship, Anchor, Gauge, Ruler, Users } from "lucide-react";
 import type { Vessel, VesselType } from "@/lib/supabase";
 import { getVesselCategory } from "@/lib/vessel-types";
 
@@ -99,6 +99,12 @@ export default function UseCaseVesselCard({ vessel }: Props) {
             <span className="inline-flex items-center gap-1">
               <Anchor className="w-3 h-3 text-gray-400" />
               {vessel.tonnage}t
+            </span>
+          )}
+          {vessel.horsepower && (
+            <span className="inline-flex items-center gap-1">
+              <Gauge className="w-3 h-3 text-gray-400" />
+              {vessel.horsepower.toLocaleString()}마력
             </span>
           )}
           {vessel.length_m && (

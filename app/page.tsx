@@ -12,7 +12,7 @@ export default async function HomePage() {
   const allVessels = getAllVesselsFromStore();
   const groups = await Promise.all(
     VESSEL_CLASS_ORDER.map(async (cls) => {
-      const vessels = await getVesselsByClass(cls, 4);
+      const vessels = await getVesselsByClass(cls);
       return {
         cls,
         vessels,
